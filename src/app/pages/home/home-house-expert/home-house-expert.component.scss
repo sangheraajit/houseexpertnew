@@ -1,0 +1,75 @@
+.house-expert-wrap {
+    padding: calc(var(--th-padding) * 22) 0;
+    overflow: hidden;
+
+    .container {
+        position: relative;
+        z-index: 10;
+    }
+
+    .shadow-pink {
+        img {
+            position: relative;
+            z-index: 1;
+        }
+
+        &::after,
+        &:before {
+            background-color: var(--pink-color);
+            position: absolute;
+            content: "";
+            width: 200px;
+            height: 200px;
+            border-radius: 100%;
+            top: 120px;
+            right: -200px;
+            filter: blur(80px);
+            opacity: .6;
+        }
+
+        &:before {
+            background-color: var(--purple-color);
+            right: 0;
+            top: 150px;
+        }
+    }
+    .shadow-purple {
+        img {
+            position: relative;
+            z-index: 1;
+        }
+
+        &::after,
+        &:before {
+            background-color: var(--pink-color);
+            position: absolute;
+            content: "";
+            width: 200px;
+            height: 200px;
+            border-radius: 100%;
+            top: 120px;
+            right: -200px;
+            filter: blur(140px);
+            opacity: .5;
+        }
+
+        &:before {
+            background-color: var(--purple-color);
+            right: -170px;
+            top: 0;
+        }
+    }
+    &::after {
+        background-color: var(--purple-color);
+        position: absolute;
+        content: "";
+        width: 350px;
+        height: 335px;
+        border-radius: 100%;
+        bottom: -100px;
+        right: 0;
+        filter: blur(200px);
+        opacity: .6;
+    }
+
+}

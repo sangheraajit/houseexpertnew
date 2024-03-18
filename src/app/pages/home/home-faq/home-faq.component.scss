@@ -1,0 +1,62 @@
+.faqmain-wrap{
+    padding: calc(var(--th-padding) * 30) 0;
+    overflow: hidden;
+    position: relative;
+    &::after,
+        &:before {
+            background-color: var(--pink-color);
+            position: absolute;
+            content: "";
+            width: 524px;
+            height: 523px;
+            border-radius: 100%;
+            top: 120px;
+            right: -200px;
+            filter: blur(80px);
+            opacity: .2;
+        }
+
+        &:before {
+            background-color: var(--purple-color);
+            left: 0;
+            top: -200px;
+            width: 426px;
+            height: 425px;
+        }
+        .container{
+            position: relative;
+    z-index: 112;
+        }
+}
+.faq-wrap{
+    box-shadow: 0px 10px 20px rgba(235, 44, 96, .29);
+    border-radius: calc(var(--th-rounded) * 6.5);
+    padding: calc(var(--th-padding) * 7) calc(var(--th-padding) * 6);
+    background-color: var(--white-color);
+    .accordion-item{
+       border:0;
+        border-bottom:1px solid var(--light-gray-color);
+        margin-bottom: calc(var(--th-padding) * 5);
+        padding-bottom: calc(var(--th-padding) * 5);
+        border-radius: 0;
+        :last-child{ border: 0;}
+        .accordion-button{
+            padding-top: 0;
+            padding-bottom: 0;
+            font-size: var(--font-size-20);
+            font-weight: 600;
+            color: var(--purple-color);
+            position: relative;
+            padding-left: calc(var(--th-padding) * 9);
+            box-shadow: none;
+            background-color: transparent;
+            
+        }
+        .accordion-body{ padding-bottom: 0; padding-left: calc(var(--th-padding) * 9);}
+    }
+}
+
+.accordion-button:after{
+    position: absolute !important;
+    left: 0;
+}

@@ -1,0 +1,153 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+:root{
+
+    /* Theme colors */
+--light-color: #F4F4F4;
+--exlight-color-f3effc: #F3EFFC;
+--off-light-color: #FFF4F7;
+--black-color: #000000;
+--white-color: #FFFFFF;
+--light-gray-color: #C9C9C9;
+--pink-color: #EB2C60;
+--purple-color: #5F19E1;
+--gray-color: #707070;
+--dark-color: #020202;
+--copyright-color:#CBCBCB;
+--yellow-color:#FFF35C;
+--acent-color:#F5DDC9;
+--acent-dark-color:#F7EBE2;
+--sky-blue-color:#CFE8EA;
+--dark-green:#A2A777;
+--light-red:#E57055;
+--light-green:#E4EBC0;
+--dark-gshade:#535A0E;
+--dark-rshade:#776057;
+--jordy-blue:#9FBFC3;
+
+
+
+/* theme shadows*/ 
+
+--search-shadow: 0px 3px 6px #EB2C6033;
+
+/* Font sizes */
+--font-size-12: 0.75rem ;
+--font-size-14: 0.875rem ;
+--font-size-15: 0.938rem;
+--font-size-16: 1rem;
+--font-size-18: 1.125rem;
+--font-size-20: 1.25rem;
+--font-size-22: 1.375rem;
+--font-size-24: 1.5rem;
+--font-size-26: 1.625rem;
+--font-size-28: 1.75rem;
+--font-size-30:1.875rem;
+--font-size-32:2rem;
+--font-size-34:2.125rem;
+--font-size-36:2.25rem;
+--font-size-38:2.375rem;
+--font-size-40: 2.5rem;
+--font-size-50:3.125rem;
+--font-size-70:4.375rem;
+
+
+/* radius */ 
+
+--th-rounded:0.25rem;
+--th-padding:0.25rem;
+
+
+
+
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+
+body{
+    font-family: "Poppins", sans-serif;
+    font-size: var(--font-size-16);
+    
+}
+
+.font-poppins{
+    font-family: "Poppins", sans-serif;
+}
+.font-display{
+    font-family: "Playfair Display", serif;
+}
+
+
+.fs-12{ font-size: var(--font-size-12);}
+.fs-14{ font-size: var(--font-size-14);}
+.fs-16{ font-size: var(--font-size-16);}
+.fs-18{ font-size: var(--font-size-18);}
+.fs-20{ font-size: var(--font-size-20);}
+.fs-22{ font-size: var(--font-size-22);}
+.fs-24{ font-size: var(--font-size-24);}
+.fs-26{ font-size: var(--font-size-26);}
+.fs-28{ font-size: var(--font-size-28);}
+.fs-30{ font-size: var(--font-size-30);}
+.fs-32{ font-size: var(--font-size-32);}
+.fs-34{ font-size: var(--font-size-34);}
+.fs-36{ font-size: var(--font-size-36);}
+.fs-38{ font-size: var(--font-size-38);}
+.fs-40{ font-size: var(--font-size-40);}
+.fs-50{ font-size: var(--font-size-50);}
+.fs-70{ font-size: var(--font-size-70);}
+
+
+
+.text-purple{color: var(--purple-color);}
+.text-pink{color: var(--pink-color);}
+
+.bg-purple{background-color: var(--purple-color);}
+.bg-pink{background-color: var(--pink-color);}
+.bg-yellow{background-color: var(--yellow-color);}
+.bg-acent{background-color: var(--acent-color);}
+.bg-acent-dark{background-color: var(--acent-dark-color);}
+.bg-sky{background-color: var(--sky-blue-color);}
+.bg-dark-green{background-color: var(--dark-green);}
+.bg-light-red{background-color: var(--light-red);}
+.bg-light-green{background-color: var(--light-green);}
+.bg-gshade{background-color: var(--dark-gshade);}
+.bg-rshade{background-color: var(--dark-rshade);}
+.bg-jordy-blue{background-color: var(--jordy-blue);}
+
+
+
+.custom-btn{ background-color: var(--pink-color); padding-right: 30px; padding:calc(var(--th-padding) * 2) calc(var(--th-padding) * 4) ;
+    font-size: var(--font-size-18); font-weight: 500; text-decoration: none; color: var(--white-color);}
+
+
+
+    .custom-light-btn{ background-color: var(--white-color); padding-right: 30px; padding:calc(var(--th-padding) * 2) calc(var(--th-padding) * 4) ;
+        font-size: var(--font-size-18); font-weight: 500; text-decoration: none; color: var(--purple-color);}    
+
+.custom-btn:hover{}
+
+
+.scaleX-1{ transform: scaleX(-1);}
+.accordion-button:not(.collapsed)::after{
+    background: none;
+    content: '\f068';
+    font-family:'Font Awesome 5 Free' !important;
+    color: var(--black-color);
+    font-size: var(--font-size-22);
+    line-height: 1;
+}
+.accordion-button::after{
+    content: '\f067';
+    font-family:'Font Awesome 5 Free' !important;
+    background: none;
+    color: var(--black-color);
+    font-size: var(--font-size-22);
+    line-height: 1;
+}
+
+
+
+

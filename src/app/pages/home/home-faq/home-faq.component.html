@@ -1,0 +1,23 @@
+<div class="faqmain-wrap">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-9 col-md-12">
+                <h2 class="fs-40 m-0 fw-bold text-pink">Frequently Asked Questions</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-9 col-md-12">
+<div ngbAccordion class="faq-wrap">
+	<div *ngFor="let faq of faqs; let i = index; let last = last" ngbAccordionItem [collapsed]="i !== expandedIndex" [ngClass]="{' mb-0': last}">
+		<h2 ngbAccordionHeader>
+			<button ngbAccordionButton (click)="toggleAccordion(i)">{{ faq.question }}</button>
+		</h2>
+		<div ngbAccordionCollapse>
+			<div ngbAccordionBody>
+				<ng-template>
+					{{ faq.answer }}
+				</ng-template>
+			</div>
+		</div>
+	</div>
+</div>
