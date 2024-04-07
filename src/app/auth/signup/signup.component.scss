@@ -1,0 +1,32 @@
+.create-account{ max-width: 900px; margin: 0 auto;
+    box-shadow: 0 0 20px rgba(0,0,0,.2);
+
+    .logo img{
+        height: 50px;
+    }
+.auth-form {
+    .form-control{
+        
+    }
+    .custom-gray-btn,.custom-btn{ height: 53px;}
+}
+.auth-or {
+    height: 0;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    position: relative;
+    span {
+        position: absolute;
+        top: -10px;
+        height: 20px;
+        background: #fff;
+        padding: 0 10px;
+        font-size: 13px;
+        font-weight: 400;
+        color: #707070;
+    }
+}
+}
+.custom-lightborder-btn{ height: 53px;}

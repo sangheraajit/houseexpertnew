@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-services',
@@ -6,8 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./services.component.scss']
 })
 export class ServicesComponent {
-  plumber = '../../../assets/images/plumber-making.png'
-  shapblue ='../../../assets/images/purple-shape.svg'
+  plumber = '../../../assets/images/plumber-making.png';
+  shapblue ='../../../assets/images/purple-shape.svg';
 
 services = [
     {

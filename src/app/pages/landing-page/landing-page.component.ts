@@ -6,6 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent {
+  
+
   truck = '../../../../assets/images/truck.png'
   cheerful = '../../../../assets/images/cheerful-delivery.png'
   tender = '../../../../assets/images/tender.png'

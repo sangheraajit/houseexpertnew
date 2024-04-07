@@ -27,11 +27,11 @@
             </li> -->
             
             <li class="d-none d-lg-flex" ngbDropdown>
-              <a href="#" id="dropdownBasic1" placement="top-end" ngbDropdownToggle> Sign In <i class="fa fa-angle-down fw-bold"></i></a>
+              <a (click)="openModal()" id="dropdownBasic1" placement="top-end" ngbDropdownToggle> Sign In <i class="fa fa-angle-down fw-bold"></i></a>
               <div  ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                <button ngbDropdownItem>Action - 1</button>
+              <!--   <button ngbDropdownItem>Action - 1</button>
                 <button ngbDropdownItem>Another Action</button>
-                <button ngbDropdownItem>Something else is here</button>
+                <button ngbDropdownItem>Something else is here</button> -->
               </div>
             </li>
             <li class="d-flex d-lg-none" ngbDropdown>

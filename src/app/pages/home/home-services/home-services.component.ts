@@ -8,14 +8,14 @@ import { Component } from '@angular/core';
 })
 export class HomeServicesComponent {
   services = [
-    { name: 'Painting Services', icon: '../../../assets/images/home-services/painting.svg' },
-    { name: 'Cleaning Services', icon: '../../../assets/images/home-services/cleaning.svg' },
-    { name: 'Estate Agents & Rental Agreement', icon: '../../../assets/images/home-services/estate.svg' },
-    { name: 'Electrician & AC Services', icon: '../../../assets/images/home-services/electrician.svg' },
-    { name: 'Carpentry & Plumbing Services', icon: '../../../assets/images/home-services/carpentry.svg' },
-    { name: 'Packers and Movers Services', icon: '../../../assets/images/home-services/packers.svg',url:'landing-page' },
-    { name: 'Pest Control Services', icon: '../../../assets/images/home-services/pest-control.svg' },
-    { name: 'Beauty Parlour & Barber Service', icon: '../../../assets/images/home-services/beauty.svg' }
+    { name: 'Painting Services', icon: '../../../assets/images/home-services/painting.svg',url:"services" },
+    { name: 'Cleaning Services', icon: '../../../assets/images/home-services/cleaning.svg',url:"services"},
+    { name: 'Estate Agents & Rental Agreement', icon: '../../../assets/images/home-services/estate.svg',url:"services" },
+    { name: 'Electrician & AC Services', icon: '../../../assets/images/home-services/electrician.svg',url:"services" },
+    { name: 'Carpentry & Plumbing Services', icon: '../../../assets/images/home-services/carpentry.svg',url:"services" },
+    { name: 'Packers and Movers Services', icon: '../../../assets/images/home-services/packers.svg',url:"landing-page" },
+    { name: 'Pest Control Services', icon: '../../../assets/images/home-services/pest-control.svg',url:"services" },
+    { name: 'Beauty Parlour & Barber Service', icon: '../../../assets/images/home-services/beauty.svg' ,url:"services"}
   ];
   cities = [
     { name: "Kolkata", url: "/kolkata" },

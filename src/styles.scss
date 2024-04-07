@@ -125,7 +125,13 @@ body{
 
 
     .custom-light-btn{ background-color: var(--white-color); padding-right: 30px; padding:calc(var(--th-padding) * 2) calc(var(--th-padding) * 4) ;
-        font-size: var(--font-size-18); font-weight: 500; text-decoration: none; color: var(--purple-color);}    
+        font-size: var(--font-size-18); font-weight: 500; text-decoration: none; color: var(--purple-color);} 
+        
+        .custom-gray-btn{ background-color: var(--light-color); padding-right: 30px; padding:calc(var(--th-padding) * 2) calc(var(--th-padding) * 4) ;
+            font-size: var(--font-size-18); font-weight: 400; text-decoration: none; color: var(--gray-color);}  
+            
+            .custom-lightborder-btn{ background-color: transparent; padding-right: 30px; padding:calc(var(--th-padding) * 2) calc(var(--th-padding) * 4) ;
+                font-size: var(--font-size-18); font-weight: 400; text-decoration: none; border:2px solid var(--white-color); color: var(--white-color);}    
 
 .custom-btn:hover{}
 
@@ -148,6 +154,30 @@ body{
     line-height: 1;
 }
 
+
+.star-rating:before {
+    content: "\2605\2605\2605\2605\2605";
+    background: linear-gradient(90deg,#eb2c60 var(--star-percent),#DCDCDC var(--star-percent));
+    display: inline-block;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+}
+.star-rating {
+    --star-percent: calc(var(--star-rating) / 5 * 100%);
+    display: inline-block!important;
+    font-size: 1rem;
+    font-family: Times;
+    line-height: 1;
+    font-size: 22px;
+    margin-bottom: 0px;
+}
+.review-list .progress {
+    height: 5px;
+    border-radius: 26px;
+    background-color:#C9C9C9;
+}
 
 
 

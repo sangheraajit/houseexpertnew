@@ -6,10 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-  plumber = '../../../../assets/images/plumber-making.png'
-  cheerful = '../../../../assets/images/cheerful-delivery.png'
-  tender = '../../../../assets/images/tender.png'
-  shapblue ='../../../../assets/images/purple-shape.svg'
-  shappink ='../../../../assets/images/pink-shape.svg'
+
+  plumber = '../../../../assets/images/plumber-making.png';
+  cheerful = '../../../../assets/images/cheerful-delivery.png';
+  tender = '../../../../assets/images/tender.png';
+  shapblue ='../../../../assets/images/purple-shape.svg';
+  shappink ='../../../../assets/images/pink-shape.svg';
   outsideplace = '../../../../assets/images/hand-presenting.png'
 }

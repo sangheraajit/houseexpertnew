@@ -1,6 +1,5 @@
-import { NgModule } from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
@@ -37,8 +36,15 @@ import { SetPasswordComponent } from './auth/set-password/set-password.component
 import { CheckEmailComponent } from './auth/check-email/check-email.component';
 import { PasswordResetComponent } from './auth/password-reset/password-reset.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+import { ServiceDetailsComponent } from './pages/service-details/service-details.component';
+import { FailedToPayComponent } from './pages/failed-to-pay/failed-to-pay.component';
+import { ThankYouComponent } from './pages/thank-you/thank-you.component';
+import { CartComponent } from './pages/cart/cart.component';
 
-
+// import function to register Swiper custom elements
+import { register } from 'swiper/element/bundle';
+// register Swiper custom elements
+register();
 
 
 
@@ -80,6 +86,10 @@ import { LandingPageComponent } from './pages/landing-page/landing-page.componen
     CheckEmailComponent,
     PasswordResetComponent,
     LandingPageComponent,
+    ServiceDetailsComponent,
+    FailedToPayComponent,
+    ThankYouComponent,
+    CartComponent,
 
   
  
@@ -93,6 +103,7 @@ import { LandingPageComponent } from './pages/landing-page/landing-page.componen
     NgbModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

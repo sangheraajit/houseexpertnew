@@ -83,3 +83,20 @@
     }
 
 }
+.list {
+    margin-top: 40px;
+    ul{
+    
+    list-style: none;
+    li{
+        color: var(--gray-color);
+        font-size: var(--font-size-16);
+        margin-bottom: 15px;
+        padding-left: 30px;
+        background: url(../../../assets/images/pink-shape.svg) top left no-repeat;
+        background-size: 11px;
+        background-position: 0 5px;
+
+    }
+}
+}
