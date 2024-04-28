@@ -1,0 +1,39 @@
+<!-- <p *ngIf="loading">Getting your location...</p>
+<div class="google_map_container">
+  <google-map
+    *ngIf="this.markers.length > 0"
+    #myGoogleMap
+    [zoom]="zoom"
+    [center]="mapCenter"
+    [options]="mapOptions"
+  >
+    <map-marker
+      #markerElem="mapMarker"
+      *ngFor="let marker of markers"
+      [position]="marker.position"
+      [label]="marker.label"
+      [title]="marker.title"
+      [options]="marker.options"
+      (mapClick)="openInfo(markerElem, marker.info)"
+    >
+    </map-marker>
+
+    <map-info-window  >{{ infoContent }}</map-info-window>
+  </google-map>
+</div>
+ -->
+
+ <p *ngIf="loading">Getting your location...</p>
+
+<div class="google_map_container">
+  <google-map  #mapContainer [zoom]="mapZoom" [center]="mapCenter" [options]="mapOptions">
+    <map-marker
+      #marker="mapMarker"
+      [position]="mapCenter"
+      [options]="markerOptions"
+      
+      >
+    </map-marker>
+
+  </google-map>
+</div>

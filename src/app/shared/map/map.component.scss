@@ -1,0 +1,135 @@
+
+
+    #map {
+      width: 100%;
+      height: 76%;
+    }
+    .centerMarker{
+        position:absolute;
+      /*url of the marker*/
+      background:url(/assets/icon/marker.png) no-repeat;
+      /*center the marker*/
+      top:36%;
+      left:50%;
+      z-index:1;
+      /*fix offset when needed*/
+      margin-left:-17px;
+      margin-top:-20px;
+      /*size of the image*/
+      height:50px;
+      width:50px;
+      cursor:pointer;
+    }
+    .current-location {
+      position: absolute;
+      // background-color: #fff !important;
+      right: 3%;
+      width: 30px;
+      bottom: 40% !important;
+      button {
+        background-color: #fff;
+        height: 2.9rem;
+        width: 2.9rem;
+        img {
+          width: 20px;
+        }
+      }
+      .button-ios.activated {
+        background-color: transparent;
+      }
+    }
+    .address-view {
+      height: 35%;
+    }
+    ion-content {
+      background-color: transparent !important;
+    }
+    .go-back-button, .search-button {
+      background-color: transparent !important;
+      box-shadow: none;
+      .activated {
+        background-color: transparent !important;
+      }
+    }
+    .search-button {
+      ion-icon {
+        font-size: 2.7rem !important;
+      }
+    }
+    .back-btn, .search-btn {
+      position: absolute;
+      ion-icon {
+        color: #000;
+      }
+    }
+    .search-btn {
+      left: 85%;
+    }
+    .search-box {
+      position: absolute;
+      top: 2%;
+      z-index: 999;
+    }
+    ion-textarea {
+      font-size: 14px;
+    }
+    .ios, .md {
+      home-page {
+        .scroll {
+          height: 100%
+        }
+        #map {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+agm-map {
+  height: 100%;
+}
+
+#map {
+  height: 100%;
+}
+.map {
+  height: 100%;
+  overflow-y: hidden; // hide vertical
+overflow-x: hidden;
+}
+ion-content {
+  overflow-y: hidden; // hide vertical
+overflow-x: hidden; // hide horizontal
+}
+.dropdown {
+  position: absolute;
+  top: 7.5%;
+  z-index: 4;
+  margin-right: 100px;
+}
+ion-card{
+  padding-right: 6px;
+}
+.foot{
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+.map-center-overlay {
+  margin: 0;
+  position: absolute;
+  top: 68%;
+  left: 50%;
+  transform: translate(-50%, -68%);
+  pointer-events: none;
+}
+ ion-icon {
+  margin-top: 6px !important;
+  font-size: 1.3em;
+}
+ion-label {
+  margin: 14px 10px 13px 12px !important;
+}

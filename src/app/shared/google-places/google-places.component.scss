@@ -1,0 +1,8 @@
+body{min-height:calc(100vh)}
+
+::ng-deep .pac-container { z-index: 10000 !important; }
+  ::ng-deep .p-dialog-footer {
+    padding: 15px !important;
+    background: #ffffff !important;
+    border-top: 1px solid #f1f1f1 !important;
+  }

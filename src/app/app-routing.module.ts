@@ -12,7 +12,7 @@ import { FaqComponent } from './pages/faq/faq.component';
 import { ContactUsComponent } from './pages/contact-us/contact-us.component';
 import { HomeComponent } from './pages/home/home.component';
 import { ServicesComponent } from './pages/services/services.component';
-import { LandingPageComponent } from './pages/landing-page/landing-page.component';
+//import { LandingPageComponent } from './pages/landing-page/landing-page.component';
 import { ServiceDetailsComponent } from './pages/service-details/service-details.component';
 import { LoginComponent } from './auth/login/login.component';
 import { OtpVerificationComponent } from './auth/otp-verification/otp-verification.component';
@@ -24,10 +24,13 @@ import { PasswordResetComponent } from './auth/password-reset/password-reset.com
 import { FailedToPayComponent } from './pages/failed-to-pay/failed-to-pay.component';
 import { ThankYouComponent } from './pages/thank-you/thank-you.component';
 import { CartComponent } from './pages/cart/cart.component';
+import { LandingPageComponent } from './pages/packers-and-movers/landing-page/landing-page.component';
+import { MoverPakersStepsComponent } from './pages/packers-and-movers/mover-pakers-steps/mover-pakers-steps.component';
+//import { MoverPakersStepsComponent } from './pages/mover-pakers-steps/mover-pakers-steps.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  {path:'landing-page', component: LandingPageComponent},
+  {path:'landing-page', component: LandingPageComponent },
   { path: 'services', component: ServicesComponent },
   { path: 'service-details', component: ServiceDetailsComponent },
   { path: 'about-us', component: AboutUsComponent },
@@ -54,6 +57,7 @@ const routes: Routes = [
   { path: 'blogs', component: BlogsComponent },
   { path: 'faq', component: FaqComponent },
   { path: 'contact-us', component: ContactUsComponent },
+  { path: 'mover-steps', component: MoverPakersStepsComponent },
 ];
 
 @NgModule({

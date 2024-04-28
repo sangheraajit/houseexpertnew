@@ -10,7 +10,7 @@
     <div class="col-5 bg-purple px-4 py-5 text-white d-flex align-items-center">
       <div class="ps-4">
         <h1 class="fs-40 mb-4 fw-semibold col-lg-5">
-          Electrician & AC Services
+          {{cat_name}}
         </h1>
         <p class="m-0 col-7 fs-18">
           Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -29,39 +29,47 @@
         <div class="d-flex mb-4">
           <span
             class="rounded-pill bg-black px-4 py-2 fs-20 fw-medium text-white"
-            >AC Repair & Service</span
+            >{{cat_name}}</span
           >
         </div>
         <h2 class="fs-50 fw-semibold text-purple mb-3">Keep Cool. Stay Comfy.</h2>
         <p>Breathe easy knowing your AC is always in tip-top shape.</p>
       </div>
     </div>
-    <div *ngFor="let item of services" class="col">
+   <!--  <div *ngFor="let item of services" class="col"> -->
+    <div *ngFor="let item of CategoryList" class="col">
+    
       <div class="item-card mb-5">
         <div class="row">
           <div class="col-7">
             <div class="mb-3">
-              <div class="mb-2">{{ item.warranty }}</div>
-              <h3 class="fs-24 fw-semibold text-pink">{{ item.title }}</h3>
+              <div class="mb-2">
+               <!--  {{ item.warranty }} -->
+              </div>
+              <h3 class="fs-24 fw-semibold text-pink">{{ item.cat_name}}</h3>
             </div>
             <div class="d-flex gap-2 align-items-center">
               <img src="../../../assets/images/material-stars.svg">
-              {{ item.reviews }}
+             <!--  {{ item.reviews }} -->
             </div>
             <div class="d-flex gap-4 mt-3">
               <div class="d-flex gap-2 align-items-center fs-20 fw-semibold">
                 <img src="../../../assets/images/rupees.svg">
                
-                {{ item.price }}</div>
+              <!--   {{ item.price }} -->
+              </div>
               <div class="d-flex gap-2 align-items-center fs-20 fw-semibold">
-                <img src="../../../assets/images/clock.svg"> {{ item.time }}
+                <img src="../../../assets/images/clock.svg"> 
+                <!-- {{ item.time }} -->
               </div>
             </div>
             <hr/>
             <div class="list">
               <ul class="m-0 p-0">
-                <li>{{ item.description }}</li>
-                <li>{{ item.description }}</li>
+                <li>
+                 <!--  {{ item.description }} -->
+                </li>
+               
               </ul>
              
             </div>

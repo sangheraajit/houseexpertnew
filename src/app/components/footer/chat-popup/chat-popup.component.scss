@@ -1,0 +1,12 @@
+.chat-popup {
+    border-radius: calc(var(--th-rounded) * 6);
+    border: 1px solid var(--purple-color);
+    position: fixed; right: 50px; bottom: 200px;
+    overflow: hidden;
+    z-index: 12;
+    width: 294px;
+    box-shadow: 0px 10px 20px rgba(235, 44, 96,.29);
+    .chat-footer{ min-height: 48px;
+    .custom-light-btn{ border: 2px solid var(--pink-color); color: black;} }
+    
+}

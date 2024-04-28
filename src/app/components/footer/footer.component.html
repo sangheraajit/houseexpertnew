@@ -1,0 +1,59 @@
+<footer class="footer-wrap">
+  <app-chat-popup></app-chat-popup>
+  <div class="container">
+    <div class="row mb-5 pb-3">
+      <div class="col">
+        <img src="../../../assets/images/logo.svg" alt="Logo" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col f-links" *ngFor="let section of footerInfo">
+        <h2 class="">{{ section.heading }}</h2>
+        <ng-container *ngIf="section.heading !== 'Social Links'">
+          <ul class="m-0 p-0">
+            <li *ngFor="let item of section.items">
+              <a [href]="item.url">{{ item.name }}</a>
+            </li>
+          </ul>
+        </ng-container>
+        <ul
+          class="d-flex gap-3 m-0 p-0"
+          *ngIf="section.heading === 'Social Links'"
+        >
+          <li *ngFor="let item of section.items" class="m-0">
+            <a [href]="item.url" target="_blank">
+              <img [src]="item.name" [alt]="item.name" />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="copyright">
+    <div class="container">
+      <div class="row">
+        <div class="col-auto">
+          <p class="m-0">
+            Brain behind the design: <strong>Ccube Communications</strong>
+          </p>
+        </div>
+        <div class="col">
+          <p class="m-0">
+            All rights reserved and copyright by <strong>House Experts</strong>
+          </p>
+        </div>
+        <div class="col-auto ms-auto">
+          <div *ngFor="let section of footerInfo">
+            <div class="d-flex gap-4" *ngIf="section.heading === 'Company'">
+              <a
+                *ngFor="let item of section.items.slice(1, 3)"
+                [href]="item.url"
+                >{{ item.name }}</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
