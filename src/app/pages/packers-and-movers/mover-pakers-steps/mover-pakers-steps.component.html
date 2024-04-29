@@ -47,7 +47,7 @@
     <span  class="blur-bg2"></span>
     <div class="row align-items-center">
       <div class="col-12 tab-wrapper">
-        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" (navChange)="navChanged($event)">
           <li [ngbNavItem]="1">
             <button class="" ngbNavLink>Step 1</button>
             <ng-template ngbNavContent>
@@ -355,7 +355,7 @@
                       </div>
                       <div class="d-flex mb-3">
                         <div class="d-flex align-items-center pick-date">
-                          <p class="m-0 p-3 px-4 text-purple fw-medium">
+                          <p class="m-0 p-0 px-4 text-purple fw-medium">
                             Pick A Date
                             <input
                             class="form-control"
@@ -363,7 +363,7 @@
                             ngbDatepicker
                             #d="ngbDatepicker"
                              [minDate]="minDate"
-                             [(ngModel)]="jheader.orderdate"
+                             [(ngModel)]="orderdate"
                           />
                           </p>
                           <span class="bg-purple p-3 ms-auto">
@@ -375,16 +375,21 @@
                         </div>
                       </div>
                       <div class="d-flex mb-3">
-                        <div class="d-flex align-items-center pick-date">
+                        <div class="d-flex align-items-center pick-time" (click)="toggleTimeRanges()">
                           <p class="m-0 p-3 px-4 text-purple fw-medium">
                             Select Time
+                           <span *ngIf="strselectedtime!=''">  {{strselectedtime}}</span>
                           </p>
                           <span class="bg-purple p-3 ms-auto">
-                            <img
-                              src="../../../assets/images/clock-icon.svg"
-                              alt=""
-                            />
+                            <img src="../../../assets/images/clock-icon.svg" alt="" />
                           </span>
+                        </div>
+                        <!-- Move the time ranges container outside the pick-date div -->
+                        <div *ngIf="showTimeRanges" class="time-ranges-container">
+                          <div class="time-range"  (click)="selecttime(10,'10 AM - 12 PM')">10 AM - 12 PM</div>
+                          <div class="time-range"  (click)="selecttime(12,'12 AM - 02 PM')">12 PM - 02 PM</div>
+                          <div class="time-range"  (click)="selecttime(14,'02 PM - 04 PM')">02 PM - 04 PM</div>
+                          <div class="time-range"  (click)="selecttime(18,'04 PM - 06 PM')">04 PM - 06 PM</div>
                         </div>
                       </div>
                     </div>
@@ -467,7 +472,7 @@
                           <div class="form-group">
                             <label>Move Date*</label>
                             {{
-                                orderdate
+                                jheader.orderdate
                   
                                 }}
                           </div>

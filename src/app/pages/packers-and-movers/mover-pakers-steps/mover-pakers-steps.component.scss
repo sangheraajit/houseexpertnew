@@ -313,3 +313,41 @@ div{
     }
 }
 }
+.pick-time {
+    position: relative;
+    min-width: 220px;
+    overflow: hidden;
+    border: 1px solid var(--purple-color);
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px #EB2C604D;
+  }
+  
+  .time-ranges-container {
+    position: absolute;
+    top: calc(100% + -255px);
+    left: 52px;
+   min-width: 220px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1;
+    background: var(--unnamed-color-ffffff) 0% 0% no-repeat padding-box;
+    border: 1px solid var(--unnamed-color-5f19e1);
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #5F19E1;
+    border-radius: 0px 0px 15px 15px;
+    opacity: 1;
+  }
+
+  .time-range {
+    padding: 5px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .time-range:last-child {
+    border-bottom: none;
+  }
+  .selected {
+    border-color: #022279;
+    background: #022279 !important;
+    color: #fff;
+}
