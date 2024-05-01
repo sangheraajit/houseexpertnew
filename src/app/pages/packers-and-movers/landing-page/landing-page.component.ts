@@ -190,7 +190,7 @@ export class LandingPageComponent {
       //toaddress1: ["", Validators.required],
       // housetype: ["", Validators.required],
       phoneNumber: new FormControl(undefined, [Validators.required]),
-      movingdate: new FormControl(undefined, [Validators.required]),
+    //  movingdate: new FormControl(undefined, [Validators.required]),
       name: new FormControl("", [
         Validators.required,
         Validators.minLength(1),

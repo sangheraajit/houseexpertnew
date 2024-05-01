@@ -1,5 +1,5 @@
 import { DatePipe } from "@angular/common";
-import { Component, ElementRef, EventEmitter, Input, NgZone, Output, ViewChild } from "@angular/core";
+import { Component, ElementRef, EventEmitter, HostListener, Input, NgZone, Output, ViewChild } from "@angular/core";
 import {
   AbstractControl,
   FormControl,
@@ -13,9 +13,13 @@ import { Subscription } from "rxjs";
 import { AuthService } from "src/app/service/auth.service";
 import { CartService } from "src/app/service/cart.service";
 import { GoogleAddressService } from "src/app/service/google-address.service";
+import { httpService } from "src/app/service/http.service";
+import { OrderService } from "src/app/service/order.service";
 import { SubcategoryService } from "src/app/service/subcategory.service";
+import { ToastService } from "src/app/service/toast.service";
 import { UserService } from "src/app/service/user.service";
 import { environment } from "src/environments/environment";
+declare var Razorpay: any;
 @Component({
   selector: "app-mover-pakers-steps",
   templateUrl: "./mover-pakers-steps.component.html",
@@ -76,7 +80,7 @@ export class MoverPakersStepsComponent {
   ArticlemstlistAll: any;
   PackageList: any;
   minDate: any;
-  selectedValues: any;
+  selectedPackageValues: any;
   itemstomove = "";
   orderdate: any;
   showTimeRanges: boolean = false;
@@ -84,6 +88,9 @@ export class MoverPakersStepsComponent {
   iscurrenttime: any =0;
   strselectedtime=""
   Articlemstlist!: any;
+  selectedPackageName=""
+  DistanceKM: any;
+  isPaymentPending = true;
   @Output() SelectedDate = new EventEmitter<any>();
   @Output() SelectedTime = new EventEmitter<any>();
   constructor(
@@ -94,7 +101,10 @@ export class MoverPakersStepsComponent {
     private authService: AuthService,
     //public ref: DynamicDialogRef, public config: DynamicDialogConfig
     public cartService: CartService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private orderService: OrderService,
+    public apiservice: httpService,
+    private toastService: ToastService,
   ) {
     /*   if(config.data.Citylist)
     {
@@ -190,7 +200,33 @@ export class MoverPakersStepsComponent {
       this.jheader.tolong = this.googleAddressService.getlng(place);
       this.jheader.tocity = this.googleAddressService.getDistrict(place);
     }
-    this.bookingInformation.jheader[0] = this.jheader;
+      // Obtain the distance in meters by the computeDistanceBetween method
+      // From the Google Maps extension using plain coordinates
+      var distanceInMeters =
+        google.maps.geometry.spherical.computeDistanceBetween(
+          new google.maps.LatLng({
+            lat: this.jheader.fromlat,
+            lng: this.jheader.fromlong,
+          }),
+          new google.maps.LatLng({
+            lat: this.jheader.tolat,
+            lng: this.jheader.tolong,
+          })
+        );
+
+      // Outputs: Distance in Meters:  286562.7470149898
+      console.log("Distance in Meters: ", distanceInMeters);
+
+      // Outputs: Distance in Kilometers:  286.5627470149898
+      this.DistanceKM = (distanceInMeters * 0.001).toFixed(2);
+      console.log("Distance in Kilometers: ", this.DistanceKM);
+      this.jheader.totkm = this.DistanceKM;
+      if (this.jheader.totkm < 150) {
+        this.jheader.incity = true;
+      } else {
+        this.jheader.incity = false;
+      }
+      this.bookingInformation.jheader[0] = this.jheader;
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -210,16 +246,17 @@ export class MoverPakersStepsComponent {
   onSelect(item: any, event: any, packageamount: any) {
     //packageamount
     console.log("onSelect package event", event);
-    // this.selectedValues=event;
+    // this.selectedPackageValues=event;
     //sthis.bookingInformation.selecteddate =event.toDateString();
-    if (this.selectedValues === event) {
-      this.selectedValues = null;
+    this.selectedPackageName=item.packagename;
+    if (this.selectedPackageValues === event) {
+      this.selectedPackageValues = null;
       return;
     }
     // compute cart total price and quantity
     this.cartService.computeCartTotals();
 
-    this.selectedValues = event;
+    this.selectedPackageValues = event;
     this.jheader.packageid = event;
     this.jheader.selectedpackage = item;
     //this.packegeform.controls["packageid"].setValue(event);
@@ -241,6 +278,53 @@ export class MoverPakersStepsComponent {
     this.SubcategoryService.setBookingInformation(this.bookingInformation);
     console.log("step  next bookingInformation", this.bookingInformation);
     if (step == 3) {
+      this.bookingInformation.type = 'select-product';
+      // Create an array of article_ids from cartItemsList
+      const cartArticleIds = this.cartService.cartItemsList.map(
+        (element: any) => element.pid
+      );
+
+      // Iterate through jdetail and filter items that are in cartArticleIds
+      this.bookingInformation.jdetail =
+        this.bookingInformation.jdetail.filter((detail: any) => {
+          return cartArticleIds.includes(detail.article_id);
+        });
+      // Iterate through cartItemsList and add missing items to jdetail
+      this.cartService.cartItemsList.forEach((element: any) => {
+        const existingDetail = this.bookingInformation.jdetail.find(
+          (detail: any) => detail.article_id === element.pid
+        );
+
+        if (existingDetail) {
+          // Item already exists, update its quantity and line_total
+          existingDetail.quantity += element.qty;
+          existingDetail.line_total = existingDetail.quantity * element.price;
+        } else {
+          // Item not found, add it to the cart
+          const details = {
+            serv_id: 0,
+            article_id: element.pid,
+            quantity: element.qty,
+            admin_rate: 0,
+            partner_rate: 0,
+            discount: 0,
+            tax: 0,
+            line_total: element.qty * element.price,
+            linestatus: 'new',
+            item_name: element.name,
+          };
+          this.bookingInformation.jdetail.push(details);
+        }
+        // Recalculate the cart totals
+        this.cartService.computeCartTotals();
+        this.bookingInformation.jheader[0].grandtotal = this.cartService.cartTotal;
+        this.bookingInformation.jheader[0].total = this.cartService.cartTotal;
+        this.bookingInformation.jheader[0].totalcft = this.cartService.Totalcft;
+        this.bookingInformation.jheader[0].tokenamount =
+          this.cartService.TokenAmount;
+      });
+    }
+    this.SubcategoryService.setBookingInformation(this.bookingInformation);
       const date = new Date(this.jheader.orderdate);
       this.orderdate = {
         year: date.getFullYear(),
@@ -264,13 +348,49 @@ export class MoverPakersStepsComponent {
           //   element.packageTotal=element.packageamount+this.jheader.total;
         });
       });
-    }
+    
     if (step == 4) {
       this.itemstomove = this.cartService.cartItemsList
         .map((item: any) => {
           return item.name + "(" + item.qty + ")";
         })
         .join(",");
+        this.orderService
+        .CreateOrUpdateOrder(this.bookingInformation)
+        .subscribe((res: any) => {
+          // alert('in');
+          this.bookingInformation.orderresponse = res;
+          console.log('bookingInformation res', res);
+        
+
+          // this.cart.cartTotal=res.totalamount;
+          // this.cart.TokenAmount=this.cart.percentage(15,this.cart.cartTotal);
+          // this.jheader.tokenamount = this.cart.TokenAmount;
+          // this.jheader.grandtotal = this.cart.cartTotal;
+
+          this.jheader.vehiclename = res.vehiclename;
+          this.bookingInformation.jheader[0] = this.jheader;
+
+          this.SubcategoryService.setBookingInformation(
+            this.bookingInformation
+          );
+
+          if (this.DistanceKM > 150) {
+            this.toastService.showSuccessToast(
+              'success',
+             'Thankyou for being a Customer for  house Expert',
+            );
+            this.display = false;
+            // delete this.bookingInformation.movetype;
+            delete this.bookingInformation.housetype;
+            delete this.bookingInformation.type;
+            delete this.bookingInformation.jdetail;
+            this.cartService.emptyCart();
+            this.SubcategoryService.removeBookingInformation();
+            this.jheader = '';
+            //window.location.reload();
+          }
+        });
     }
   }
   navChanged(event:any) {
@@ -306,6 +426,43 @@ export class MoverPakersStepsComponent {
           return item.name + "(" + item.qty + ")";
         })
         .join(",");
+
+        this.orderService
+        .CreateOrUpdateOrder(this.bookingInformation)
+        .subscribe((res: any) => {
+          // alert('in');
+          this.bookingInformation.orderresponse = res;
+          console.log('bookingInformation res', res);
+        
+
+          // this.cart.cartTotal=res.totalamount;
+          // this.cart.TokenAmount=this.cart.percentage(15,this.cart.cartTotal);
+          // this.jheader.tokenamount = this.cart.TokenAmount;
+          // this.jheader.grandtotal = this.cart.cartTotal;
+
+          this.jheader.vehiclename = res.vehiclename;
+          this.bookingInformation.jheader[0] = this.jheader;
+
+          this.SubcategoryService.setBookingInformation(
+            this.bookingInformation
+          );
+
+          if (this.DistanceKM > 150) {
+            this.toastService.showSuccessToast(
+              'success',
+             'Thankyou for being a Customer for  house Expert',
+            );
+            this.display = false;
+            // delete this.bookingInformation.movetype;
+            delete this.bookingInformation.housetype;
+            delete this.bookingInformation.type;
+            delete this.bookingInformation.jdetail;
+            this.cartService.emptyCart();
+            this.SubcategoryService.removeBookingInformation();
+            this.jheader = '';
+            //window.location.reload();
+          }
+        });
     }
   }
   toggleTimeRanges() {
@@ -346,5 +503,172 @@ export class MoverPakersStepsComponent {
     this.Articlemstlist = this.ArticlemstlistAll.filter((item: any) => {
       return item.itemname.toLowerCase().includes(searchValue.toLowerCase());
     });
+  }
+  paynow() {
+   
+    let paymentoptions = this.preparePaymentDetails(   this.bookingInformation.orderresponse,
+      this.bookingInformation);
+    var rzp1 = new Razorpay(paymentoptions);
+    rzp1.open();
+    rzp1.on('payment.failed', function (response: any) {
+      //this.message = "Payment Failed";
+      // Todo - store this information in the server
+      alert(response);
+
+      console.log(response.error.code);
+      console.log(response.error.description);
+      console.log(response.error.source);
+      console.log(response.error.step);
+      console.log(response.error.reason);
+      console.log(response.error.metadata.order_id);
+      console.log(response.error.metadata.payment_id);
+      //this.error = response.error.reason;
+    });
+  }
+  preparePaymentDetails(res: any, order: any) {
+    console.log(
+      'ShoppingCartComponent -> preparePaymentDetails -> order',
+      order,
+      this.cartService.TokenAmount
+    );
+
+    console.log('In preparePaymentDetails');
+
+    return {
+      key: environment.RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
+      amount: this.cartService.TokenAmount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 29935 refers to 29935 paise or INR 299.35.
+      name: 'House expert solutions pvt Ltd',
+      currency: 'INR',
+      order_id: res.razorpayorderno, // order.id,//This is a sample Order ID. Create an Order using Orders API. (https://razorpay.com/docs/payment-gateway/orders/integration/#step-1-create-an-order). Refer the Checkout form table given below
+      //"image": 'https://angular.io/assets/images/logos/angular/angular.png',
+
+      handler: function (response: any, error: any) {
+        console.log('handler response', response, error);
+        var event = new CustomEvent('payment.success', {
+          detail: response,
+          bubbles: true,
+          cancelable: true,
+        });
+        window.dispatchEvent(event);
+      },
+      prefill: {
+        name: order.jcustomer[0].cust_name,
+        email: order.jcustomer[0].cust_email,
+        contact: order.jcustomer[0].cust_mobile,
+      },
+      modal: {
+        // We should prevent closing of the form when esc key is pressed.
+        escape: false,
+      },
+      notes: {
+        address: order.jheader[0].fromaddress,
+      },
+      theme: {
+        color: '#2874f0',
+      },
+    };
+  }
+
+  handlePayment(response: any) {
+    console.log('In handlePayment', response);
+
+    /* this.paymentService.capturePayment({
+      amount: this.payableAmount,
+      payment_id: response.razorpay_payment_id
+    })
+      .subscribe(res => {
+      console.log("ShoppingCartComponent -> AFTER CAPTURE -> res", res)
+        this.paymentResponse = res;
+        this.changeRef.detectChanges();
+       },
+      error => {
+        this.paymentResponse = error;
+      }); */
+  }
+
+  /* @HostListener('window:payment.success', ['$event'])
+  onPaymentSuccess(event: any): void {
+    //this.message = "Success Payment";
+    console.log("onPaymentSuccess",event);
+  } */
+  @HostListener('window:payment.success', ['$event'])
+  onPaymentSuccess(event: any): void {
+    console.log('onPaymentSuccess', event);
+    // this.bookingInformation.orderresponse
+    let paymentdetail = {
+      spname: 'payment_save',
+      jpayment: [
+        {
+          orderid: this.bookingInformation.orderresponse.orderno,
+          paymenttype: 'token',
+          paymentid: event.detail.razorpay_payment_id,
+          paymentmode: 'razorpay',
+          referenceno: this.bookingInformation.orderresponse.razorpayorderno,
+          currency: 'INR',
+          credit: this.cartService.TokenAmount,
+        },
+      ],
+      pid: 0,
+    };
+    this.apiservice.apicall(paymentdetail).subscribe((data: any) => {
+      console.log('paymentId', data.message);
+
+      this.toastService.showSuccessToast(
+       'success',
+      'Thankyou for being a Customer for houseexpert',
+       );
+      this.orderService
+        .SendWhatsAppsJobConfirmation(this.jheader.Id)
+        .subscribe((res: any) => {});
+      this.orderService
+        .SendWhatsAppsAdvancePay(this.jheader.Id)
+        .subscribe((res: any) => {});
+      this.display = false;
+      this.isPaymentPending = false;
+      delete this.bookingInformation.housetype;
+      delete this.bookingInformation.type;
+      delete this.bookingInformation.jdetail;
+      this.cartService.emptyCart();
+      this.SubcategoryService.removeBookingInformation();
+      this.jheader = '';
+      setTimeout(() => {
+        window.location.reload();
+      }, 5000);
+
+      //this.router.navigate(['bookinglist'])
+    });
+  }
+  saveChanges() {
+    /*  if (this.ref && this.ref.isValid() && this.widgetForm.valid) {
+      // save form
+    } else {
+      // this.toastr.warning("Form not saved!");
+    } */
+  }
+  ngOnDestroy(): void {
+/*     if (this.ref) {
+      this.ref.close();
+    }
+ */    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+  onHide() {
+
+    if (this.isPaymentPending) {
+      this.orderService
+        .SendWhatsAppsPaymentPending(this.jheader.Id)
+        .subscribe((res: any) => {});
+    } else {
+    }
+    delete this.bookingInformation.housetype;
+    delete this.bookingInformation.type;
+    delete this.bookingInformation.jdetail;
+    this.cartService.emptyCart();
+    this.SubcategoryService.removeBookingInformation();
+    this.jheader = '';
+    setTimeout(() => {
+      window.location.reload();
+    }, 5000);
   }
 }

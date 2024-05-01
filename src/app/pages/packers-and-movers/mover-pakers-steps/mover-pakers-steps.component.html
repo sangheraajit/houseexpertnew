@@ -231,7 +231,7 @@
                           aria-describedby="basic-addon1"
                         />
                         <span
-                          class="input-group-text border-0 px-3 bg-pink text-white rounded-circle ms-2"
+                          class="bg-pink input-group-text border-0 px-3 bg-pink text-white rounded-circle ms-2"
                           id="basic-addon1"
                         >
                           <i class="fa fa-search fs-22 scaleX-1"></i>
@@ -299,11 +299,17 @@
                                 "
                               />
 
-                              <span
+                              <span   *ngIf="item.qty > 0"
                                 class="opacity-25"
                                 (click)="changeQty(item, 1, '')"
                                 >+</span
                               >
+                              <div class="bg-pink add-remove"  *ngIf="item.qty == 0">
+                              <div class="add" (click)="changeQty(item, 1, '')">
+                              
+                                <span>ADD</span>
+                              </div>
+                              </div>
                             </div>
                           </li>
                         </ul>
@@ -400,7 +406,7 @@
                     </h3>
                     <div class="row">
                       <div class="col-md-6" *ngFor="let item of PackageList">
-                        <div class="package-col" [ngClass]="selectedValues === item.id ? 'selected' : ''"
+                        <div class="package-col" [ngClass]="selectedPackageValues === item.id ? 'selected' : ''"
                         (click)="onSelect(item,item.id,item.getcalculateamounts)"
                         >
                           <h4 class="text-purple fw-semibold fs-20">
@@ -488,7 +494,7 @@
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Your Package*</label>
-                            {{  selectedValues}}
+                            {{  selectedPackageName}}
                           </div>
                         </div>
                       </div>
@@ -532,10 +538,10 @@
                             >
                           </div>
                         </div>
-                        <h4 class="fs-16 fw-normal mb-3">
+                                             <!--  <h4 class="fs-16 fw-normal mb-3">
                           Select Payment Methods
                         </h4>
-                        <div class="payment-method">
+  <div class="payment-method">
                           <ul>
                             <li>
                               <img src="../../../assets/images/upi.svg" />
@@ -555,15 +561,15 @@
                               <img src="../../../assets/images/qr.svg" />
                             </li>
                           </ul>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                     <div class="col-12 d-flex justify-content-end mb-0 mt-5">
-                      <button
+                      <button (click)="paynow()"
                         type="submit"
                         class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
                       >
-                        Place Order
+                        Pay ₹ {{cartService.TokenAmount}}
                       </button>
                     </div>
                   </div>
