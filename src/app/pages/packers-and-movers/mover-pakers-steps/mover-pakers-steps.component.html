@@ -454,7 +454,7 @@
                         </div>
                       </div>
                       <div class="row mb-4">
-                        <div class="col-md-12">
+                        <div class="col-md-10">
                           <div class="form-group">
                             <label>Moving To*</label>
                             {{
@@ -463,7 +463,16 @@
                                 }}
                           </div>
                         </div>
+                        <div class="col-md-2">
+                          <button (click)="nextPage(1)"
+                          type="submit"
+                          class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
+                        >
+                          Edit
+                        </button>
+                        </div>
                       </div>
+                      
                       <div class="row mb-4">
                         <div class="col-md-6">
                           <div class="form-group">
@@ -483,19 +492,38 @@
                                 }}
                           </div>
                         </div>
+
                       </div>
                       <div class="row mb-4">
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                           <div class="form-group">
                             <label>Item to Move*</label>
                             {{  itemstomove}}
-                          </div>
+                          </div><button (click)="nextPage(2)"
+                          type="submit"
+                          class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
+                        >
+                          Edit
+                        </button>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                           <div class="form-group">
                             <label>Your Package*</label>
                             {{  selectedPackageName}}
                           </div>
+                        
+                        </div>
+                        <div class="col-md-2">
+                          <button (click)="nextPage(3)"
+                          type="submit"
+                          class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
+                        >
+                          Edit
+                        </button>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-12">
                         </div>
                       </div>
                       <div class="row">
@@ -506,6 +534,7 @@
                           </p>
                         </div>
                       </div>
+                      
                     </div>
                     <div class="col-md-4">
                       <div class="ps-4">
