@@ -54,6 +54,9 @@ import { LandingPageComponent } from './../pages/packers-and-movers/landing-page
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { GooglePlacesComponent } from './google-places/google-places.component';
+import { ToastComponent } from '../components/toast/toast.component';
+import { ToastService } from '../service/toast.service';
+import { ToasterComponent } from '../components/toaster/toaster.component';
 
 
 
@@ -111,7 +114,9 @@ import { GooglePlacesComponent } from './google-places/google-places.component';
     ThankYouComponent,
    CartComponent,
     MoverPakersStepsComponent,
-    GooglePlacesComponent
+    GooglePlacesComponent,
+    ToastComponent,
+    ToasterComponent
   ],
   exports: [
     HeaderComponent,
@@ -162,7 +167,9 @@ import { GooglePlacesComponent } from './google-places/google-places.component';
     ThankYouComponent,
    CartComponent,
     MoverPakersStepsComponent,
-    GooglePlacesComponent
+    GooglePlacesComponent,
+    ToastComponent,
+    ToasterComponent
     ]
 })
 export class SharedModule { }

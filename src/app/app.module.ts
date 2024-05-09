@@ -7,6 +7,7 @@ import { register } from 'swiper/element';
 import { httpInterceptorProviders } from './service/interceptor';
 import { AuthGuard } from './service/auth-guard.service';
 import { DatePipe } from '@angular/common';
+import { ToastComponent } from './components/toast/toast.component';
 
 //import { MoverPakersStepsComponent } from './pages/mover-pakers-steps/mover-pakers-steps.component';
 

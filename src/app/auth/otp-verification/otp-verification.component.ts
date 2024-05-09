@@ -49,28 +49,20 @@ export class OtpVerificationComponent {
       });
   }
   verifyLoginCode() {
-    //this.isOtpSent=false;
     this.userservice.VerifyOPT(this.phoneNumber, this.otp).subscribe(
       (res: any) => {
-        // this.ShowCreateAccount = false;
         console.log("VerifyOPT OptResponse res" + res);
         console.log("VerifyOPT OptResponse res" + res.status);
         this.OptResponse = res;
         console.log("VerifyOPT OptResponse " + this.OptResponse);
-
+  
         this.authService.setUser(this.OptResponse);
-
-        localStorage.setItem("token", this.OptResponse.token);
-        localStorage.setItem("custid", res.id);
+  
         var logindata = {
           iserror: false,
           data: this.OptResponse,
         };
         this.activeModal.close(logindata);
-        // this.ref.close(logindata);
-        //this.router.navigate(['']);
-
-        // this.storageService.set('OptResponse', this.OptResponse);
       },
       (data: any) => {
         console.log("verifyLoginCode", data);
@@ -82,20 +74,12 @@ export class OtpVerificationComponent {
             iserror: false,
             data: data,
           };
-          //this.ref.close(logindata);
         } else {
-          // this.ref.close(data);
           var logindata = {
             iserror: true,
             data: data,
           };
-
-          /*  this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: data.error,
-          }); */
-          // this.ref.close(logindata);
+          this.toastService.showErrorToast("Error", data.error);
         }
       }
     );

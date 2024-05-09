@@ -1,13 +1,13 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 
-import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
+import { environment } from "src/environments/environment";
+import { Router } from "@angular/router";
 
-import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from '../models/user';
-import { StorageService } from './storage.service';
-import { LOCAL_VARIABLES } from '../constants/constants';
+import { BehaviorSubject, Observable } from "rxjs";
+import { User } from "../models/user";
+import { StorageService } from "./storage.service";
+import { LOCAL_VARIABLES } from "../constants/constants";
 
 interface JWTToken {
   name: string;
@@ -15,10 +15,10 @@ interface JWTToken {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class AuthService {
-  private readonly API_URL = environment.CommonApiServer + 'api/User/';
+  private readonly API_URL = environment.CommonApiServer + "api/User/";
 
   private userSubject = new BehaviorSubject<User | null>(null);
   public user!: Observable<User | null>;
@@ -31,7 +31,7 @@ export class AuthService {
     private storageService: StorageService
   ) {
     this.userSubject = new BehaviorSubject<User | null>(
-      JSON.parse(localStorage.getItem(LOCAL_VARIABLES.CURRENT_USER) || '{}')
+      JSON.parse(localStorage.getItem(LOCAL_VARIABLES.CURRENT_USER) || "{}")
     );
     this.user = this.userSubject.asObservable();
   }
@@ -136,15 +136,13 @@ export class AuthService {
       if (this.storageService.getFromStorage(LOCAL_VARIABLES.TOKEN) !== null) {
         resolve(this.storageService.getFromStorage(LOCAL_VARIABLES.TOKEN));
       } else {
-        reject(this.route.navigate(['/auth/login']));
+        reject(this.route.navigate(["/auth/login"]));
       }
     });
 
     return promise;
   }
   isLoggedIn(): boolean {
-
-
     let currentUser = this.currentUserValue;
 
     if (!currentUser) {
@@ -152,12 +150,14 @@ export class AuthService {
     }
 
     // check if token is expired
+    if (currentUser.token) {
+      const jwtToken = JSON.parse(atob(currentUser.token.split(".")[1]));
 
-    const jwtToken = JSON.parse(atob(currentUser.token.split('.')[1]));
+      const tokenExpired = Date.now() > jwtToken.exp * 1000;
 
-    const tokenExpired = Date.now() > jwtToken.exp * 1000;
-
-    return !tokenExpired;
+      return !tokenExpired;
+    }
+    return false;
   }
   setUser(data: any) {
     this.storageService.putInStorage(LOCAL_VARIABLES.CURRENT_USER, data);
@@ -170,17 +170,27 @@ export class AuthService {
 
     this.storageService.putInStorage(LOCAL_VARIABLES.USER_CODE, data.id);
     this.storageService.putInStorage(LOCAL_VARIABLES.CUSTOMER_ID, data.id);
-    this.storageService.putInStorage(LOCAL_VARIABLES.USER_EMAIL, data.custEmail);
-    this.storageService.putInStorage(LOCAL_VARIABLES.USER_PHONE, data.custMobile);
+    this.storageService.putInStorage(
+      LOCAL_VARIABLES.USER_EMAIL,
+      data.custEmail
+    );
+    this.storageService.putInStorage(
+      LOCAL_VARIABLES.USER_PHONE,
+      data.custMobile
+    );
     this.storageService.putInStorage(LOCAL_VARIABLES.USER_CITY, data.custCity);
-    this.storageService.putInStorage(LOCAL_VARIABLES.USER_ADDREES, data.custAddress);
+    this.storageService.putInStorage(
+      LOCAL_VARIABLES.USER_ADDREES,
+      data.custAddress
+    );
+    this.storageService.putInStorage(LOCAL_VARIABLES.TOKEN, data.token);
+    this.storageService.putInStorage(LOCAL_VARIABLES.CUSTOMER_ID, data.id);
     this.emitLoginSuccess(data);
   }
   emitLoginSuccess(data: any): void {
     this.userSubject.next(data);
   }
   purgeAuth() {
-
     // Set current user to an empty object
 
     this.removeUserDetails();

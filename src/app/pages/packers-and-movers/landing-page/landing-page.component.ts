@@ -298,6 +298,10 @@ export class LandingPageComponent {
       return;
     } */
     //this.router.navigate(['sub-category/customer']);
+    this.currentUser = this.authService.currentUserValue;
+    console.log("this.customerinformation currentUser", this.currentUser);
+
+    this.isAuthenticated = this.authService.isLoggedIn();
     this.bookingInformation = this.SubcategoryService.getBookingInformation();
     this.jheader = this.bookingInformation.jheader[0];
     this.jcustomer = this.bookingInformation.jcustomer[0];
@@ -405,9 +409,10 @@ export class LandingPageComponent {
 
     //modalRef.componentInstance.user = this.user;
     modalRef.componentInstance.phoneNumber = this.Mainform.value.phoneNumber;
-    modalRef.componentInstance.result.then((data: any) => {
-      console.log(data);
-      if (data) {
+    modalRef.result.then((result) => {
+      console.log("OtpVerification result",result); // 'Closed'
+      console.log("OtpVerification",result);
+      if (result.data && result.iserror==false) {
         this.toastService.showSuccessToast(
           "info",
           "you are logged in successfully"
@@ -423,8 +428,16 @@ export class LandingPageComponent {
           this.jcustomer.cust_email = this.currentUser.custEmail;
           this.jcustomer.cust_mobile = this.currentUser.custMobile;
         }
+        this.router.navigate(["mover-steps"]);
+      }
+      else {
+        this.toastService.showErrorToast(
+          "Error",
+          result.data
+        );
       }
     });
+    
   }
   OnSelected(type: any) {
     console.log("OnSelected", type);
