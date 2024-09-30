@@ -1,6 +1,11 @@
-.input-group{
+.input-group {
     box-shadow: 0px 3px 6px #EB2C6033;
     height: 40px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    position: relative;
+    opacity: 1;
+
     .dropdown-toggle {
         &::after {
             display: none;
@@ -10,4 +15,16 @@
             text-shadow: 0 1px 0 var(--gray-color);
         }
     }
+
+   /*  @media (max-width: 768px) {
+      
+        display: flex;
+        justify-content: center;  
+        align-items: center;     
+        width: 264px;
+        height: 44px;
+        box-shadow: 0px 3px 6px #EB2C6033;
+        margin: 0 auto;  
+        top: 100px;
+    } */
 }

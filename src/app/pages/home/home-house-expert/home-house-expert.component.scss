@@ -7,58 +7,36 @@
         z-index: 10;
     }
 
-    .shadow-pink {
-        img {
-            position: relative;
-            z-index: 1;
-        }
-
-        &::after,
-        &:before {
-            background-color: var(--pink-color);
-            position: absolute;
-            content: "";
-            width: 200px;
-            height: 200px;
-            border-radius: 100%;
-            top: 120px;
-            right: -200px;
-            filter: blur(80px);
-            opacity: .6;
-        }
-
-        &:before {
-            background-color: var(--purple-color);
-            right: 0;
-            top: 150px;
-        }
+    .shadow-pink img,
+    .shadow-purple img {
+        position: relative;
+        z-index: 1;
     }
-    .shadow-purple {
-        img {
-            position: relative;
-            z-index: 1;
-        }
 
-        &::after,
-        &:before {
-            background-color: var(--pink-color);
-            position: absolute;
-            content: "";
-            width: 200px;
-            height: 200px;
-            border-radius: 100%;
-            top: 120px;
-            right: -200px;
-            filter: blur(140px);
-            opacity: .5;
-        }
-
-        &:before {
-            background-color: var(--purple-color);
-            right: -170px;
-            top: 0;
-        }
+    .shadow-pink::after, .shadow-pink::before,
+    .shadow-purple::after, .shadow-purple::before {
+        background-color: var(--pink-color);
+        position: absolute;
+        content: "";
+        width: 200px;
+        height: 200px;
+        border-radius: 100%;
+        filter: blur(80px);
+        opacity: 0.6;
     }
+
+    .shadow-pink::before {
+        background-color: var(--purple-color);
+        right: 0;
+        top: 150px;
+    }
+
+    .shadow-purple::before {
+        background-color: var(--purple-color);
+        right: -170px;
+        top: 0;
+    }
+
     &::after {
         background-color: var(--purple-color);
         position: absolute;
@@ -71,5 +49,90 @@
         filter: blur(200px);
         opacity: .6;
     }
+}
+.col-lg-7 {
+    position: relative; /* Ensure positioning is relative to this column */
+}
 
+.d-flex {
+    overflow: hidden; /* Prevents content overflow */
+}
+
+h2 {
+    overflow-wrap: break-word; /* Break long words */
+    white-space: normal; /* Allow text to wrap */
+}
+
+.bg-acent,
+.bg-sky,
+.bg-dark-green {
+   // padding: 1.5rem; /* Adjust padding as necessary */
+    box-sizing: border-box; /* Include padding in element's total width/height */
+}
+
+.fs-30 {
+    font-size: 30px; /* Ensure consistent font size */
+}
+
+.fs-18 {
+    font-size: 18px; /* Ensure consistent font size */
+}
+
+.custom-btn {
+    min-width: 150px; /* Ensure buttons have a minimum width */
+}
+
+@media (max-width: 1200px) {
+    .house-expert-wrap {
+        padding: calc(var(--th-padding) * 12) 0;
+    }
+    .container {
+        padding: 0 20px;
+    }
+    .col-lg-5, .col-lg-7 {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 992px) {
+    .house-expert-wrap {
+        padding: calc(var(--th-padding) * 8) 0;
+    }
+    .shadow-pink::after, .shadow-pink::before, .shadow-purple::after, .shadow-purple::before {
+        width: 150px;
+        height: 150px;
+    }
+    .shadow-purple::before {
+        right: -100px;
+    }
+}
+
+@media (max-width: 768px) {
+    .house-expert-wrap {
+        padding: calc(var(--th-padding) * 5) 0;
+    }
+    .col-lg-5, .col-lg-7 {
+        flex-direction: column;
+        width: 100%;
+    }
+    .col-lg-6 {
+        flex-direction: column;
+        width: 100%;
+    }
+    .shadow-pink::after, .shadow-pink::before,
+    .shadow-purple::after, .shadow-purple::before {
+        width: 100px;
+        height: 100px;
+        filter: blur(60px);
+    }
+}
+
+@media (max-width: 576px) {
+    .house-expert-wrap {
+        padding: calc(var(--th-padding) * 3) 0;
+    }
+    .shadow-pink::after, .shadow-pink::before, .shadow-purple::after, .shadow-purple::before {
+        width: 80px;
+        height: 80px;
+    }
 }
