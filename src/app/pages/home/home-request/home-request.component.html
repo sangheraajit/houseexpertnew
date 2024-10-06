@@ -1,48 +1,36 @@
-<div class="request-wrap position-relative" [ngClass]="bgColor">
-  <div class="container" [ngClass]="spaPosition">
+<div class="request-wrap position-relative" [ngClass]="[bgColor, layout]">
+  <div class="container-fluid" >
     <div class="row align-items-center">
-      <div class="col-md-6" [ngClass]="order">
-        <div class="req-description">
+      <!-- Description will go left or right based on 'order' -->
+      <div class="col-lg-4 col-md-6 col-xs-12" [ngClass]="order">
+        <div class="req-description" [ngClass]="{'absolute-position': isImageTop}">
           <p *ngIf="subtitle" class="fs-24 mb-2 top">{{ subtitle }}</p>
           <h2
             *ngIf="title"
             class="font-display mb-4 fw-bold d-inline-flex align-items-end gap-2 bottom-line"
             [ngClass]="fontsize"
           >
-            {{ title
-            }}<sub class="font-poppins fs-24" *ngIf="titleshort">{{
-              titleshort
-            }}</sub>
+            {{ title }}
+            <sub class="font-poppins fs-24" *ngIf="titleshort">{{ titleshort }}</sub>
           </h2>
-          <p *ngIf="description" class="m-0">
-            {{ description }}
-          </p>
-          <div *ngIf="btntext" class="d-flex mt-4">
+          <p *ngIf="description" class="m-0">{{ description }}</p>
+          <div *ngIf="btntext" class="d-flex mt-4 mb-4">
             <a class="custom-light-btn rounded-pill fw-bold px-4" href="#">
               {{ btntext }}
             </a>
           </div>
         </div>
       </div>
-      <div  [ngClass]="col">
-        <img
-        *ngIf="path"
-          src={{path}}
-          class="w-100"
-          alt="plumber-making"
-        />
 
+      <!-- Image will go left or right based on 'order' -->
+      <div class="col-lg-4 col-md-6 col-xs-12 imgclass"  [ngStyle]="{ 'z-index': isImageOnTopOfShape ? '10' : '5' }">
+        <img *ngIf="path" src="{{ path }}" class="w-100" alt="dynamic-image" />
       </div>
     </div>
   </div>
-  <div [ngClass]="shapeposition">
-    <img [ngClass]="shapeScale" src={{shapPath}} alt="shape" />
+
+  <!-- Shape position with dynamic top value and z-index -->
+  <div class="shape-class" [ngClass]="shapeposition" [ngStyle]="{ top: shapeTopPosition, 'z-index': isImageOnTopOfShape ? '5' : '10' }">
+    <img src="{{ shapPath }}" alt="shape" />
   </div>
-  <div class="position-absolute bottom-0 end-0" *ngIf="outsideimg">
-    <img style="max-width: 550px;" src={{outsideimg}}>
-  </div>
-  <div class="col-4" *ngIf="spaimg">
-    <img class="w-100" src={{spaimg}}>
-  </div>
-  
 </div>

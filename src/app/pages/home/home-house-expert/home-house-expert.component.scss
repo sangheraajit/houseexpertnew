@@ -1,138 +1,173 @@
-.house-expert-wrap {
-    padding: calc(var(--th-padding) * 22) 0;
-    overflow: hidden;
-
-    .container {
-        position: relative;
-        z-index: 10;
-    }
-
-    .shadow-pink img,
-    .shadow-purple img {
-        position: relative;
-        z-index: 1;
-    }
-
-    .shadow-pink::after, .shadow-pink::before,
-    .shadow-purple::after, .shadow-purple::before {
-        background-color: var(--pink-color);
-        position: absolute;
-        content: "";
-        width: 200px;
-        height: 200px;
-        border-radius: 100%;
-        filter: blur(80px);
-        opacity: 0.6;
-    }
-
-    .shadow-pink::before {
-        background-color: var(--purple-color);
-        right: 0;
-        top: 150px;
-    }
-
-    .shadow-purple::before {
-        background-color: var(--purple-color);
-        right: -170px;
-        top: 0;
-    }
-
-    &::after {
-        background-color: var(--purple-color);
-        position: absolute;
-        content: "";
-        width: 350px;
-        height: 335px;
-        border-radius: 100%;
-        bottom: -100px;
-        right: 0;
-        filter: blur(200px);
-        opacity: .6;
-    }
-}
-.col-lg-7 {
-    position: relative; /* Ensure positioning is relative to this column */
+.request-wrap {
+  min-height: 350px; // Minimum height for the wrap
+  display: flex; // Flexbox for layout
+  align-items: center; // Center items vertically
+  justify-content: center; // Center items horizontally
 }
 
-.d-flex {
-    overflow: hidden; /* Prevents content overflow */
+/* Description styles */
+.req-description {
+  color: var(--white-color); // Set text color using CSS variable
+
+  p.top {
+    font-style: italic; // Italic style for the top paragraph
+  }
+
+  .font-display {
+    font-style: italic; // Italic font style
+    line-height: 0.8; // Line height adjustment
+
+    sub {
+      font-weight: 500; // Subscript font weight
+      line-height: 1; // Line height for subscript
+    }
+  }
 }
 
-h2 {
-    overflow-wrap: break-word; /* Break long words */
-    white-space: normal; /* Allow text to wrap */
+/* Bottom line style for titles */
+.bottom-line {
+  position: relative; // Position for pseudo-elements
+
+  &::before,
+  &::after {
+    position: absolute; // Position pseudo-elements absolutely
+    bottom: -20px; // Position below text
+    border-bottom: 1px solid var(--white-color); // Bottom border color
+    content: ""; // Empty content for pseudo-elements
+    left: 50px; // Left position
+    right: 0; // Right position
+  }
+
+  &::after {
+    bottom: -15px; // Adjust position for after pseudo-element
+    left: 70px; // Adjust left position for after
+    right: -20px; // Adjust right position for after
+  }
 }
 
-.bg-acent,
-.bg-sky,
-.bg-dark-green {
-   // padding: 1.5rem; /* Adjust padding as necessary */
-    box-sizing: border-box; /* Include padding in element's total width/height */
+/* Default styling for desktop view */
+.req-description .subtitle,
+.req-description .title,
+.req-description .description {
+  display: block; // Default to block display
 }
 
-.fs-30 {
-    font-size: 30px; /* Ensure consistent font size */
+.quote-btn {
+  display: block; // Block display for button
 }
 
-.fs-18 {
-    font-size: 18px; /* Ensure consistent font size */
+/* Absolute positioning for specific cases */
+.absolute-position {
+  position: absolute; // Use absolute positioning
+}
+/* Default styles for desktop */
+.responsive-div {
+  display: flex;
+  flex-direction: row; /* Default to row for desktop */
 }
 
-.custom-btn {
-    min-width: 150px; /* Ensure buttons have a minimum width */
+.image-section {
+  order: 2; /* Image on the right for desktop */
 }
 
-@media (max-width: 1200px) {
-    .house-expert-wrap {
-        padding: calc(var(--th-padding) * 12) 0;
-    }
-    .container {
-        padding: 0 20px;
-    }
-    .col-lg-5, .col-lg-7 {
-        flex-direction: column;
-    }
+.text-section {
+  order: 1; /* Text on the left for desktop */
+}
+/* Mobile styles */
+@media only screen and (max-width: 767px) {
+  .request-wrap {
+    height: auto; // Allow height to be dynamic on mobile
+  }
+  .req-description
+  {
+    padding-left: 25px;
+  }
+ /*  .mobile-layout .imgclass {
+    order: 1; // Image on top for mobile
+  } */
+
+  .mobile-layout .imgclass img {
+    height: 50vh; // Set height for mobile images
+    width: 50vh !important; // Ensure correct width
+  }
+
+  .mobile-layout .font-display {
+    display: block !important; // Stack title text for mobile
+  }
+
+  .mobile-layout .font-display sub.font-poppins {
+    display: block; // Ensure subscript is block
+    margin-top: 0.5rem; // Space between elements
+    font-size: 18px; // Adjust font size for mobile
+  }
+
+  .outsideimg img {
+    width: 350px; // Fixed width for outside image
+    height: 350px; // Fixed height for outside image
+  }
+
+  .spaimg img {
+    height: 70vh; // Set height for spa image
+    width: 56vh !important; // Ensure width for spa image
+    position: absolute; // Position absolute for spa image
+    top: 0px; // Position from the top
+  }
+
+  /* Dynamic width for shape */
+  .shape-pink-class { // Replace .shape-class with the actual class name for the shape
+    width: 38%; // Set shape width to 95% on mobile
+    height: 35%;
+    z-index: -1;
+  }
+  .shape-purple-class { // Replace .shape-class with the actual class name for the shape
+    width: 38%; // Set shape width to 95% on mobile
+    height: 35%;
+    top: 100% !important;
+    //z-index: -1;
+  }
 }
 
-@media (max-width: 992px) {
-    .house-expert-wrap {
-        padding: calc(var(--th-padding) * 8) 0;
-    }
-    .shadow-pink::after, .shadow-pink::before, .shadow-purple::after, .shadow-purple::before {
-        width: 150px;
-        height: 150px;
-    }
-    .shadow-purple::before {
-        right: -100px;
-    }
+/* Desktop styles */
+@media only screen and (min-width: 768px) {
+  .desktop-layout .req-description {
+    position: relative; // Position relative for desktop
+  }
+
+ /*  .desktop-layout .imgclass {
+    order: 2; // Image on bottom for desktop
+  } */
+
+  .desktop-layout .imgclass img {
+    width: 100%; // Full width for images
+    height: auto; // Auto height for images
+  }
+
+  /* Default width for shape on desktop */
+  .shape-pink-class { // Replace .shape-class with the actual class name for the shape
+    width: auto; // Default width for shape on desktop
+  }
+  .shape-purple-class { // Replace .shape-class with the actual class name for the shape
+    width: auto; // Default width for shape on desktop
+  }
+}
+/* Mobile styles */
+@media only screen and (max-width: 767px) {
+  .responsive-div {
+      flex-direction: column; /* Stack vertically for mobile */
+  }
+
+  .image-section {
+      order: 1; /* Image on top for mobile */
+      width: 100%;
+  }
+
+  .text-section {
+      order: 2; /* Text below image for mobile */
+  }
 }
 
-@media (max-width: 768px) {
-    .house-expert-wrap {
-        padding: calc(var(--th-padding) * 5) 0;
-    }
-    .col-lg-5, .col-lg-7 {
-        flex-direction: column;
-        width: 100%;
-    }
-    .col-lg-6 {
-        flex-direction: column;
-        width: 100%;
-    }
-    .shadow-pink::after, .shadow-pink::before,
-    .shadow-purple::after, .shadow-purple::before {
-        width: 100px;
-        height: 100px;
-        filter: blur(60px);
-    }
-}
-
-@media (max-width: 576px) {
-    .house-expert-wrap {
-        padding: calc(var(--th-padding) * 3) 0;
-    }
-    .shadow-pink::after, .shadow-pink::before, .shadow-purple::after, .shadow-purple::before {
-        width: 80px;
-        height: 80px;
-    }
+/* Optional styles for image responsiveness */
+.image-section img {
+  width: 100%; /* Ensure the image scales responsively */
+  height: auto; /* Maintain aspect ratio */
 }

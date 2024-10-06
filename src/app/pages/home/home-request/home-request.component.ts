@@ -27,6 +27,11 @@ export class HomeRequestComponent {
   @Input() spaimg:any
   @Input() spaPosition:any
   @Input() fontsize:any
+  @Input() layout: string = '';  // layout class (mobile-layout or desktop-layout)
+  @Input() isImageTop: boolean = false; // New flag to control text positioning
+  @Input() shapeTopPosition: string = '50%'; // New input for dynamic top position
+  @Input() isImageOnTopOfShape: boolean = false; // New input to control if image should be above shape
+  @Input() height: string = '350px'; // New input for dynamic height
   
  
     

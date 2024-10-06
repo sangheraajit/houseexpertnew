@@ -1,43 +1,130 @@
 .request-wrap {
-    min-height: 350px;
-    display: flex;
-    align-items: center;
-
+  min-height: 350px; // Minimum height for the wrap
+  display: flex; // Flexbox for layout
+  align-items: center; // Center items vertically
+  justify-content: center; // Center items horizontally
 }
 
+/* Description styles */
 .req-description {
-    color: var(--white-color);
+  color: var(--white-color); // Set text color using CSS variable
 
-    p.top {
-        font-style: italic;
+  p.top {
+    font-style: italic; // Italic style for the top paragraph
+  }
+
+  .font-display {
+    font-style: italic; // Italic font style
+    line-height: 0.8; // Line height adjustment
+
+    sub {
+      font-weight: 500; // Subscript font weight
+      line-height: 1; // Line height for subscript
     }
-
-    .font-display {
-        font-style: italic;
-        line-height: .8;
-
-        sub {
-            font-weight: 500;
-            line-height: 1;
-        }
-    }
+  }
 }
 
+/* Bottom line style for titles */
 .bottom-line {
-    position: relative;
+  position: relative; // Position for pseudo-elements
 
-    &::before,
-    &::after {
-        position: absolute;
-        bottom: -20px;
-        border-bottom: 1px solid var(--white-color);
-        content: "";
-        left: 50px;
-        right: 0;
+  &::before,
+  &::after {
+    position: absolute; // Position pseudo-elements absolutely
+    bottom: -20px; // Position below text
+    border-bottom: 1px solid var(--white-color); // Bottom border color
+    content: ""; // Empty content for pseudo-elements
+    left: 50px; // Left position
+    right: 0; // Right position
+  }
 
+  &::after {
+    bottom: -15px; // Adjust position for after pseudo-element
+    left: 70px; // Adjust left position for after
+    right: -20px; // Adjust right position for after
+  }
+}
 
-    }
-    &::after{     bottom: -15px;
-        left: 70px;
-        right: -20px;}
+/* Default styling for desktop view */
+.req-description .subtitle,
+.req-description .title,
+.req-description .description {
+  display: block; // Default to block display
+}
+
+.quote-btn {
+  display: block; // Block display for button
+}
+
+/* Absolute positioning for specific cases */
+.absolute-position {
+  position: absolute; // Use absolute positioning
+}
+
+/* Mobile styles */
+@media only screen and (max-width: 767px) {
+  .request-wrap {
+    height: auto; // Allow height to be dynamic on mobile
+  }
+  .req-description
+  {
+    padding-left: 25px;
+  }
+ /*  .mobile-layout .imgclass {
+    order: 1; // Image on top for mobile
+  } */
+
+  .mobile-layout .imgclass img {
+    height: 50vh; // Set height for mobile images
+    width: 50vh !important; // Ensure correct width
+  }
+
+  .mobile-layout .font-display {
+    display: block !important; // Stack title text for mobile
+  }
+
+  .mobile-layout .font-display sub.font-poppins {
+    display: block; // Ensure subscript is block
+    margin-top: 0.5rem; // Space between elements
+    font-size: 18px; // Adjust font size for mobile
+  }
+
+  .outsideimg img {
+    width: 350px; // Fixed width for outside image
+    height: 350px; // Fixed height for outside image
+  }
+
+  .spaimg img {
+    height: 70vh; // Set height for spa image
+    width: 56vh !important; // Ensure width for spa image
+    position: absolute; // Position absolute for spa image
+    top: 0px; // Position from the top
+  }
+
+  /* Dynamic width for shape */
+  .shape-class { // Replace .shape-class with the actual class name for the shape
+    width: 38%; // Set shape width to 95% on mobile
+    height: 35%;
+  }
+}
+
+/* Desktop styles */
+@media only screen and (min-width: 768px) {
+  .desktop-layout .req-description {
+    position: relative; // Position relative for desktop
+  }
+
+ /*  .desktop-layout .imgclass {
+    order: 2; // Image on bottom for desktop
+  } */
+
+  .desktop-layout .imgclass img {
+    width: 100%; // Full width for images
+    height: auto; // Auto height for images
+  }
+
+  /* Default width for shape on desktop */
+  .shape-class { // Replace .shape-class with the actual class name for the shape
+    width: auto; // Default width for shape on desktop
+  }
 }
