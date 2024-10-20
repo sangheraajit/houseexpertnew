@@ -73,14 +73,14 @@ export class HomeServicesComponent {
   ) {}
 
   ngOnInit() {
-    this.actRoute.paramMap.subscribe((params) => {
+   /*  this.actRoute.paramMap.subscribe((params) => {
       this.fragment = params.get("fragment");
       this.cat_id = params.get("cat_id");
       this.cat_name = params.get("cat_name");
       this.fragment = params.get("fragment");
       console.log(this.cat_name);
       this.getChildCategories(this.cat_id);
-    });
+    }); */
 
     this.getAllCategories();
     //this.getAllfeaturedParters()
