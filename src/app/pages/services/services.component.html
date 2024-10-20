@@ -37,6 +37,68 @@
       </div>
     </div>
    <!--  <div *ngFor="let item of services" class="col"> -->
+    <div *ngFor="let item of services" class="col">
+    
+      <div class="item-card mb-5">
+        <div class="row">
+          <div class="col-7">
+            <div class="mb-3">
+              <div class="mb-2">
+               <!--  {{ item.warranty }} -->
+              </div>
+              <h3 class="fs-24 fw-semibold text-pink">{{ item.title}}</h3>
+            </div>
+            <div class="d-flex gap-2 align-items-center">
+              <img src="../../../assets/images/material-stars.svg">
+             <!--  {{ item.reviews }} -->
+            </div>
+            <div class="d-flex gap-4 mt-3">
+              <div class="d-flex gap-2 align-items-center fs-20 fw-semibold">
+                <img src="../../../assets/images/rupees.svg">
+               
+              <!--   {{ item.price }} -->
+              </div>
+              <div class="d-flex gap-2 align-items-center fs-20 fw-semibold">
+                <img src="../../../assets/images/clock.svg"> 
+                <!-- {{ item.time }} -->
+              </div>
+            </div>
+            <hr/>
+            <div class="list">
+              <ul class="m-0 p-0">
+                <li>
+                 <!--  {{ item.description }} -->
+                </li>
+               
+              </ul>
+             
+            </div>
+            
+          </div>
+          <div class="col-5">
+            <img class="w-100" src="{{ item.imageUrl }}" alt="" />
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-7">
+            <div class="d-flex">
+              <a
+              [routerLink]="['/service-details']"
+                class="custom-btn rounded-pill d-flex align-items-center gap-3"
+                >View Details <i class="fa fs-30 fa-arrow-right"></i
+              ></a>
+            </div>
+          </div>
+          <div class="col-5">
+            <button class="custom-btn rounded-pill bg-light fs-18 text-dark fw-normal ps-4 d-flex align-items-center gap-4 border-0">
+              Add to Cart
+              <i class="fa fa-shopping-cart fs-30 text-purple"></i>
+            </button>
+            
+          </div>
+        </div>
+      </div>
+    </div>
     <div *ngFor="let item of CategoryList" class="col">
     
       <div class="item-card mb-5">

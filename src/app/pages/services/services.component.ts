@@ -82,6 +82,7 @@ services = [
   city:any
   isLoading: boolean=false;
   fragment: any;
+  
   constructor(
     public SubcategoryService: SubcategoryService,
     private router: Router,

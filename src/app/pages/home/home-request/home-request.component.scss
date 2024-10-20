@@ -41,7 +41,7 @@
   &::after {
     bottom: -15px; // Adjust position for after pseudo-element
     left: 70px; // Adjust left position for after
-    right: -20px; // Adjust right position for after
+    right: -12px; // Adjust right position for after
   }
 }
 
@@ -68,15 +68,15 @@
   }
   .req-description
   {
-    padding-left: 25px;
+    padding-left: 10px;
   }
  /*  .mobile-layout .imgclass {
     order: 1; // Image on top for mobile
   } */
 
   .mobile-layout .imgclass img {
-    height: 50vh; // Set height for mobile images
-    width: 50vh !important; // Ensure correct width
+   // height: 40vh; // Set height for mobile images
+   // width: 40vh !important; // Ensure correct width
   }
 
   .mobile-layout .font-display {
@@ -103,8 +103,8 @@
 
   /* Dynamic width for shape */
   .shape-class { // Replace .shape-class with the actual class name for the shape
-    width: 38%; // Set shape width to 95% on mobile
-    height: 35%;
+    width: auto; // Set shape width to 95% on mobile
+    height: 37%;
   }
 }
 

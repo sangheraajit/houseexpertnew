@@ -33,6 +33,8 @@ const routes: Routes = [
   {path:'landing-page', component: LandingPageComponent },
   { path: 'services', component: ServicesComponent },
   { path: 'service-details', component: ServiceDetailsComponent },
+  { path: 'services/:cat_id/:cat_name', component: ServicesComponent },
+  { path: 'service-details/:cat_id/:cat_name', component: ServiceDetailsComponent },
   { path: 'about-us', component: AboutUsComponent },
   { path: 'help', component: HelpComponent },
   { path: 'terms-and-conditions', component: TermsAndConditionsComponent },

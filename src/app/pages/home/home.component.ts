@@ -20,6 +20,7 @@ export class HomeComponent {
   plumberMobile = "../../../../assets/images/plumber-making-phone-gesture@2x.png";
   cheerfulMobile = "../../../../assets/images/cheerful-delivery-man-with-parcels@2x.png";
   homHomeValuationMobile="../../../../assets/images/hand-presenting-model-house-home-loan-campaign@2x.png"
+  tenderMobile= "../../../../assets/images/tender-african-woman-smiling-enjoying-massage-with-closed-eyes-spa-resort@2x.png"
   // Listen for window resize event
   @HostListener("window:resize", ["$event"])
   onResize(event: any) {
@@ -35,6 +36,7 @@ export class HomeComponent {
       this.plumber = this.plumberMobile;
       this.cheerful = this.cheerfulMobile;
       this.HomeValuation=this.homHomeValuationMobile;
+      this.tender=this.tenderMobile;
       console.log("mobile view", this.plumber);
     } 
     else
