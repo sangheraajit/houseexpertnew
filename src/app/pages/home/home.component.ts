@@ -1,4 +1,5 @@
 import { Component, HostListener } from "@angular/core";
+import { httpService } from "src/app/service/http.service";
 
 @Component({
   selector: "app-home",
@@ -44,9 +45,27 @@ export class HomeComponent {
       console.log("mobile view else", this.plumber);
     }
   }
-  
+  CategoryList: any;
+  constructor(
+    private apiservice: httpService,
+    
+  ) {}
 
   ngOnInit() {
     this.checkScreenSize();
+    this.getAllCategories();
+  }
+  getAllCategories() {
+    let spname = "get_category_read";
+    let ptype = "readallactive";
+    let pid = 0;
+    this.apiservice.apiPost(spname, ptype, pid).subscribe((res: any) => {
+      console.log("getAlllCategories", res);
+      let temp = res.filter(
+        (c: { isleaf: boolean; active: boolean }) =>
+          c.isleaf == false && c.active == true
+      );
+      this.CategoryList = temp;
+    });
   }
 }

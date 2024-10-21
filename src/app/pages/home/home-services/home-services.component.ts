@@ -1,7 +1,8 @@
-import { Component } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { httpService } from "src/app/service/http.service";
 import { SubcategoryService } from "src/app/service/subcategory.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-home-services",
@@ -61,11 +62,12 @@ export class HomeServicesComponent {
     { name: "Ahamdabaad", url: "/ahamdabaad" },
   ];
   selectedOption: string | undefined;
-  CategoryList: any;
+  @Input() CategoryList: any;
   FeaturedPartnerList: any;
   fragment: any;
   cat_id: any;
   cat_name: any;
+  ImageserverUrl=environment.ImageserverUrl
   constructor(
     private apiservice: httpService,
     public SubcategoryService: SubcategoryService,
@@ -82,10 +84,10 @@ export class HomeServicesComponent {
       this.getChildCategories(this.cat_id);
     }); */
 
-    this.getAllCategories();
+    //this.getAllCategories();
     //this.getAllfeaturedParters()
   }
-  getAllCategories() {
+  /* getAllCategories() {
     let spname = "get_category_read";
     let ptype = "readallactive";
     let pid = 0;
@@ -97,7 +99,7 @@ export class HomeServicesComponent {
       );
       this.CategoryList = temp;
     });
-  }
+  } 
   getChildCategories(cat_id: number) {
     /*  let spname = "get_childcategory_read"
   let ptype = "readall"
@@ -106,10 +108,10 @@ export class HomeServicesComponent {
     console.log('getChildCategories', res);
     this.CategoryList = res;
 
-  }); */
+  });
     this.SubcategoryService.getChildCategories(cat_id).subscribe((res: any) => {
       console.log("getChildCategories", res);
       this.CategoryList = res;
     });
-  }
+  } */
 }

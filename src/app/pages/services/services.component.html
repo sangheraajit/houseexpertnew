@@ -1,29 +1,40 @@
 <div class="services-banner">
-  <div class="d-flex">
-    <div class="col-7">
-      <img
-        class="w-100"
-        src="../../../assets/images/young-builder-man.png"
-        alt=""
-      />
-    </div>
-    <div class="col-5 bg-purple px-4 py-5 text-white d-flex align-items-center">
-      <div class="ps-4">
-        <h1 class="fs-40 mb-4 fw-semibold col-lg-5">
-          {{cat_name}}
-        </h1>
-        <p class="m-0 col-7 fs-18">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry’s.
-        </p>
+  <div class="container-fluid">
+    <div class="row d-flex flex-wrap">
+      <!-- Image Section -->
+      <div class="col-12 col-lg-7 mb-3 mb-lg-0">
+        <img
+          class="img-fluid w-100"
+          src="../../../assets/images/young-builder-man.png"
+          alt="Builder"
+        />
+      </div>
+  
+      <!-- Text Section -->
+      <div
+        class="col-12 col-lg-5 bg-purple px-4 py-5 text-white d-flex align-items-center"
+      >
+        <div>
+          <h1 class="fs-3 fs-lg-1 mb-4 fw-semibold">
+            {{ cat_name }}
+          </h1>
+          <p class="m-0 fs-6 fs-lg-5">
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry’s.
+          </p>
+        </div>
       </div>
     </div>
   </div>
+  
+  <app-home-services [CategoryList]="CategoryList" ></app-home-services>
 </div>
 
 <!-- <app-home-services></app-home-services> -->
 <div class="services-wrap">
+  
   <div class="container">
+    
     <div class="row mb-4">
       <div class="col">
         <div class="d-flex mb-4">
@@ -35,6 +46,7 @@
         <h2 class="fs-50 fw-semibold text-purple mb-3">Keep Cool. Stay Comfy.</h2>
         <p>Breathe easy knowing your AC is always in tip-top shape.</p>
       </div>
+      
     </div>
    <!--  <div *ngFor="let item of services" class="col"> -->
     <div *ngFor="let item of services" class="col">
