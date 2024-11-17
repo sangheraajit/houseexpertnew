@@ -208,6 +208,16 @@ export class LandingPageComponent {
     console.log("this.customerinformation currentUser", this.currentUser);
 
     this.isAuthenticated = this.authService.isLoggedIn();
+    if(this.isAuthenticated)
+    {
+      
+       
+        this.Mainform.patchValue({
+          name: this.currentUser.custName,
+          email: this.currentUser.custEmail,
+          phoneNumber: this.currentUser.custMobile,
+        })
+    }
   }
   public widgetForm: FormGroup = new FormGroup({
     customerinfo: new FormControl(""),

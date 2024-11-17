@@ -62,4 +62,9 @@ export class HeaderComponent {
     this.router.navigate(["profile"]);
     //  : this.openAnotherModal(0);
   }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
 }

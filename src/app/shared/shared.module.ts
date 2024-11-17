@@ -57,6 +57,7 @@ import { GooglePlacesComponent } from './google-places/google-places.component';
 import { ToastComponent } from '../components/toast/toast.component';
 import { ToastService } from '../service/toast.service';
 import { ToasterComponent } from '../components/toaster/toaster.component';
+import { ProfileComponent } from '../pages/Customer/profile/profile.component';
 
 
 
@@ -116,7 +117,8 @@ import { ToasterComponent } from '../components/toaster/toaster.component';
     MoverPakersStepsComponent,
     GooglePlacesComponent,
     ToastComponent,
-    ToasterComponent
+    ToasterComponent,
+    ProfileComponent
   ],
   exports: [
     HeaderComponent,
@@ -169,7 +171,8 @@ import { ToasterComponent } from '../components/toaster/toaster.component';
     MoverPakersStepsComponent,
     GooglePlacesComponent,
     ToastComponent,
-    ToasterComponent
+    ToasterComponent,
+    ProfileComponent
     ]
 })
 export class SharedModule { }

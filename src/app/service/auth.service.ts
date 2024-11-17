@@ -160,36 +160,30 @@ export class AuthService {
     return false;
   }
   setUser(data: any) {
+    // Store user data in local storage
     this.storageService.putInStorage(LOCAL_VARIABLES.CURRENT_USER, data);
-
+  
+    // Store the token
     this.storageService.putInStorage(LOCAL_VARIABLES.TOKEN, data.token);
-    this.storageService.putInStorage(LOCAL_VARIABLES.TOKEN, data.custMobile);
+  
+    // Store other user-specific information
+    this.storageService.putInStorage(LOCAL_VARIABLES.USER_PHONE, data.custMobile);
     this.storageService.putInStorage(LOCAL_VARIABLES.NAME, data.custName);
-
-    //this.storageService.putInStorage(LOCAL_VARIABLES.IMAGE, data.userImage);
-
+    this.storageService.putInStorage(LOCAL_VARIABLES.USER_EMAIL, data.custEmail);
+    this.storageService.putInStorage(LOCAL_VARIABLES.USER_CITY, data.custCity);
+    this.storageService.putInStorage(LOCAL_VARIABLES.USER_ADDRESS, data.custAddress);
     this.storageService.putInStorage(LOCAL_VARIABLES.USER_CODE, data.id);
     this.storageService.putInStorage(LOCAL_VARIABLES.CUSTOMER_ID, data.id);
-    this.storageService.putInStorage(
-      LOCAL_VARIABLES.USER_EMAIL,
-      data.custEmail
-    );
-    this.storageService.putInStorage(
-      LOCAL_VARIABLES.USER_PHONE,
-      data.custMobile
-    );
-    this.storageService.putInStorage(LOCAL_VARIABLES.USER_CITY, data.custCity);
-    this.storageService.putInStorage(
-      LOCAL_VARIABLES.USER_ADDREES,
-      data.custAddress
-    );
-    this.storageService.putInStorage(LOCAL_VARIABLES.TOKEN, data.token);
-    this.storageService.putInStorage(LOCAL_VARIABLES.CUSTOMER_ID, data.id);
+  
+    // Emit login success event
     this.emitLoginSuccess(data);
   }
+  
+  // Emit login success event using BehaviorSubject
   emitLoginSuccess(data: any): void {
-    this.userSubject.next(data);
+    this.userSubject.next(data);  // Notify all subscribers of the login event
   }
+  
   purgeAuth() {
     // Set current user to an empty object
 

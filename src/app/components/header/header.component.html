@@ -10,7 +10,7 @@
 
       <!-- Search Bar (Single Instance for Both Desktop & Mobile) -->
       <div class="col search-container">
-        <app-search></app-search>
+       <!--  <app-search></app-search> -->
       </div>
 
       <!-- Icons Section -->
@@ -21,11 +21,28 @@
           <span class="d-none d-lg-inline">888 444 9628</span>
         </a>
 
-        <!-- Sign In / My Booking -->
-        <a (click)="openModal()" class="d-flex align-items-center gap-2">
-          <i class="fa fa-user fs-22"></i> 
-          <span class="d-none d-lg-inline">Sign In</span>
-        </a>
+        <!-- User Menu / Dropdown -->
+        <ng-container *ngIf="isAuthenticated; else signIn">
+          <div ngbDropdown class="d-flex align-items-center">
+            <a class="d-flex align-items-center gap-2" ngbDropdownToggle>
+              <i class="fa fa-user fs-22"></i>
+              <span class="d-none d-lg-inline">My Account</span>
+            </a>
+            <div ngbDropdownMenu>
+              <button class="dropdown-item" (click)="Profile()">Profile</button>
+              <button class="dropdown-item" (click)="booking()">My Booking</button>
+              <button class="dropdown-item" (click)="logout()">Logout</button>
+            </div>
+          </div>
+        </ng-container>
+
+        <!-- Sign In Button -->
+        <ng-template #signIn>
+          <a (click)="openModal()" class="d-flex align-items-center gap-2">
+            <i class="fa fa-user fs-22"></i> 
+            <span class="d-none d-lg-inline">Sign In</span>
+          </a>
+        </ng-template>
 
         <!-- Cart Icon -->
         <a href="#">

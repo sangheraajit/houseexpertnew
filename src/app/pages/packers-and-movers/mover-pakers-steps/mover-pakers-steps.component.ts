@@ -515,7 +515,7 @@ export class MoverPakersStepsComponent {
       // Todo - store this information in the server
       alert(response);
 
-      console.log(response.error.code);
+       console.log(response.error.code);
       console.log(response.error.description);
       console.log(response.error.source);
       console.log(response.error.step);

@@ -123,22 +123,33 @@ export class LoginComponent {
     return this.registerForm.get("acceptTerms")!;
   }
   openModal() {
-    this.activeModal.close(true);
+    // Close any active modal if open
+    this.activeModal?.close(true);
+  
+    // Open OTP verification modal
     const modalRef = this.modalService.open(OtpVerificationComponent, {
-      size: "lg",
+      size: 'lg',
       centered: true,
     });
-
-    //modalRef.componentInstance.user = this.user;
+  
+    // Pass data (phone number) to the OTP component
     modalRef.componentInstance.phoneNumber = this.loginForm.value.phoneNumber;
-    modalRef.componentInstance.result.then((data: any) => {
-      console.log(data);
-      if (data) {
-        this.toastService.showSuccessToast("info","you are logged in successfully");
-        window.location.reload();
-      }
-    });
+  
+    // Handle the result when the modal is closed
+    modalRef.result
+      .then((result) => {
+        console.log('OTP Modal Result:', result);
+        if (result && !result.iserror) {
+          this.toastService.showSuccessToast('info', 'You are logged in successfully');
+          window.location.reload();
+        }
+      })
+      .catch((err) => {
+        console.error('Modal dismissed with error:', err);
+        this.toastService.showErrorToast('Error', 'Failed to verify OTP.');
+      });
   }
+  
 
   SendOPT() {
     const { email, password, phone } = this.loginForm.value;
@@ -254,4 +265,5 @@ export class LoginComponent {
       }
     });
   }
+  
 }

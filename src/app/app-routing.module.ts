@@ -26,6 +26,9 @@ import { ThankYouComponent } from './pages/thank-you/thank-you.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { LandingPageComponent } from './pages/packers-and-movers/landing-page/landing-page.component';
 import { MoverPakersStepsComponent } from './pages/packers-and-movers/mover-pakers-steps/mover-pakers-steps.component';
+import { ProfileComponent } from './pages/Customer/profile/profile.component';
+import { AuthGuard } from './service/auth-guard.service';
+import { MyBookingComponent } from './pages/Customer/my-booking/my-booking.component';
 //import { MoverPakersStepsComponent } from './pages/mover-pakers-steps/mover-pakers-steps.component';
 
 const routes: Routes = [
@@ -60,6 +63,8 @@ const routes: Routes = [
   { path: 'faq', component: FaqComponent },
   { path: 'contact-us', component: ContactUsComponent },
   { path: 'mover-steps', component: MoverPakersStepsComponent },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'mybooking', component: MyBookingComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

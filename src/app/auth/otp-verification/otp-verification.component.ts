@@ -49,41 +49,37 @@ export class OtpVerificationComponent {
       });
   }
   verifyLoginCode() {
+    // Verify the OTP using the service
     this.userservice.VerifyOPT(this.phoneNumber, this.otp).subscribe(
       (res: any) => {
-        console.log("VerifyOPT OptResponse res" + res);
-        console.log("VerifyOPT OptResponse res" + res.status);
-        this.OptResponse = res;
-        console.log("VerifyOPT OptResponse " + this.OptResponse);
+        console.log('VerifyOPT Response:', res);
   
-        this.authService.setUser(this.OptResponse);
+        // Set user data in auth service
+        this.authService.setUser(res);
   
-        var logindata = {
-          iserror: false,
-          data: this.OptResponse,
-        };
-        this.activeModal.close(logindata);
+        // Close the modal with success result
+        const loginData = { iserror: false, data: res };
+        this.activeModal.close(loginData);
       },
-      (data: any) => {
-        console.log("verifyLoginCode", data);
-        if (
-          data.status == 404 &&
-          data.error == "Invalid user name or user pin."
-        ) {
-          var logindata = {
-            iserror: false,
-            data: data,
-          };
+      (err: any) => {
+        console.log('VerifyLoginCode Error:', err);
+  
+        // Prepare the error object
+        const loginData = { iserror: true, data: err };
+  
+        // Display error toast based on status
+        if (err.status === 404 && err.error === 'Invalid user name or user pin.') {
+          this.toastService.showErrorToast('Error', 'Invalid username or OTP.');
         } else {
-          var logindata = {
-            iserror: true,
-            data: data,
-          };
-          this.toastService.showErrorToast("Error", data.error);
+          this.toastService.showErrorToast('Error', err.error || 'OTP verification failed.');
         }
+  
+        // Optionally close the modal with an error result
+        this.activeModal.dismiss(loginData);
       }
     );
   }
+  
   onOtpChange(otp: string | undefined) {
     this.otp = otp;
   }

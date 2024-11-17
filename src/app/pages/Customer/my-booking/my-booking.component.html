@@ -1,0 +1,353 @@
+<!-- <div class="wrapper">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <td
+            colspan="2"
+            class="text-left"
+            style="background-color: #ddd; border: 1px solid #ddd"
+          >
+            Order Details
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="width: 50%" class="text-left">
+            <b>Order ID:</b> {{ this.dialog.orderno }}
+            <br />
+            <b>Pickup Date and Time:</b
+            >{{ this.dialog.orderdate | date : "dd-MMM-yyyy" }} {{ strdate }}
+          </td>
+          <td style="width: 50%" class="text-left">
+            <b>Package Type:</b> {{ this.packagename }}
+            <br /><b>Status:</b><p-tag [value]="this.dialog.orderstatus" [severity]="getSeverity(this.dialog.orderstatus)"></p-tag>
+            <br /><b>Assinged Partner:</b> {{ partnername }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr>
+          <td
+            colspan="3"
+            class="text-left"
+            style="background-color: #ddd; border: 1px solid #ddd"
+          >
+            Party Details
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="width: 50%" class="text-left">
+            {{ this.dialog.cust_name }}
+          </td>
+          <td style="width: 30%" class="text-left">
+            <i style="padding-right: 5px" class="fa fa-envelope"></i
+            >{{ this.dialog.cust_email }}
+          </td>
+          <td style="width: 20%" class="text-left">
+            <i style="padding-right: 5px" class="fa fa-phone"></i
+            >{{ this.dialog.cust_mobile }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr style="background-color: #ddd; border: 1px solid #ddd">
+          <td style="width: 50%; vertical-align: top" class="text-left">
+            From Address
+          </td>
+          <td style="width: 50%; vertical-align: top" class="text-left">
+            To Address
+          </td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="text-left">
+            {{ this.dialog.fromaddress1 }},{{ this.dialog.fromaddress }}
+            <br />
+            <b>Floor:</b> {{ this.dialog.fromfloor }}
+            <br />
+            <b>Lift Available:</b>{{ this.dialog.fromlift ? "yes" : "No" }}
+          </td>
+          <td class="text-left">
+            {{ this.dialog.toaddress1 }},{{ this.dialog.toaddress }}
+            <br />
+            <b>Floor:</b> {{ this.dialog.tofloor }}
+            <br />
+            <b>Lift Available:</b>{{ this.dialog.tolift ? "yes" : "No" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover" width="100%">
+        <thead>
+          <tr style="background-color: #ddd; border: 1px solid #ddd">
+            <td class="text-left"></td>
+            <td class="text-left">Item</td>
+            <td class="text-right">Quantity</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of dialogdetail">
+            <td class="text-left">
+              <img
+                [src]="
+                  item.imageurl ? ImageserverUrl + item.imageurl : noimageurl
+                "
+              />
+            </td>
+            <td class="text-left">{{ item.item_name }}</td>
+            <td class="text-right">{{ item.quantity }}</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td></td>
+            <td class="text-right"><b>Sub-Total</b></td>
+            <td class="text-right">{{ this.dialog.grandtotal }}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="text-right"><b>Discount</b></td>
+            <td class="text-right">{{ this.dialog.discount }}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="text-right"><b>Insurance Amount @{{ insurancerate }} %</b></td>
+            <td class="text-right">{{this.dialog.insuranceamount}}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="text-right"><b>GST Amount</b></td>
+            <td class="text-right">{{ dialog.gstamount }}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="text-right"><b>Paid Amount</b></td>
+            <td class="text-right">{{ this.paidamount }}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td class="text-right"><b>Balance</b></td>
+            <td class="text-right" style="color: red"> {{ this.dialog.grandtotal - this.dialog.discount - this.paidamount }}</td>
+          </tr>
+          <tr>
+  
+  
+            <td colspan="3" class="text-right">
+              <p-button  *ngIf="this.dialog.orderstatus == 'Quotation'"
+                [label]="NextButtonLabel"
+                (onClick)="processPayment()"
+                icon="pi pi-angle-right"
+                iconPos="right"
+                styleClass="font-12 font-bold text-uppercase"
+                [ngClass]="'p-button-danger'"
+              ></p-button>
+              <p-button *ngIf="this.dialog.orderstatus == 'adminapproved'"
+              [label]="NextButtonLabel"
+              (onClick)="processPayment()"
+              icon="pi pi-angle-right"
+              iconPos="right"
+              styleClass="font-12 font-bold text-uppercase"
+              [ngClass]="'p-button-danger'"
+            ></p-button>
+            </td>
+  
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+    <div class="modal-header">
+  
+    </div>
+    <div class="modal-body"  style="display: none;">
+      <table style="width: 100%">
+        <tr>
+          <th>Residencial</th>
+          <th>Package Type</th>
+      
+        </tr>
+        <tr>
+          <td>{{ this.dialog.movetype }}</td>
+          <td>{{ this.packagename }}</td>
+        </tr>
+      </table>
+      <span aria-hidden="true"
+        >Location({{
+          this.dialog.fromcity.split(",").length > 1
+            ? this.dialog.fromcity.split(",")[1]
+            : this.dialog.fromcity.split(",")[0]
+        }})</span
+      >
+      <table style="width: 100%">
+        <tr>
+          <th>Moving From</th>
+          <th>Floor From</th>
+          <th>Lift Available From</th>
+          <th>Moving To</th>
+          <th>Floor To</th>
+          <th>Lift Available To</th>
+        </tr>
+        <tr>
+          <td>{{ this.dialog.fromaddress1 }},{{ this.dialog.fromaddress }}</td>
+          <td>{{ this.dialog.fromfloor }}</td>
+          <td>{{ this.dialog.fromlift ? "yes" : "No" }}</td>
+          <td>{{ this.dialog.toaddress1 }},{{ this.dialog.toaddress }}</td>
+          <td>{{ this.dialog.tofloor }}</td>
+          <td>{{ this.dialog.tolift ? "yes" : "No" }}</td>
+        </tr>
+      </table>
+      <span aria-hidden="true">Date & Time Details</span>
+      <table style="width: 100%">
+        <tr>
+          <th>Pickup Date</th>
+          <th>Pickup Time</th>
+        </tr>
+        <tr>
+          <td>
+            {{ this.dialog.orderdate.split("T")[0] | date : "dd-MMM-yyyy" }}
+          </td>
+        
+          <td>{{ strdate }}</td>
+        </tr>
+      </table>
+      <span aria-hidden="true">Distance & Items Quantity</span>
+      <table style="width: 100%">
+        <tr>
+       
+          <th>Total Items</th>
+        </tr>
+        <tr>
+         
+          <td>{{ this.dialogdetail.length }}</td>
+        </tr>
+      </table>
+      <span aria-hidden="true">Items </span>
+      <table style="width: 100%">
+        <tr>
+          <th>Item</th>
+          <th>Qty</th>
+        </tr>
+        <tr *ngFor="let h of dialogdetail">
+          <td>{{ h.item_name }}</td>
+          <td>{{ h.quantity }}</td>
+        </tr>
+      </table>
+      <span aria-hidden="true">Party Details</span>
+      <table style="width: 100%">
+        <tr>
+          <th>Party Name</th>
+          <th>Email</th>
+          <th>Mobile#</th>
+        </tr>
+        <tr>
+          <td>{{ this.dialog.cust_name }}</td>
+          <td>{{ this.dialog.cust_email }}</td>
+          <td>{{ this.dialog.cust_mobile }}</td>
+        </tr>
+      </table>
+     
+      <table style="width: 100%">
+        <tr>
+        
+          <th>Select Partner</th>
+        </tr>
+        <tr>
+         
+          <td>
+            {{ partnername }}
+          
+          </td>
+        </tr>
+      </table>
+      <span aria-hidden="true">Payment Details </span>
+      <table style="width: 100%">
+        <tr>
+          <th>Total Amount</th>
+          <th>Discount Amount</th>
+          <th>Paid Amount</th>
+          <th
+            *ngIf="
+              this.dialog.orderstatus == 'Quotation' ||
+              this.dialog.orderstatus == 'token'
+            "
+          >
+            Balance Amount
+          </th>
+          <th *ngIf="this.dialog.orderstatus == 'Quotation'">Balance Amount</th>
+        </tr>
+        <tr>
+          <td>{{ this.dialog.grandtotal }}</td>
+          <td>{{ this.dialog.discount }}</td>
+          <td>{{ this.paidamount }}</td>
+          <td
+            *ngIf="
+              this.dialog.orderstatus == 'Quotation' ||
+              this.dialog.orderstatus == 'token'
+            "
+          >
+            {{ this.dialog.grandtotal - this.dialog.discount - this.paidamount }}
+          </td>
+          <td *ngIf="this.dialog.orderstatus == 'Quotation'">
+            <p-button
+              [label]="NextButtonLabel"
+              (onClick)="processPayment()"
+              icon="pi pi-angle-right"
+              iconPos="right"
+              styleClass="font-12 font-bold text-uppercase"
+              [ngClass]="'p-button-danger'"
+            ></p-button>
+          </td>
+        </tr>
+      </table>
+      <div
+        class="modal-body"
+        *ngIf="
+          this.dialog.orderstatus == 'adminapproved' ||
+          this.dialog.orderstatus == 'ready'
+        "
+        class="row"
+      >
+        <table style="width: 100%">
+          <tr>
+            <th>For Insurance</th>
+            <th>Insurance Amount@{{ insurancerate }}%</th>
+            <th>GST Amount@{{ gstrate }}%</th>
+            <th>Balance Amount</th>
+            <th *ngIf="this.dialog.orderstatus == 'adminapproved'"></th>
+          </tr>
+          <tr>
+            <td>{{ dialog.forinsurance }}</td>
+            <td>{{ dialog.insuranceamount }}</td>
+            <td>{{ dialog.gstamount }}</td>
+  
+            <td>
+              <span style="color: red">
+               
+                {{ this.payamount }}
+              </span>
+            </td>
+            <td *ngIf="this.dialog.orderstatus == 'adminapproved'">
+              <p-button
+                [label]="NextButtonLabel"
+                (onClick)="processPayment()"
+                icon="pi pi-angle-right"
+                iconPos="right"
+                styleClass="font-12 font-bold text-uppercase"
+                [ngClass]="'p-button-danger'"
+              ></p-button>
+            </td>
+          </tr>
+        </table>
+      </div>
+     
+    </div>
+  </div>
+   -->
