@@ -1,7 +1,7 @@
 body{min-height:calc(100vh)}
 
 ::ng-deep .pac-container { z-index: 10000 !important; }
-::ng-deep .form-right {
+/* ::ng-deep .form-right {
   margin-top: 30px;
   margin-bottom: -100px;
 }
@@ -14,7 +14,7 @@ body{min-height:calc(100vh)}
 }
 .form-group {
   margin-bottom: 10px;
-}
+} */
 ::placeholder {
   color: #c9c9c9;
   opacity: 1; /* Firefox */

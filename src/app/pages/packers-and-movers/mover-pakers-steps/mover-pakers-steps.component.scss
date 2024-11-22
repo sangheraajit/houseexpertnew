@@ -242,8 +242,13 @@ cursor: pointer;
     display: flex;
     flex-direction: column;
     gap: 5px;
+    max-height: 265px; /* Adjust the height as needed */
+    overflow-y: auto;
     li{  border-bottom: 1px solid; padding: 5px 0;
-    &.selected-item{color: #707070;}
+    &.selected-item{
+        color: #707070;
+    
+    }
     }
 }
 .qty{

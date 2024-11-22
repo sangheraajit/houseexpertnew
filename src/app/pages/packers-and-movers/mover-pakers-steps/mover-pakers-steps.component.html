@@ -43,11 +43,17 @@
 
 <div class="mover-steps-section">
   <div class="container">
-    <span  class="blur-bg"></span>
-    <span  class="blur-bg2"></span>
+    <span class="blur-bg"></span>
+    <span class="blur-bg2"></span>
     <div class="row align-items-center">
       <div class="col-12 tab-wrapper">
-        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" (navChange)="navChanged($event)">
+        <ul
+          ngbNav
+          #nav="ngbNav"
+          [(activeId)]="active"
+          class="nav-tabs"
+          (navChange)="navChanged($event)"
+        >
           <li [ngbNavItem]="1">
             <button class="" ngbNavLink>Step 1</button>
             <ng-template ngbNavContent>
@@ -155,7 +161,7 @@
                         </div>
                       </div>
                     </div>
-                    <div class="row mb-4">
+                    <div class="row mb-4 d-none">
                       <div class="col-md-5">
                         <div class="form-group">
                           <input
@@ -200,7 +206,8 @@
                     <div
                       class="form-group d-flex justify-content-end mb-0 mt-5 pt-5"
                     >
-                      <button (click)="nextPage(2);"
+                      <button
+                        (click)="nextPage(2)"
                         type="submit"
                         class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
                       >
@@ -223,7 +230,9 @@
                   <div class="row">
                     <div class="col-10 mb-4">
                       <div class="input-group rounded-pill m-0" ngbDropdown>
-                        <input  #query (keyup)="searchData(query.value)"
+                        <input
+                          #query
+                          (keyup)="searchData(query.value)"
                           type="text"
                           class="form-control border-0 rounded-pill shadow-none px-0 ps-4"
                           placeholder="Please enter any product name to search"
@@ -291,24 +300,27 @@
                                 value="{{ item?.qty }}"
                                 #qtyRef
                                 (keyup)="
-                                  changeQty(
-                                    item,
-                                    qtyRef.value,
-                                    'replace'
-                                  )
+                                  changeQty(item, qtyRef.value, 'replace')
                                 "
                               />
 
-                              <span   *ngIf="item.qty > 0"
+                              <span
+                                *ngIf="item.qty > 0"
                                 class="opacity-25"
                                 (click)="changeQty(item, 1, '')"
                                 >+</span
                               >
-                              <div class="bg-pink add-remove"  *ngIf="item.qty == 0">
-                              <div class="add" (click)="changeQty(item, 1, '')">
-                              
-                                <span>ADD</span>
-                              </div>
+                              <div
+                                style="padding-right: 15px"
+                                *ngIf="item.qty == 0"
+                              >
+                                <button
+                                  (click)="changeQty(item, 1, '')"
+                                  class="custom-btn border-0 rounded-pill fw-bold bg-pink"
+                                  style="font-size: 10px; height: 30px"
+                                >
+                                  Add
+                                </button>
                               </div>
                             </div>
                           </li>
@@ -317,10 +329,9 @@
                     </div>
                   </div>
 
-                  <div
-                    class="form-group d-flex justify-content-end mb-0 mt-5 pt-5"
-                  >
-                    <button (click)="nextPage(3);"
+                  <div class="form-group d-flex justify-content-end mb-0">
+                    <button
+                      (click)="nextPage(3)"
                       type="submit"
                       class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
                     >
@@ -364,16 +375,17 @@
                           <p class="m-0 p-0 px-4 text-purple fw-medium">
                             Pick A Date
                             <input
-                            class="form-control"
-                            placeholder="yyyy-mm-dd"
-                            ngbDatepicker
-                            #d="ngbDatepicker"
-                             [minDate]="minDate"
-                             [(ngModel)]="orderdate"
-                          />
+                              class="form-control"
+                              placeholder="yyyy-mm-dd"
+                              ngbDatepicker
+                              #d="ngbDatepicker"
+                              [minDate]="minDate"
+                              [(ngModel)]="orderdate"
+                            />
                           </p>
                           <span class="bg-purple p-3 ms-auto">
-                            <img   (click)="d.toggle()"
+                            <img
+                              (click)="d.toggle()"
                               src="../../../assets/images/calendar-icon.svg"
                               alt=""
                             />
@@ -381,21 +393,52 @@
                         </div>
                       </div>
                       <div class="d-flex mb-3">
-                        <div class="d-flex align-items-center pick-time" (click)="toggleTimeRanges()">
+                        <div
+                          class="d-flex align-items-center pick-time"
+                          (click)="toggleTimeRanges()"
+                        >
                           <p class="m-0 p-3 px-4 text-purple fw-medium">
                             Select Time
-                           <span *ngIf="strselectedtime!=''">  {{strselectedtime}}</span>
+                            <span *ngIf="strselectedtime != ''">
+                              {{ strselectedtime }}</span
+                            >
                           </p>
                           <span class="bg-purple p-3 ms-auto">
-                            <img src="../../../assets/images/clock-icon.svg" alt="" />
+                            <img
+                              src="../../../assets/images/clock-icon.svg"
+                              alt=""
+                            />
                           </span>
                         </div>
                         <!-- Move the time ranges container outside the pick-date div -->
-                        <div *ngIf="showTimeRanges" class="time-ranges-container">
-                          <div class="time-range"  (click)="selecttime(10,'10 AM - 12 PM')">10 AM - 12 PM</div>
-                          <div class="time-range"  (click)="selecttime(12,'12 AM - 02 PM')">12 PM - 02 PM</div>
-                          <div class="time-range"  (click)="selecttime(14,'02 PM - 04 PM')">02 PM - 04 PM</div>
-                          <div class="time-range"  (click)="selecttime(18,'04 PM - 06 PM')">04 PM - 06 PM</div>
+                        <div
+                          *ngIf="showTimeRanges"
+                          class="time-ranges-container"
+                        >
+                          <div
+                            class="time-range"
+                            (click)="selecttime(10, '10 AM - 12 PM')"
+                          >
+                            10 AM - 12 PM
+                          </div>
+                          <div
+                            class="time-range"
+                            (click)="selecttime(12, '12 AM - 02 PM')"
+                          >
+                            12 PM - 02 PM
+                          </div>
+                          <div
+                            class="time-range"
+                            (click)="selecttime(14, '02 PM - 04 PM')"
+                          >
+                            02 PM - 04 PM
+                          </div>
+                          <div
+                            class="time-range"
+                            (click)="selecttime(18, '04 PM - 06 PM')"
+                          >
+                            04 PM - 06 PM
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -406,28 +449,35 @@
                     </h3>
                     <div class="row">
                       <div class="col-md-6" *ngFor="let item of PackageList">
-                        <div class="package-col" [ngClass]="selectedPackageValues === item.id ? 'selected' : ''"
-                        (click)="onSelect(item,item.id,item.getcalculateamounts)"
+                        <div
+                          class="package-col"
+                          [ngClass]="
+                            selectedPackageValues === item.id ? 'selected' : ''
+                          "
+                          (click)="
+                            onSelect(item, item.id, item.getcalculateamounts)
+                          "
                         >
                           <h4 class="text-purple fw-semibold fs-20">
-                            {{item.packagename}}
+                            {{ item.packagename }}
                           </h4>
-                          <h2 class="text-pink fs-50 fw-bold">₹  {{item.packageTotal}}</h2>
+                          <h2 class="text-pink fs-50 fw-bold">
+                            ₹ {{ item.packageTotal }}
+                          </h2>
                           <ul>
                             <li *ngFor="let itemdetails of item.tpackagedtl">
                               <i class="fa fa-check"></i>
-                              {{itemdetails.bulletdesc}}
+                              {{ itemdetails.bulletdesc }}
                             </li>
-                           
                           </ul>
                         </div>
                       </div>
-                     
                     </div>
                   </div>
                 </div>
                 <div class="col-12 d-flex justify-content-end mb-0 mt-5">
-                  <button (click)="nextPage(4);"
+                  <button
+                    (click)="nextPage(4)"
                     type="submit"
                     class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
                   >
@@ -448,8 +498,8 @@
                         <div class="col-md-12">
                           <div class="form-group">
                             <label>Moving From*</label>
-                            
-                            <label> {{jheader.fromaddress}}</label>
+
+                            <label> {{ jheader.fromaddress }}</label>
                           </div>
                         </div>
                       </div>
@@ -457,84 +507,67 @@
                         <div class="col-md-10">
                           <div class="form-group">
                             <label>Moving To*</label>
-                            {{
-                                jheader.toaddress
-                    
-                                }}
+                            {{ jheader.toaddress }}
                           </div>
                         </div>
                         <div class="col-md-2">
-                          <button (click)="nextPage(1)"
-                          type="submit"
-                          class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
-                        >
-                          Edit
-                        </button>
+                          <a
+                            href="#"
+                            (click)="nextPage(1)"
+                            style="color: #eb2c60"
+                            >Edit</a
+                          >
                         </div>
                       </div>
-                      
+
                       <div class="row mb-4">
-                        <div class="col-md-6">
+                        <div class="col-md-6 d-none">
                           <div class="form-group">
                             <label>Vehicle*</label>
-                            {{
-                                jheader.vehiclename
-                    
-                                }}
+                            {{ jheader.vehiclename }}
                           </div>
                         </div>
                         <div class="col-md-6">
                           <div class="form-group">
                             <label>Move Date*</label>
-                            {{
-                                jheader.orderdate
-                  
-                                }}
+                            {{ jheader.orderdate }}
                           </div>
                         </div>
-
                       </div>
                       <div class="row mb-4">
-                        <div class="col-md-5">
-                          <div class="form-group">
-                            <label>Item to Move*</label>
-                            {{  itemstomove}}
-                          </div><button (click)="nextPage(2)"
-                          type="submit"
-                          class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
-                        >
-                          Edit
-                        </button>
-                        </div>
-                        <div class="col-md-5">
-                          <div class="form-group">
-                            <label>Your Package*</label>
-                            {{  selectedPackageName}}
-                          </div>
-                        
+                        <div class="col-md-10">
+                          <label>Item to Move*</label>
                         </div>
                         <div class="col-md-2">
-                          <button (click)="nextPage(3)"
-                          type="submit"
-                          class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
-                        >
-                          Edit
-                        </button>
+                          <a href="#" (click)="nextPage(2)" style="color: #eb2c60"
+                            >Edit</a
+                          >
                         </div>
+                      </div>
+                      <div class="row mb-4">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            {{ itemstomove }}
+                          </div>
+                        </div>
+    
+                        
                       </div>
                       <div class="row">
-                        <div class="col-12">
+                        <div class="col-md-6">
+                          <label>Your Selected Package*</label>
+                        </div>
+                        <div class="col-md-4">
+                          <span class="badge rounded-pill bg-danger">{{
+                            selectedPackageName
+                          }}</span>
+                        </div>
+                        <div class="col-md-2">
+                          <a href="#" (click)="nextPage(3)" style="color: #eb2c60"
+                            >Edit</a
+                          >
                         </div>
                       </div>
-                      <div class="row">
-                        <div class="col-12">
-                          <p class="m-0">
-                            Note: Boxes we provide are of 17 * 17 * 19 inch in
-                            size.
-                          </p>
-                        </div>
-                      </div>
-                      
                     </div>
                     <div class="col-md-4">
                       <div class="ps-4">
@@ -548,13 +581,17 @@
                             <span class="p-3 px-4 flex-grow-1"
                               >Quotation Amount</span
                             >
-                            <span class="p-3 pe-4">₹ {{cartService.cartTotal}}</span>
+                            <span class="p-3 pe-4"
+                              >₹ {{ cartService.cartTotal }}</span
+                            >
                           </div>
                           <div class="d-flex border-bottom">
                             <span class="p-3 px-4 flex-grow-1"
                               >Token to Pay</span
                             >
-                            <span class="p-3 pe-4 border-start">₹ {{cartService.TokenAmount}}</span>
+                            <span class="p-3 pe-4 border-start"
+                              >₹ {{ cartService.TokenAmount }}</span
+                            >
                           </div>
                           <div class="d-flex">
                             <span
@@ -563,11 +600,14 @@
                             >
                             <span
                               class="p-3 pe-4 bg-purple text-white fw-semibold"
-                              >₹ {{(cartService.cartTotal-cartService.TokenAmount)}}</span
+                              >₹
+                              {{
+                                cartService.cartTotal - cartService.TokenAmount
+                              }}</span
                             >
                           </div>
                         </div>
-                                             <!--  <h4 class="fs-16 fw-normal mb-3">
+                        <!--  <h4 class="fs-16 fw-normal mb-3">
                           Select Payment Methods
                         </h4>
   <div class="payment-method">
@@ -593,15 +633,34 @@
                         </div> -->
                       </div>
                     </div>
+                    <div class="row">
+                      <div class="col-12">
+                        <p class="m-0">
+                          Note: Boxes we provide are of 17 * 17 * 19 inch in
+                          size.
+                        </p>
+                       <!--  <ul class="p-0 m-0" style="list-style: none;">
+                          <li class="mb-3 font-16 font-medium"  *ngFor="let itemdetails of this.jheader.selectedpackage.tpackagedtl">
+                            <p class="mb-0"><i class="pi pi-check text-success font-bold"></i></p>
+                            {{itemdetails.bulletdesc}}</li>
+                
+                        </ul> -->
+                      </div>
+                    </div>
                     <div class="col-12 d-flex justify-content-end mb-0 mt-5">
-                      <button (click)="paynow()"
+                      <button
+                        (click)="paynow()"
                         type="submit"
                         class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
                       >
-                        Pay ₹ {{cartService.TokenAmount}}
+                        Pay ₹ {{ cartService.TokenAmount }}
                       </button>
                     </div>
                   </div>
+                 
+                
+                 
+                 
                 </form>
               </div>
             </ng-template>

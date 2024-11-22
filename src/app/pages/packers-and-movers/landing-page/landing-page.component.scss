@@ -74,7 +74,7 @@
     background: url(../../../../assets/images/blur-top.png) no-repeat;
     left: -200px;
     position: absolute;
-    width: 490px;
+    width: auto;
     height: 535px;
     top: -200px;
     background-size: cover !important;
@@ -84,7 +84,7 @@
     background: url(../../../../assets/images/blur-bottom.png) no-repeat;
     right: -200px;
     position: absolute;
-    width: 460px;
+    width: auto;
     height: 490px;
     bottom: -200px;
     background-size: cover !important;
@@ -113,30 +113,98 @@
 }
 
 .landing-expert {
-  background: url(../../../../assets/images/landing-right.png) top right
-    no-repeat #fff4f7;
+  background: url('../../../../assets/images/landing-right.png') top right no-repeat #fff4f7;
   min-height: 746px;
+  display: flex;
+  align-items: center;
+}
 
-  .left-content {
-    padding: 140px 0;
+.container {
+  padding: 0 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 20px;
+}
+
+.left-content {
+  padding: 50px 0;
+}
+
+h2 {
+  font-size: 1.8rem;
+  line-height: 1.5;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.list-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.list-item {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  flex: 1 1 45%; /* Takes up 45% width, adjusts automatically */
+}
+
+.list-item li {
+  position: relative;
+  padding-left: 25px;
+  background: url('../../../../assets/images/item-arrow.svg') left center no-repeat;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    flex-direction: column;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .list-wrapper {
+    flex-direction: column;
   }
 
   .list-item {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-
-    li {
-      position: relative;
-      padding-left: 20px;
-      background: url(../../../../assets/images/item-arrow.svg) left top
-        no-repeat;
-      font-size: 20px !important;
-      font-weight: medium;
-      margin-bottom: 10px;
-    }
+    flex: 1 1 100%; /* Takes full width on small screens */
   }
 }
+
+@media (max-width: 480px) {
+  .left-content {
+    padding: 20px 0;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  .list-item li {
+    font-size: 0.9rem;
+  }
+}
+
 
 .landing-services {
   padding: 100px 0 100px;
@@ -149,7 +217,7 @@
     background: url(../../../../assets/images/service-blubg.png) no-repeat;
     left: -90px;
     position: absolute;
-    width: 490px;
+    width: auto;
     height: 476px;
     top: 0;
     background-size: cover !important;
@@ -159,7 +227,7 @@
     background: url(../../../../assets/images/service-blubg.png) no-repeat;
     right: -200px;
     position: absolute;
-    width: 460px;
+    width: auto;
     height: 490px;
     bottom: -200px;
     background-size: cover !important;
@@ -255,6 +323,19 @@
 .form-right {
   margin-top: 30px;
   margin-bottom: -100px;
+  position: absolute;
+  top: 60%; /* Center vertically */
+  right: 5%; /* Distance from the right edge */
+  transform: translateY(-50%); /* Ensure proper vertical centering */
+  z-index: 2; /* Ensure it appears above the image */
+  width: 90%; /* Default width for smaller screens */
+  max-width: 450px; /* Limit maximum width */
+  height: 75vh; /* Set height to 75% of the viewport height */
+  background-color: #fff; /* Background color */
+  padding: 2rem; /* Spacing inside the form */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+  border-radius: 8px; /* Rounded corners */
+  overflow-y: auto; /* Add scrolling if content overflows */
 }
 .form-right .form-control {
   border: 0;
