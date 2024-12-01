@@ -93,6 +93,7 @@ export class MoverPakersStepsComponent {
   isPaymentPending = true;
   @Output() SelectedDate = new EventEmitter<any>();
   @Output() SelectedTime = new EventEmitter<any>();
+  
   constructor(
     public SubcategoryService: SubcategoryService,
     private ngZone: NgZone,
@@ -271,6 +272,9 @@ export class MoverPakersStepsComponent {
     this.bookingInformation.jheader[0] = this.jheader;
 
     this.SubcategoryService.setBookingInformation(this.bookingInformation);
+  }
+  EditStep(step: number) {
+    this.active = step;
   }
   nextPage(step: number) {
     this.active = step;

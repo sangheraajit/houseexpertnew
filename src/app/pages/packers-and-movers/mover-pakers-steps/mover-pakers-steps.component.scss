@@ -1,5 +1,5 @@
-::ng-deep .header-wrap{display: none;}
-::ng-deep .chat-popup{display: none;}
+/* ::ng-deep .header-wrap{display: none;}
+::ng-deep .chat-popup{display: none;} */
 
 .header-inner {
     padding: 20px 0;
@@ -187,7 +187,7 @@ li.nav-item+.nav-item {
     background: url(../../../../assets/images/blur-top.png) no-repeat;
     left: -200px;
     position: absolute;
-    width: 490px;
+    width: auto;
     height: 535px;
     top: -200px;
     background-size: cover !important;
@@ -199,7 +199,7 @@ li.nav-item+.nav-item {
     background: url(../../../../assets/images/blur-bottom.png) no-repeat;
     right: -200px;
     position: absolute;
-    width: 460px;
+    width: auto;
     height: 490px;
     bottom: -200px;
     background-size: cover !important;

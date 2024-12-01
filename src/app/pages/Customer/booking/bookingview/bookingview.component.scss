@@ -1,0 +1,24 @@
+/*  table, th, td {
+    border: 1px solid black;
+}
+th, td {
+    padding: 10px;
+}
+ .center {
+  margin: auto;
+  width: 80%;
+  padding: 10px;
+}
+ */
+ .wrapper {
+  padding-top: 95px;
+  width: 80%;
+  margin: auto;
+ }
+ @media only screen and (max-width:767px){
+  .wrapper {
+    padding: 10px;
+    width: 100%;
+    padding-top: 95px;
+   }
+ }

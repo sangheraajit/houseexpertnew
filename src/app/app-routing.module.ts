@@ -65,6 +65,12 @@ const routes: Routes = [
   { path: 'mover-steps', component: MoverPakersStepsComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'mybooking', component: MyBookingComponent, canActivate: [AuthGuard] },
+  { path: 'mybooking', component: MyBookingComponent, canActivate: [AuthGuard] },
+  {
+    path: 'bookinglist',
+    loadChildren: () =>
+      import('./pages/Customer/booking/booking.module').then((m) => m.BookingModule),
+  },
 ];
 
 @NgModule({

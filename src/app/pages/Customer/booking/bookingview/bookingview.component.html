@@ -1,0 +1,136 @@
+<div class="wrapper">
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <td colspan="2" class="text-left bg-light border">
+          Order Details
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="width: 50%" class="text-left">
+          <b>Order ID:</b> {{ dialog.orderno }}<br />
+          <b>Pickup Date and Time:</b> {{ dialog.orderdate | date: 'dd-MMM-yyyy' }} {{ strdate }}
+        </td>
+        <td style="width: 50%" class="text-left">
+          <b>Package Type:</b> {{ packagename }}<br />
+          <b>Status:</b> 
+          <span class="badge bg-{{ getSeverity(dialog.orderstatus) }}">
+            {{ dialog.orderstatus }}
+          </span>
+          <br />
+          <b>Assigned Partner:</b> {{ partnername }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <td colspan="3" class="text-left bg-light border">Party Details</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="width: 50%" class="text-left">{{ dialog.cust_name }}</td>
+        <td style="width: 30%" class="text-left">
+          <i class="fa fa-envelope me-2"></i>{{ dialog.cust_email }}
+        </td>
+        <td style="width: 20%" class="text-left">
+          <i class="fa fa-phone me-2"></i>{{ dialog.cust_mobile }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr class="bg-light border">
+        <td class="text-left">From Address</td>
+        <td class="text-left">To Address</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="text-left">
+          {{ dialog.fromaddress1 }}, {{ dialog.fromaddress }}<br />
+          <b>Floor:</b> {{ dialog.fromfloor }}<br />
+          <b>Lift Available:</b> {{ dialog.fromlift ? 'Yes' : 'No' }}
+        </td>
+        <td class="text-left">
+          {{ dialog.toaddress1 }}, {{ dialog.toaddress }}<br />
+          <b>Floor:</b> {{ dialog.tofloor }}<br />
+          <b>Lift Available:</b> {{ dialog.tolift ? 'Yes' : 'No' }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover">
+      <thead>
+        <tr class="bg-light border">
+          <td></td>
+          <td class="text-left">Item</td>
+          <td class="text-right">Quantity</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of dialogdetail">
+          <td class="text-left">
+            <img [src]="item.imageurl ? ImageserverUrl + item.imageurl : noimageurl" class="img-fluid" />
+          </td>
+          <td class="text-left">{{ item.item_name }}</td>
+          <td class="text-right">{{ item.quantity }}</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td></td>
+          <td class="text-right"><b>Sub-Total</b></td>
+          <td class="text-right">{{ dialog.grandtotal }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="text-right"><b>Discount</b></td>
+          <td class="text-right">{{ dialog.discount }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="text-right"><b>Insurance Amount {{ insurancerate }} %</b></td>
+          <td class="text-right">{{ dialog.insuranceamount }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="text-right"><b>GST Amount</b></td>
+          <td class="text-right">{{ dialog.gstamount }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="text-right"><b>Paid Amount</b></td>
+          <td class="text-right">{{ paidamount }}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td class="text-right"><b>Balance</b></td>
+          <td class="text-right text-danger">
+            {{ dialog.grandtotal - dialog.discount - paidamount }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3" class="text-right">
+            <button 
+              *ngIf="dialog.orderstatus === 'Quotation' || dialog.orderstatus === 'adminapproved'" 
+              class="btn btn-danger text-uppercase fw-bold" 
+              (click)="processPayment()">
+              {{ NextButtonLabel }}
+              <i class="bi bi-arrow-right ms-2"></i>
+            </button>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>

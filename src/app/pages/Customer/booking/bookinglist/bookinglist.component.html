@@ -1,0 +1,67 @@
+<!-- Table using Angular Bootstrap -->
+<table class="table table-striped">
+    <thead>
+      <tr>
+       
+        <th>Order ID</th>
+        <th>Order Date</th>
+        <th>From City</th>
+        <th>To City</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of currentOrders">
+        
+        <td>{{ order.id }}</td>
+        <td>{{order.orderdate | date:"dd-MMM-yyyy"}}</td>
+        <td>{{ order.fromcity }}</td>
+        <td>{{ order.fromcity }}</td>
+        <td>{{ order.tocity }}</td>
+        <td>
+          <span
+            class="badge"
+            [ngClass]="{
+              'bg-success': order.orderstatus === 'Completed' || order.orderstatus === 'ready',
+              'bg-warning': order.orderstatus === 'Token' || order.orderstatus === 'adminapproved',
+              'bg-danger': order.orderstatus === 'Quotation' || order.orderstatus === 'new'
+            }"
+          >
+            {{ order.orderstatus }}
+          </span>
+        </td>
+        <td>
+          <button
+            type="button"
+            class="btn btn-info btn-sm"
+            (click)="editorder(order)"
+          >
+            <i class="bi bi-pencil"></i> Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <!-- Pagination Controls -->
+  <div class="d-flex justify-content-between align-items-center">
+    <button
+      class="btn btn-secondary"
+      (click)="previousPage()"
+      [disabled]="!hasPreviousPage"
+    >
+      Previous
+    </button>
+  
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  
+    <button
+      class="btn btn-secondary"
+      (click)="nextPage()"
+      [disabled]="!hasNextPage"
+    >
+      Next
+    </button>
+  </div>
+  

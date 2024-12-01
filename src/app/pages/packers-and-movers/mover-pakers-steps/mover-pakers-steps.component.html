@@ -1,4 +1,4 @@
-<header class="header-inner">
+<!-- <header class="header-inner">
   <div class="container">
     <div class="row align-items-center">
       <div class="col-auto">
@@ -18,7 +18,7 @@
       </div>
     </div>
   </div>
-</header>
+</header> -->
 <div class="mover-banner bg-purple pt-5">
   <div class="container">
     <div class="row align-items-center">
@@ -513,7 +513,7 @@
                         <div class="col-md-2">
                           <a
                             href="#"
-                            (click)="nextPage(1)"
+                            (click)="EditStep(1); $event.preventDefault()"
                             style="color: #eb2c60"
                             >Edit</a
                           >
@@ -539,7 +539,7 @@
                           <label>Item to Move*</label>
                         </div>
                         <div class="col-md-2">
-                          <a href="#" (click)="nextPage(2)" style="color: #eb2c60"
+                          <a href="#" (click)="EditStep(2);$event.preventDefault()" style="color: #eb2c60"
                             >Edit</a
                           >
                         </div>
@@ -563,7 +563,7 @@
                           }}</span>
                         </div>
                         <div class="col-md-2">
-                          <a href="#" (click)="nextPage(3)" style="color: #eb2c60"
+                          <a href="#" (click)="EditStep(3);$event.preventDefault()" style="color: #eb2c60"
                             >Edit</a
                           >
                         </div>
