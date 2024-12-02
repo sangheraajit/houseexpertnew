@@ -452,6 +452,7 @@ export class BookingviewComponent implements OnInit {
     this.ServiceObj.apicall(body).subscribe(
       (res: any) => {
         let data: any = res;
+        console.log("DDL_PACKAGE",data)
         if (data.length > 0) {
           this.ddlpackage = data as any[];
           this.packagename = this.ddlpackage.find(

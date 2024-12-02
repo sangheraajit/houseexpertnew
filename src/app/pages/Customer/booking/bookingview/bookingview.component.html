@@ -72,9 +72,9 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr class="bg-light border">
-          <td></td>
+          <td style="width: 50px;"></td>
           <td class="text-left">Item</td>
-          <td class="text-right">Quantity</td>
+          <td class="text-end">Quantity</td>
         </tr>
       </thead>
       <tbody>
@@ -83,44 +83,44 @@
             <img [src]="item.imageurl ? ImageserverUrl + item.imageurl : noimageurl" class="img-fluid" />
           </td>
           <td class="text-left">{{ item.item_name }}</td>
-          <td class="text-right">{{ item.quantity }}</td>
+          <td class="text-end">{{ item.quantity }}</td>
         </tr>
       </tbody>
       <tfoot>
-        <tr>
+        <tr >
           <td></td>
-          <td class="text-right"><b>Sub-Total</b></td>
-          <td class="text-right">{{ dialog.grandtotal }}</td>
+          <td ><b>Sub-Total</b></td>
+          <td class="text-end">{{ dialog.grandtotal }}</td>
+        </tr>
+        <tr *ngIf="dialog.discount && dialog.discount>0">
+          <td></td>
+          <td ><b>Discount</b></td>
+          <td class="text-end">{{ dialog.discount }}</td>
+        </tr>
+        <tr *ngIf="dialog.insuranceamount && dialog.insuranceamount>0">
+          <td></td>
+          <td ><b>Insurance Amount {{ insurancerate }} %</b></td>
+          <td class="text-end">{{ dialog.insuranceamount }}</td>
+        </tr>
+        <tr *ngIf="dialog.gstamount && dialog.gstamount>0">
+          <td></td>
+          <td ><b>GST Amount</b></td>
+          <td class="text-end">{{ dialog.gstamount }}</td>
         </tr>
         <tr>
           <td></td>
-          <td class="text-right"><b>Discount</b></td>
-          <td class="text-right">{{ dialog.discount }}</td>
+          <td ><b>Paid Amount</b></td>
+          <td class="text-end">{{ paidamount }}</td>
         </tr>
         <tr>
           <td></td>
-          <td class="text-right"><b>Insurance Amount {{ insurancerate }} %</b></td>
-          <td class="text-right">{{ dialog.insuranceamount }}</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td class="text-right"><b>GST Amount</b></td>
-          <td class="text-right">{{ dialog.gstamount }}</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td class="text-right"><b>Paid Amount</b></td>
-          <td class="text-right">{{ paidamount }}</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td class="text-right"><b>Balance</b></td>
-          <td class="text-right text-danger">
+          <td ><b>Balance</b></td>
+          <td class="text-end text-danger">
             {{ dialog.grandtotal - dialog.discount - paidamount }}
           </td>
         </tr>
         <tr>
-          <td colspan="3" class="text-right">
+          <td colspan="3" class="text-end" style="text-align: right; border: 1px solid red;">
             <button 
               *ngIf="dialog.orderstatus === 'Quotation' || dialog.orderstatus === 'adminapproved'" 
               class="btn btn-danger text-uppercase fw-bold" 
