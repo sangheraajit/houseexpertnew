@@ -64,7 +64,7 @@
 }
 
 .landing-steps {
-  padding: 200px 0 100px;
+  padding: 90px 0 100px;
 
   .container {
     position: relative;
@@ -325,10 +325,10 @@
 }
 
 @media (max-width: 767px) {
-  .list-items-top {
+  /* .list-items-top {
     padding-right: 23px;
     padding-top: 100px;
-  }
+  } */
   .form-right {
     bottom: 0; /* Align to the bottom of the image */
     top: -79px; /* Remove top alignment */
@@ -386,20 +386,23 @@
 @media (max-width: 576px) {
   .form-right {
     bottom: 0; /* Align to the bottom of the image */
-    top: -230px; /* Remove top alignment */
+    margin-top: 0;
+    margin-bottom: 0;  
     right: 0; /* Stretch across the screen */
     width: 100%; /* Full-width on small screens */
     max-width: unset; /* Remove max-width constraint */
     padding-top: 20px; /* Reduce padding for smaller screens */
     transform: translateY(0); /* No vertical centering */
+     height: 58vh;
   }
   .landing-steps .blur-bg2 {
     width: 200px;
     right: 10px;
   }
-  .landing-shape .truck-2 {
+  .landing-shape .truck-2 img {
     margin-top: auto;
     margin-bottom: 0;
+    width: 330px;
   }
   .translate-middle-y {
     transform: translateY(-160%) !important;
