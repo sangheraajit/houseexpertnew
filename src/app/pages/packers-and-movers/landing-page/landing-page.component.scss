@@ -38,7 +38,7 @@
   &::after {
     bottom: -15px;
     left: 70px;
-    right: -20px;
+    right: 0px;
   }
 }
 
@@ -381,6 +381,12 @@
       width: 100px;
     }
   }
+  .shadow-pink{
+    img 
+    {
+      width: 100px;
+    }
+  }
 }
 
 @media (max-width: 576px) {
@@ -408,6 +414,12 @@
     transform: translateY(-160%) !important;
   }
   .shadow-purple{
+    img 
+    {
+      width: 100px;
+    }
+  }
+  .shadow-pink{
     img 
     {
       width: 100px;
