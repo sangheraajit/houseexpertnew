@@ -22,19 +22,21 @@
 <div class="mover-banner bg-purple pt-5">
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-md-6">
-        <div class="req-description mb-4">
-          <p class="fs-24 mb-2 text-white">Your</p>
-          <h2
-            class="font-display mb-4 fw-bold d-inline-flex align-items-end gap-2 bottom-line fs-70"
-          >
-            Stress-Free
-            <sub class="font-poppins fs-24"> Moving Solution</sub>
-          </h2>
-          <p class="m-0 mt-4 fs-18">
-            We handle all aspects of your move, so you can relax and enjoy your
-            new home.
-          </p>
+      <div class="col-lg-12 col-md-12">
+        <div class="image-container">
+          <div class="req-description mb-4">
+            <p class="fs-24 mb-2 text-white">Your</p>
+            <h2
+              class="font-display mb-4 fw-bold d-inline-flex align-items-end gap-2 bottom-line fs-70"
+            >
+              Stress-Free
+              <sub class="font-poppins fs-24"> Moving Solution</sub>
+            </h2>
+            <p class="m-0">
+              We handle all aspects of your move, so you can relax and enjoy your new home.
+            </p>
+          </div>
+          <img width="100%" src="../../../assets/images/landing.png" />
         </div>
       </div>
     </div>
@@ -54,171 +56,133 @@
           class="nav-tabs"
           (navChange)="navChanged($event)"
         >
-          <li [ngbNavItem]="1">
-            <button class="" ngbNavLink>Step 1</button>
-            <ng-template ngbNavContent>
-              <div class="">
-                <h3 class="text-uppercase fs-20 mb-3 fw-bold text-purple">
-                  Movment details
-                </h3>
-                <div>
-                  <form [formGroup]="Customerform">
-                    <div class="row mb-4">
-                      <div class="col-md-5">
-                        <div class="form-group">
-                          <label>Moving From*</label>
-                          <app-google-places
-                            formControlName="fromaddress"
-                            placeholder="Moving From"
-                            [isRequired]="true"
-                            [autocompleteInput]="jheader.fromaddress"
-                            (setAddress)="getAddress($event, 'from')"
-                            adressType="geocode"
-                            [ngClass]="{
-                              'is-invalid':
-                                f['fromaddress'].touched &&
-                                !f['fromaddress'].valid
-                            }"
-                          ></app-google-places>
-                        </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <input
-                            style="width: 100px"
-                            type="number"
-                            formControlName="fromfloor"
-                            [(ngModel)]="jheader.fromfloor"
-                            placeholder="Floor no"
-                            [ngClass]="{
-                              'form-control is-invalid':
-                                f['fromfloor'].touched && !f['fromfloor'].valid
-                            }"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-5">
-                        <div class="form-group">
-                          <label class="checkbox">
-                            <input
-                              type="checkbox"
-                              formControlName="fromlift"
-                              [(ngModel)]="jheader.fromlift"
-                            />
-                            Service Lift
-                          </label>
-                        </div>
+        <li [ngbNavItem]="1">
+          <button class="btn btn-link" ngbNavLink>Step 1</button>
+          <ng-template ngbNavContent>
+            <div>
+              <h3 class="text-uppercase fs-20 mb-3 fw-bold text-purple">
+                Movement Details
+              </h3>
+              <div>
+                <form [formGroup]="Customerform">
+                  <!-- Moving From Section -->
+                  <div class="row mb-4">
+                    <div class="col-lg-12 col-md-12">
+                      <div class="form-group">
+                        <label for="fromAddress">Moving From*</label>
+                        <app-google-places
+                          id="fromAddress"
+                          formControlName="fromaddress"
+                          placeholder="Moving From"
+                          [isRequired]="true"
+                          [autocompleteInput]="jheader.fromaddress"
+                          (setAddress)="getAddress($event, 'from')"
+                          adressType="geocode"
+                          [ngClass]="{
+                            'is-invalid': f['fromaddress'].touched && !f['fromaddress'].valid
+                          }"
+                        ></app-google-places>
                       </div>
                     </div>
-                    <div class="row mb-4">
-                      <div class="col-md-5">
-                        <div class="form-group">
-                          <label>Moving To*</label>
-                          <app-google-places
-                            formControlName="toaddress"
-                            [placeholder]="
-                              bookingInformation.categoryname ==
-                              'Packers and Movers'
-                                ? 'Moving to'
-                                : 'Address'
-                            "
-                            [isRequired]="true"
-                            [autocompleteInput]="jheader.toaddress"
-                            (setAddress)="getAddress($event, 'to')"
-                            adressType="geocode"
-                            [ngClass]="{
-                              'is-invalid':
-                                f['toaddress'].touched && !f['toaddress'].valid
-                            }"
-                          ></app-google-places>
-                        </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <input
-                            style="width: 100px"
-                            formControlName="tofloor"
-                            type="number"
-                            [(ngModel)]="jheader.tofloor"
-                            placeholder="Floor no"
-                            [ngClass]="{
-                              'is-invalid form-control':
-                                f['tofloor'].touched && !f['tofloor'].valid
-                            }"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-5">
-                        <div class="form-group">
-                          <label class="checkbox">
-                            <input
-                              type="checkbox"
-                              formControlName="fromlift"
-                              [(ngModel)]="jheader.tolift"
-                            />
-                            Service Lift
-                          </label>
-                        </div>
+                    <div class="col-lg-6 col-md-12">
+                      <div class="form-group">
+                        <label for="fromFloor">Floor No</label>
+                        <input
+                          id="fromFloor"
+                          class="form-control"
+                          type="number"
+                          formControlName="fromfloor"
+                          [(ngModel)]="jheader.fromfloor"
+                          placeholder="Floor No"
+                          [ngClass]="{
+                            'is-invalid': f['fromfloor'].touched && !f['fromfloor'].valid
+                          }"
+                        />
                       </div>
                     </div>
-                    <div class="row mb-4 d-none">
-                      <div class="col-md-5">
-                        <div class="form-group">
+                    <div class="col-lg-6 col-md-12">
+                      <div class="form-group">
+                        <label class="checkbox">
                           <input
-                            class="form-control"
-                            type="text"
-                            placeholder="Name"
-                            [(ngModel)]="jcustomer.cust_name"
-                            formControlName="cust_name"
-                            [ngClass]="{
-                              'is-invalid form-control':
-                                f['cust_name'].touched && !f['cust_name'].valid
-                            }"
+                            type="checkbox"
+                            formControlName="fromlift"
+                            [(ngModel)]="jheader.fromlift"
                           />
-                        </div>
-                      </div>
-                      <div class="col-md-2">
-                        <div class="form-group">
-                          <input
-                            class="form-control"
-                            type="text"
-                            placeholder="Phone No"
-                            formControlName="cust_mobile"
-                            [(ngModel)]="jcustomer.cust_mobile"
-                            class="form-control sf-form-control"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-5">
-                        <div class="form-group">
-                          <input
-                            class="form-control"
-                            type="text"
-                            placeholder="email"
-                            formControlName="cust_email"
-                            [(ngModel)]="jcustomer.cust_email"
-                            class="form-control sf-form-control"
-                          />
-                        </div>
+                          Service Lift
+                        </label>
                       </div>
                     </div>
-
-                    <div
-                      class="form-group d-flex justify-content-end mb-0 mt-5 pt-5"
+                  </div>
+        
+                  <!-- Moving To Section -->
+                  <div class="row mb-4">
+                    <div class="col-lg-6 col-md-12">
+                      <div class="form-group">
+                        <label for="toAddress">Moving To*</label>
+                        <app-google-places
+                          id="toAddress"
+                          formControlName="toaddress"
+                          [placeholder]="
+                            bookingInformation.categoryname == 'Packers and Movers'
+                              ? 'Moving to'
+                              : 'Address'
+                          "
+                          [isRequired]="true"
+                          [autocompleteInput]="jheader.toaddress"
+                          (setAddress)="getAddress($event, 'to')"
+                          adressType="geocode"
+                          [ngClass]="{
+                            'is-invalid': f['toaddress'].touched && !f['toaddress'].valid
+                          }"
+                        ></app-google-places>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                      <div class="form-group">
+                        <label for="toFloor">Floor No</label>
+                        <input
+                          id="toFloor"
+                          class="form-control"
+                          type="number"
+                          formControlName="tofloor"
+                          [(ngModel)]="jheader.tofloor"
+                          placeholder="Floor No"
+                          [ngClass]="{
+                            'is-invalid': f['tofloor'].touched && !f['tofloor'].valid
+                          }"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-12">
+                      <div class="form-group">
+                        <label class="checkbox">
+                          <input
+                            type="checkbox"
+                            formControlName="tolift"
+                            [(ngModel)]="jheader.tolift"
+                          />
+                          Service Lift
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+        
+                  <!-- Next Button -->
+                  <div class="form-group d-flex justify-content-end mb-0 mt-5 pt-5">
+                    <button
+                      (click)="nextPage(2)"
+                      type="submit"
+                      class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
                     >
-                      <button
-                        (click)="nextPage(2)"
-                        type="submit"
-                        class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
-                      >
-                        Next
-                      </button>
-                    </div>
-                  </form>
-                </div>
+                      Next
+                    </button>
+                  </div>
+                </form>
               </div>
-            </ng-template>
-          </li>
+            </div>
+          </ng-template>
+        </li>
+        
           <li [ngbNavItem]="2">
             <button ngbNavLink>Step 2</button>
             <ng-template ngbNavContent>

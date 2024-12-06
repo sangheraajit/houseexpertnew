@@ -64,48 +64,49 @@
 
 .mover-banner{ 
     width: 100%;
-    background: url(../../../../assets/images/landing.png) 
-    bottom right no-repeat var(--purple-color); 
-    min-height: 300px;
-background-position: 90%;
-position: relative;
+   // background: url(../../../../assets/images/landing.png) 
+   // bottom right no-repeat var(--purple-color); 
+   // min-height: 300px;
+//background-position: 90%;
+//position: relative;
 
 .req-description {
     color: var(--white-color);
-
+  
     p.top {
-        font-style: italic;
+      font-style: italic;
     }
-
+  
     .font-display {
-        font-style: italic;
-        line-height: .8;
-
-        sub {
-            font-weight: 500;
-            line-height: 1;
-        }
+      font-style: italic;
+      line-height: 0.8;
+  
+      sub {
+        font-weight: 500;
+        line-height: 1;
+      }
     }
-}
-.bottom-line {
+  }
+  
+  .bottom-line {
     position: relative;
-
+  
     &::before,
     &::after {
-        position: absolute;
-        bottom: -20px;
-        border-bottom: 1px solid var(--white-color);
-        content: "";
-        left: 50px;
-        right: 0;
-   }
-
-    &::after {
-        bottom: -15px;
-        left: 70px;
-        right: -20px;
+      position: absolute;
+      bottom: -20px;
+      border-bottom: 1px solid var(--white-color);
+      content: "";
+      left: 50px;
+      right: 0;
     }
-}
+  
+    &::after {
+      bottom: -15px;
+      left: 70px;
+      right: 0px;
+    }
+  }
 
 }
 .mover-steps-section{ padding: 100px 0;
@@ -187,7 +188,7 @@ li.nav-item+.nav-item {
     background: url(../../../../assets/images/blur-top.png) no-repeat;
     left: -200px;
     position: absolute;
-    width: auto;
+    width: 490px;
     height: 535px;
     top: -200px;
     background-size: cover !important;
@@ -197,9 +198,9 @@ li.nav-item+.nav-item {
 
 .blur-bg2 {
     background: url(../../../../assets/images/blur-bottom.png) no-repeat;
-    right: -200px;
+    right: -150px;
     position: absolute;
-    width: auto;
+    width: 490px;
     height: 490px;
     bottom: -200px;
     background-size: cover !important;
@@ -360,3 +361,34 @@ div{
     background: #022279 !important;
     color: #fff;
 }
+@media (max-width: 768px) {
+    .nav-container {
+      flex-direction: column; /* Stack buttons vertically */
+    }
+    .nav-item button {
+      width: 100px; /* Full width for better accessibility */
+      padding: 10px; /* Adjust padding for smaller screens */
+      font-size: var(--font-size-12);
+    }
+    li.nav-item+.nav-item {
+        margin-left: -18px;
+    }
+    .nav-item+.nav-item{
+        button{ padding-left: 0px;}
+    }
+    .mover-steps-section
+    {
+        padding: 60px 0;
+    }
+    .blur-bg2 {
+        width: 200px;
+        right: 10px;
+      }
+  }
+  @media (max-width: 576px) {
+    .blur-bg2 {
+        width: 200px;
+        right: 10px;
+      }
+  }
+  
