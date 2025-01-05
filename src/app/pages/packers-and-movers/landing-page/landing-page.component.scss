@@ -276,7 +276,7 @@
   background: url(../../../../assets/images/bullet.svg) right center no-repeat;
 }
 .form-right {
-  margin-top: 30px;
+  margin-top: 60px;
   margin-bottom: -100px;
   top: 60%; /* Center vertically */
   right: 5%; /* Distance from the right edge */
@@ -363,6 +363,7 @@
     top: 0; /* Align to the top of the image */
     right: 5%; /* Add some spacing from the edge */
     transform: translateY(0); /* No vertical centering */
+    position: relative;
   }
   .landing-steps .blur-bg2 {
     width: 200px;

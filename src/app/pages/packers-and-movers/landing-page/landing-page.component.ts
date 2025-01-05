@@ -297,6 +297,7 @@ export class LandingPageComponent {
         this.jheader.incity = false;
       }
       this.bookingInformation.jheader[0] = this.jheader;
+      this.bookingInformation.setBookingInformation(this.bookingInformation)
     }
   }
 
