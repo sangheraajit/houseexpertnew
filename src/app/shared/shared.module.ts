@@ -58,6 +58,7 @@ import { ToastComponent } from '../components/toast/toast.component';
 import { ToastService } from '../service/toast.service';
 import { ToasterComponent } from '../components/toaster/toaster.component';
 import { ProfileComponent } from '../pages/Customer/profile/profile.component';
+import { PackersAndMoversFaqComponent } from '../pages/packers-and-movers/packers-and-movers-faq/packers-and-movers-faq.component';
 
 
 
@@ -118,7 +119,8 @@ import { ProfileComponent } from '../pages/Customer/profile/profile.component';
     GooglePlacesComponent,
     ToastComponent,
     ToasterComponent,
-    ProfileComponent
+    ProfileComponent,
+    PackersAndMoversFaqComponent
   ],
   exports: [
     HeaderComponent,
@@ -172,7 +174,8 @@ import { ProfileComponent } from '../pages/Customer/profile/profile.component';
     GooglePlacesComponent,
     ToastComponent,
     ToasterComponent,
-    ProfileComponent
+    ProfileComponent,
+    PackersAndMoversFaqComponent
     ]
 })
 export class SharedModule { }
