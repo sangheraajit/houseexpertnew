@@ -297,7 +297,7 @@ export class LandingPageComponent {
         this.jheader.incity = false;
       }
       this.bookingInformation.jheader[0] = this.jheader;
-      this.bookingInformation.setBookingInformation(this.bookingInformation)
+      this.SubcategoryService.setBookingInformation(this.bookingInformation)
     }
   }
 
@@ -424,13 +424,14 @@ export class LandingPageComponent {
       console.log("OtpVerification result",result); // 'Closed'
       console.log("OtpVerification",result);
       if (result.data && result.iserror==false) {
-        this.toastService.showSuccessToast(
+        this.verifyCustomer();
+        /*  this.toastService.showSuccessToast(
           "info",
           "you are logged in successfully"
         );
 
         // window.location.reload();
-        if (
+       if (
           this.jcustomer.cust_name == "" &&
           this.jcustomer.cust_email == "" &&
           this.jcustomer.cust_mobile == ""
@@ -439,7 +440,7 @@ export class LandingPageComponent {
           this.jcustomer.cust_email = this.currentUser.custEmail;
           this.jcustomer.cust_mobile = this.currentUser.custMobile;
         }
-        this.router.navigate(["mover-steps"]);
+        this.router.navigate(["mover-steps"]); */
       }
       else {
         this.toastService.showErrorToast(
@@ -450,6 +451,70 @@ export class LandingPageComponent {
     });
     
   }
+  verifyCustomer() {
+    // Verify the OTP using the service
+    this.userService.VerifyCustomerExists(this.Mainform.value.phoneNumber).subscribe(
+      (res: any) => {
+        console.log('VerifyCustomerExists:', res);
+
+        // Set user data in auth service
+        this.authService.setUser(res);
+        if (
+          this.jcustomer.cust_name == "" &&
+          this.jcustomer.cust_email == "" &&
+          this.jcustomer.cust_mobile == ""
+        ) {
+          this.jcustomer.cust_name = res.custName;
+          this.jcustomer.cust_email = res.custEmail;
+          this.jcustomer.cust_mobile = res.custMobile;
+        }
+        // Close the modal with success result
+        const loginData = { iserror: false, data: res };
+       // this.activeModal.close(loginData);
+      },
+      (err: any) => {
+        console.log('VerifyCustomerExists Error:', err);
+
+        // Prepare the error object
+        const loginData = { iserror: true, data: err };
+
+        // Display error toast based on status
+        if (err.status === 404 && err.error === 'Customer Not Found') {
+          //this.toastService.showErrorToast('Error', 'Invalid username or OTP.');
+          this.registorCustomr();
+
+        } else {
+          this.toastService.showErrorToast('Error', err.error || 'Customer verification failed.');
+        }
+
+        // Optionally close the modal with an error result
+       // this.activeModal.dismiss(loginData);
+      }
+    );
+  }
+registorCustomr()
+{
+  const { phoneNumber, name, email } =
+          this.Mainform.value;
+  let data = {
+    spname: "customer_save",
+    ptype: "save",
+    pcust_name: name,
+    pcust_pass: phoneNumber.replace("+91", ""),
+    pcust_gender: "M",
+    pcust_email: email,
+    pcust_mobile: phoneNumber.replace("+91", ""),
+    pcust_address: name,
+    pcust_city: 1,
+  };
+  this.userService.register(data).subscribe((res: any) => {
+    console.log(res);
+    this.verifyCustomer()
+    localStorage.setItem("token", res);
+    
+    this.router.navigate(["mover-steps"]); 
+  });
+}
   OnSelected(type: any) {
     console.log("OnSelected", type);
     this.bookingInformation.housetype = type.value.name;

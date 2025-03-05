@@ -12,6 +12,7 @@ import { Subscription, take, timer } from "rxjs";
 import { UserService } from "src/app/service/user.service";
 import { AuthService } from "src/app/service/auth.service";
 import { ToastService } from "src/app/service/toast.service";
+import { SignupComponent } from "../signup/signup.component";
 interface IUser {
   name: string;
   email: string;
@@ -125,23 +126,24 @@ export class LoginComponent {
   openModal() {
     // Close any active modal if open
     this.activeModal?.close(true);
-  
+
     // Open OTP verification modal
     const modalRef = this.modalService.open(OtpVerificationComponent, {
       size: 'lg',
       centered: true,
     });
-  
+
     // Pass data (phone number) to the OTP component
     modalRef.componentInstance.phoneNumber = this.loginForm.value.phoneNumber;
-  
+
     // Handle the result when the modal is closed
     modalRef.result
       .then((result) => {
         console.log('OTP Modal Result:', result);
         if (result && !result.iserror) {
-          this.toastService.showSuccessToast('info', 'You are logged in successfully');
-          window.location.reload();
+       //   this.toastService.showSuccessToast('info', 'You are logged in successfully');
+         // window.location.reload();
+         this.verifyCustomer();
         }
       })
       .catch((err) => {
@@ -149,8 +151,42 @@ export class LoginComponent {
         this.toastService.showErrorToast('Error', 'Failed to verify OTP.');
       });
   }
-  
 
+  verifyCustomer() {
+    // Verify the OTP using the service
+    this.userservice.VerifyCustomerExists(this.phoneNumber).subscribe(
+      (res: any) => {
+        console.log('VerifyCustomerExists:', res);
+
+        // Set user data in auth service
+        this.authService.setUser(res);
+
+        // Close the modal with success result
+        const loginData = { iserror: false, data: res };
+        this.activeModal.close(loginData);
+      },
+      (err: any) => {
+        console.log('VerifyCustomerExists Error:', err);
+
+        // Prepare the error object
+        const loginData = { iserror: true, data: err };
+
+        // Display error toast based on status
+        if (err.status === 404 && err.error === 'Customer Not Found') {
+          //this.toastService.showErrorToast('Error', 'Invalid username or OTP.');
+          this.openSignupModal();
+
+        } else {
+          this.toastService.showErrorToast('Error', err.error || 'Customer verification failed.');
+        }
+
+        // Optionally close the modal with an error result
+        this.activeModal.dismiss(loginData);
+      }
+    );
+  }
+
+  
   SendOPT() {
     const { email, password, phone } = this.loginForm.value;
     this.submitted = true;
@@ -164,6 +200,8 @@ export class LoginComponent {
           this.phoneNumber.length - 4
         ); */
       this.phoneNumber = this.loginForm.value.phoneNumber;
+
+
       this.userservice.SendOPT(this.phoneNumber).subscribe(
         (res: any) => {
           this.ShowCreateAccount = false;
@@ -194,6 +232,7 @@ export class LoginComponent {
             this.ShowCreateAccount = true;
             this.ShowMobileinput = false;
             this.ShowOtpInput = false;
+            this.openSignupModal();
           } else if (data.status == 400) {
             /*               this.messageService.add({
                 severity: 'error',
@@ -265,5 +304,32 @@ export class LoginComponent {
       }
     });
   }
-  
+  openSignupModal() {
+    // Close any active modal if open
+    this.activeModal?.close(true);
+
+    // Open OTP verification modal
+    const modalRef = this.modalService.open(SignupComponent, {
+      size: 'lg',
+      centered: true,
+    });
+
+    // Pass data (phone number) to the OTP component
+    modalRef.componentInstance.phoneNumber = this.phoneNumber;
+
+    // Handle the result when the modal is closed
+    modalRef.result
+      .then((result) => {
+        console.log('OTP Modal Result:', result);
+        if (result && !result.iserror) {
+          //this.toastService.showSuccessToast('info', 'You are logged in successfully');
+         //window.location.reload();
+         
+        }
+      })
+      .catch((err) => {
+        console.error('Modal dismissed with error:', err);
+        this.toastService.showErrorToast('Error', 'Failed to verify OTP.');
+      });
+  }
 }

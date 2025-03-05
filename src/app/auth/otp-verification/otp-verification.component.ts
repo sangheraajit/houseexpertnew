@@ -7,6 +7,7 @@ import { AuthService } from "src/app/service/auth.service";
 import { ToastService } from "src/app/service/toast.service";
 import { FormBuilder } from "@angular/forms";
 import { NgOtpInputComponent, NgOtpInputConfig } from "ng-otp-input";
+import { SignupComponent } from "../signup/signup.component";
 
 @Component({
   selector: "app-otp-verification",
@@ -22,8 +23,8 @@ export class OtpVerificationComponent {
   otp: string | undefined;
   OptResponse: any;
   @ViewChild(NgOtpInputComponent, { static: false }) ngOtpInput:
-  | NgOtpInputComponent
-  | undefined;
+    | NgOtpInputComponent
+    | undefined;
   otpconfig: NgOtpInputConfig = {
     allowNumbersOnly: false,
     length: 5,
@@ -53,27 +54,24 @@ export class OtpVerificationComponent {
     this.userservice.VerifyOPT(this.phoneNumber, this.otp).subscribe(
       (res: any) => {
         console.log('VerifyOPT Response:', res);
-  
-        // Set user data in auth service
-        this.authService.setUser(res);
-  
-        // Close the modal with success result
-        const loginData = { iserror: false, data: res };
+        const loginData = { iserror: false, data: res.message };
         this.activeModal.close(loginData);
       },
       (err: any) => {
         console.log('VerifyLoginCode Error:', err);
-  
+
         // Prepare the error object
         const loginData = { iserror: true, data: err };
-  
+
         // Display error toast based on status
         if (err.status === 404 && err.error === 'Invalid user name or user pin.') {
-          this.toastService.showErrorToast('Error', 'Invalid username or OTP.');
+          //this.toastService.showErrorToast('Error', 'Invalid username or OTP.');
+          
+
         } else {
           this.toastService.showErrorToast('Error', err.error || 'OTP verification failed.');
         }
-  
+
         // Optionally close the modal with an error result
         this.activeModal.dismiss(loginData);
       }
