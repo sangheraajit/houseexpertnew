@@ -29,6 +29,7 @@
       </div>
     </div>
   </div>
+
   <div class="copyright">
     <div class="container">
       <div class="row">
@@ -56,4 +57,18 @@
       </div>
     </div>
   </div>
+  <div>
+    <a id="callnowbutton" [attr.href]="'tel:' + environment.mobilenumber">
+      <span>Call&nbsp;Now</span>
+    </a>
+  
+    <a
+      id="whatsappbutton"
+      [attr.href]="'https://api.whatsapp.com/send?phone=' + environment.mobilenumber + '&text=hello'"
+      target="_blank"
+    >
+      <i class="fa fa-phone-volume" ></i>
+    </a>
+  </div>
+  
 </footer>

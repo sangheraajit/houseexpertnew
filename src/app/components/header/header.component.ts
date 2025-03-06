@@ -6,7 +6,7 @@ import { LoginComponent } from 'src/app/auth/login/login.component';
 import { AuthService } from 'src/app/service/auth.service';
 import { ToastService } from 'src/app/service/toast.service';
 import { UserService } from 'src/app/service/user.service';
-
+import { environment } from '../../../environments/environment';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -18,7 +18,7 @@ export class HeaderComponent {
   formModal: any;
   currentUser: any;
   isAuthenticated: boolean = false;
-
+ public environment = environment;
   private subscription: Subscription = new Subscription();
   isLoggedIn: boolean = false;
   username: string = "";
