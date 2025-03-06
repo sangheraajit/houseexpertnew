@@ -6,6 +6,7 @@ import { BookinglistComponent } from './bookinglist/bookinglist.component';
 import { BookingviewComponent } from './bookingview/bookingview.component';
 
 import { FormsModule } from '@angular/forms';
+import { SelectPackageComponent } from './select-package/select-package.component';
 
 
 
@@ -13,7 +14,8 @@ import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     BookinglistComponent,
-    BookingviewComponent
+    BookingviewComponent,
+    SelectPackageComponent
   ],
   imports: [
     CommonModule,

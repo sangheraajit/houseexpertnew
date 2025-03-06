@@ -43,6 +43,10 @@ export class MyBookingComponent implements OnInit {
   public noimageurl =
     "../../assets/images/all-categories/icons/diploma-interface-svgrepo-com.svg";
   public ImageserverUrl = environment.ImageserverUrl + "article/";
+  combinedJson: { order: any; orderdetails: any } = {
+    order: null,
+    orderdetails: null,
+  };
   constructor(
     public userService: UserService,
     private orderService: OrderService,
@@ -63,6 +67,8 @@ export class MyBookingComponent implements OnInit {
 
     if (this.msg.length > 0) {
       this.dialog = JSON.parse(this.msg);
+      this.combinedJson.order = this.dialog;
+     // console.log("combinedJson",this.combinedJson)
       this.getPackList();
       this.getVehicleList();
       this.getorderdetaillist(this.dialog.id);
@@ -140,7 +146,7 @@ export class MyBookingComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.authService.currentUserValue;
-    console.log("this.customerinformation currentUser", this.currentUser);
+    //console.log("this.customerinformation currentUser", this.currentUser);
   }
   // closeModal() {
   //    this.activeModal.close();
@@ -161,11 +167,12 @@ export class MyBookingComponent implements OnInit {
         // debugger;
         let data: any = res;
 
-        console.log(data.results);
+        //console.log(data.results);
         if (data.length > 0) {
           this.dialogdetail = data;
           //this.sourcedatadtl.load(JSON.parse(data.results.table[0].document));
           //this.dialogdetail = JSON.parse(data.results.table[0].document);
+          
         }
       },
 

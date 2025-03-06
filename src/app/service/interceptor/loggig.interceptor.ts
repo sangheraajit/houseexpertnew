@@ -23,7 +23,7 @@ export class LoggigInterceptor implements HttpInterceptor {
       finalize(() => {
         this.loaderService.hide()
           const elapsed = Date.now() - started;
-          console.log(`URL: ${req.url} Method: ${req.method} Time took: ${elapsed} ms`)
+          //console.log(`URL: ${req.url} Method: ${req.method} Time took: ${elapsed} ms`)
       }))
   }
 }

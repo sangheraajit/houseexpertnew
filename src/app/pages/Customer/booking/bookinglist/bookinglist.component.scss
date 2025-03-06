@@ -1,6 +1,28 @@
-::ng-deep  .p-datatable .p-datatable-tbody > tr > td {
-  padding: 0.5rem 0.5rem;
+/*  table, th, td {
+    border: 1px solid black;
 }
-::ng-deep .p-datatable .p-datatable-thead > tr > th {
-  padding: 0.5rem 0.5rem;
+th, td {
+    padding: 10px;
 }
+ .center {
+  margin: auto;
+  width: 80%;
+  padding: 10px;
+}
+ */
+ .img-fluid
+ {
+  width: 20px;
+ }
+ .wrapper {
+  padding-top: 95px;
+  width: 80%;
+  margin: auto;
+ }
+ @media only screen and (max-width:767px){
+  .wrapper {
+    padding: 10px;
+    width: 100%;
+    padding-top: 95px;
+   }
+ }

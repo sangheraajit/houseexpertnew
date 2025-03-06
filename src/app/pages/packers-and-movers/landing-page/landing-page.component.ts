@@ -205,7 +205,7 @@ export class LandingPageComponent {
       ]),
     });
     this.currentUser = this.authService.currentUserValue;
-    console.log("this.customerinformation currentUser", this.currentUser);
+    //console.log("this.customerinformation currentUser", this.currentUser);
 
     this.isAuthenticated = this.authService.isLoggedIn();
     if(this.isAuthenticated)
@@ -310,7 +310,7 @@ export class LandingPageComponent {
     } */
     //this.router.navigate(['sub-category/customer']);
     this.currentUser = this.authService.currentUserValue;
-    console.log("this.customerinformation currentUser", this.currentUser);
+    //console.log("this.customerinformation currentUser", this.currentUser);
 
     this.isAuthenticated = this.authService.isLoggedIn();
     this.bookingInformation = this.SubcategoryService.getBookingInformation();

@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from "@angular/core";
+import { Component, OnInit, HostListener, inject } from "@angular/core";
 // import { DDLItem, DDLItemCategory } from "../../../@core/models/model";
 import { DomSanitizer } from "@angular/platform-browser";
 
@@ -10,6 +10,9 @@ import { AuthService } from "src/app/service/auth.service";
 import { environment } from "src/environments/environment";
 import { httpService } from "src/app/service/http.service";
 import { ToastService } from "src/app/service/toast.service";
+import { SelectPackageComponent } from "../select-package/select-package.component";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { SubcategoryService } from "src/app/service/subcategory.service";
 //import { PackersAndMoversMainComponent } from "src/app/sub-category/packers-and-movers-main/packers-and-movers-main.component";
 declare var Razorpay: any;
 @Component({
@@ -43,6 +46,12 @@ export class BookingviewComponent implements OnInit {
   public noimageurl =
     "../../assets/images/all-categories/icons/diploma-interface-svgrepo-com.svg";
   public ImageserverUrl = environment.ImageserverUrl + "article/";
+  combinedJson: { order: any; orderdetails: any } = {
+    order: null,
+    orderdetails: null,
+  };
+  ArticlemstlistAll: any;
+  private modalService = inject(NgbModal);
   constructor(
     public userService: UserService,
     private orderService: OrderService,
@@ -51,7 +60,9 @@ export class BookingviewComponent implements OnInit {
     private ServiceObj: httpService,
     private _sanitizer: DomSanitizer,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    
+    public SubcategoryService: SubcategoryService,
   ) {
     if (
       localStorage.getItem("Message") != null &&
@@ -63,10 +74,12 @@ export class BookingviewComponent implements OnInit {
 
     if (this.msg.length > 0) {
       this.dialog = JSON.parse(this.msg);
+      this.combinedJson.order = this.dialog;
       this.getPackList();
       this.getVehicleList();
       this.getorderdetaillist(this.dialog.id);
       this.getpaymentdetaillist(this.dialog.id);
+      this.getAllarticle();
     }
     //this.dialog.orderdate.getHours()}}":00"{{this.dialog.orderdate.getHours()>12?"PM":"AM"}}-{{ this.dialog.orderdate.getHours()+2}}":00"{{this.dialog.orderdate.getHours()>12?"PM":"AM"
     if (Number(new Date(this.dialog.orderdate).getHours()) > 12) {
@@ -140,7 +153,7 @@ export class BookingviewComponent implements OnInit {
 
   ngOnInit() {
     this.currentUser = this.authService.currentUserValue;
-    console.log("this.customerinformation currentUser", this.currentUser);
+   // console.log("this.customerinformation currentUser", this.currentUser);
   }
   // closeModal() {
   //    this.activeModal.close();
@@ -161,11 +174,24 @@ export class BookingviewComponent implements OnInit {
         // debugger;
         let data: any = res;
 
-        console.log(data.results);
+        //console.log(data.results);
         if (data.length > 0) {
           this.dialogdetail = data;
           //this.sourcedatadtl.load(JSON.parse(data.results.table[0].document));
           //this.dialogdetail = JSON.parse(data.results.table[0].document);
+          
+            //console.log(JSON.stringify(this.dialogdetail));
+            //this.sourcedata.load(this.dialogdetail);
+            try {
+             
+              this.combinedJson.orderdetails = this.dialogdetail;
+  
+              console.log("Combined JSON:", this.combinedJson);
+              // Proceed with the combined JSON
+            } catch (error) {
+              console.error("Error parsing JSON data:", error);
+            }
+          
         }
       },
 
@@ -368,6 +394,10 @@ export class BookingviewComponent implements OnInit {
         // debugger;
         let data: any = res;
         console.log(data);
+        if (!this.dialog.gstamount && this.dialog.gstamount != 0)
+          this.dialog.gstamount = Math.round(
+            (this.dialog.grandtotal * this.gstrate) / 100
+          );
         // console.log(data.results);
         if (!this.dialog.forinsurance)
           //this.dialog.forinsurance = 100000;
@@ -452,7 +482,7 @@ export class BookingviewComponent implements OnInit {
     this.ServiceObj.apicall(body).subscribe(
       (res: any) => {
         let data: any = res;
-        console.log("DDL_PACKAGE",data)
+        //console.log("DDL_PACKAGE",data)
         if (data.length > 0) {
           this.ddlpackage = data as any[];
           this.packagename = this.ddlpackage.find(
@@ -511,6 +541,41 @@ export class BookingviewComponent implements OnInit {
         // this.spinner.hide();
       }
     );
+  }
+  viewPackageRate(): void {
+    const modalRef = this.modalService.open(SelectPackageComponent, {
+         size: 'lg',
+         centered: true,
+       });
+    this.dialog.orderDetails = this.dialogdetail;
+    modalRef.componentInstance.orderHeader = this.dialog;
+    modalRef.componentInstance.ArticlemstlistAll = this.ArticlemstlistAll;
+
+    modalRef.result.then((result) => {
+      if (result) {
+        console.log("passdata", result);
+
+       // localStorage.setItem("Message", result);
+       
+        var packagefind = this.ddlpackage.find(
+          (x) => x.idval == result.packageid
+        );
+        if (packagefind) {
+          this.packagename = packagefind.textval;
+        }
+      }
+    });
+  }
+  getAllarticle() {
+    this.SubcategoryService.getAllarticle("", "").subscribe((res: any) => {
+      let data: any = res;
+
+      //console.log(data.results);
+     
+        //this.sourcedatadtl.load(JSON.parse(JSON.parse(data.results).Table[0].document));
+        this.ArticlemstlistAll =data;
+      
+    });
   }
   getSeverity(status: string) {
     switch (status) {

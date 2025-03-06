@@ -148,7 +148,7 @@ export class MoverPakersStepsComponent {
     
 
     this.currentUser = this.authService.currentUserValue;
-    console.log("this.customerinformation currentUser", this.currentUser);
+    //console.log("this.customerinformation currentUser", this.currentUser);
 
     this.isAuthenticated = authService.isLoggedIn();
 

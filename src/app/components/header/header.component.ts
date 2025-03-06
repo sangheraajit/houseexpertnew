@@ -37,7 +37,7 @@ export class HeaderComponent {
       this.isAuthenticated = this.authService.isLoggedIn();
     });
 
-    console.log("this.customerinformation currentUser", this.currentUser);
+    //console.log("this.customerinformation currentUser", this.currentUser);
   }
   openModal() {
     const modalRef = this.modalService.open(LoginComponent, {

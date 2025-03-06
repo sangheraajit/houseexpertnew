@@ -14,7 +14,16 @@
           <b>Pickup Date and Time:</b> {{ dialog.orderdate | date: 'dd-MMM-yyyy' }} {{ strdate }}
         </td>
         <td style="width: 50%" class="text-left">
-          <b>Package Type:</b> {{ packagename }}<br />
+          <div class="mr-2">
+            <b>Package Type:</b> {{ this.packagename }} 
+          </div>
+          <button
+          class="btn btn-md btn-primary"
+          (click)="viewPackageRate()"
+        >
+          View Package </button
+        ><br />
+        <br />
           <b>Status:</b> 
           <span class="badge bg-{{ getSeverity(dialog.orderstatus) }}">
             {{ dialog.orderstatus }}
@@ -116,7 +125,7 @@
           <td></td>
           <td ><b>Balance</b></td>
           <td class="text-end text-danger">
-            {{ dialog.grandtotal - dialog.discount - paidamount }}
+            {{ dialog.grandtotal + dialog.gstamount - (dialog.discount + paidamount) }}
           </td>
         </tr>
         <tr>
