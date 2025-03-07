@@ -29,7 +29,6 @@
       </div>
     </div>
   </div>
-
   <div class="copyright">
     <div class="container">
       <div class="row">
@@ -38,12 +37,7 @@
             Brain behind the design: <strong>Houseexpert.com</strong>
           </p>
         </div> -->
-        <div class="col">
-          <p class="m-0">
-            All rights reserved and copyright by <strong>House Experts</strong>
-          </p>
-        </div>
-        <div class="col-auto ms-auto">
+        <div class="col p-10">
           <div *ngFor="let section of footerInfo">
             <div class="d-flex gap-4" *ngIf="section.heading === 'Company'">
               <a
@@ -54,9 +48,16 @@
             </div>
           </div>
         </div>
+        <div class="col-auto p-10">
+          <p class="m-0">
+            All rights reserved and copyright by <strong>House Experts</strong>
+          </p>
+        </div>
+       
       </div>
     </div>
   </div>
+
   <div>
     <a id="callnowbutton" [attr.href]="'tel:' + environment.mobilenumber">
       <span>Call&nbsp;Now</span>
