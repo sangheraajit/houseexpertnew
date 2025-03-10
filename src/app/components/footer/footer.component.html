@@ -12,7 +12,7 @@
         <ng-container *ngIf="section.heading !== 'Social Links'">
           <ul class="m-0 p-0">
             <li *ngFor="let item of section.items">
-              <a [href]="item.url">{{ item.name }}</a>
+              <a [routerLink]="item.url">{{ item.name }}</a>
             </li>
           </ul>
         </ng-container>

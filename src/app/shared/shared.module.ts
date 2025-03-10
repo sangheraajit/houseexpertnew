@@ -59,6 +59,7 @@ import { ToastService } from '../service/toast.service';
 import { ToasterComponent } from '../components/toaster/toaster.component';
 import { ProfileComponent } from '../pages/Customer/profile/profile.component';
 import { PackersAndMoversFaqComponent } from '../pages/packers-and-movers/packers-and-movers-faq/packers-and-movers-faq.component';
+import { CitiesComponent } from '../pages/cities/cities.component';
 
 
 
@@ -120,7 +121,8 @@ import { PackersAndMoversFaqComponent } from '../pages/packers-and-movers/packer
     ToastComponent,
     ToasterComponent,
     ProfileComponent,
-    PackersAndMoversFaqComponent
+    PackersAndMoversFaqComponent,
+    CitiesComponent
   ],
   exports: [
     HeaderComponent,
@@ -175,7 +177,8 @@ import { PackersAndMoversFaqComponent } from '../pages/packers-and-movers/packer
     ToastComponent,
     ToasterComponent,
     ProfileComponent,
-    PackersAndMoversFaqComponent
+    PackersAndMoversFaqComponent,
+    CitiesComponent
     ]
 })
 export class SharedModule { }

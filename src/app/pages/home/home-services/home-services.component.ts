@@ -53,13 +53,13 @@ export class HomeServicesComponent {
     },
   ];
   cities = [
-    { name: "Kolkata", url: "/kolkata" },
-    { name: "Bangalore", url: "/bangalore" },
-    { name: "Mumbai", url: "/mumbai" },
-    { name: "Pune", url: "/pune" },
-    { name: "Gurgaon", url: "/gurgaon" },
-    { name: "Chennai", url: "/chennai" },
-    { name: "Ahamdabaad", url: "/ahamdabaad" },
+    { name: "Kolkata", url: "cities/kolkata" },
+    { name: "Bangalore", url: "cities/bangalore" },
+    { name: "Mumbai", url: "cities/mumbai" },
+    { name: "Pune", url: "cities/pune" },
+    { name: "Gurgaon", url: "cities/gurgaon" },
+    { name: "Chennai", url: "cities/chennai" },
+    { name: "Ahamdabaad", url: "cities/ahamdabaad" },
   ];
   selectedOption: string | undefined;
   @Input() CategoryList: any;

@@ -29,6 +29,7 @@ import { MoverPakersStepsComponent } from './pages/packers-and-movers/mover-pake
 import { ProfileComponent } from './pages/Customer/profile/profile.component';
 import { AuthGuard } from './service/auth-guard.service';
 import { MyBookingComponent } from './pages/Customer/my-booking/my-booking.component';
+import { CitiesComponent } from './pages/cities/cities.component';
 //import { MoverPakersStepsComponent } from './pages/mover-pakers-steps/mover-pakers-steps.component';
 
 const routes: Routes = [
@@ -52,7 +53,7 @@ const routes: Routes = [
   { path: 'failed-payment', component: FailedToPayComponent },
   { path: 'thankyou', component: ThankYouComponent },
   { path: 'cart', component: CartComponent },
-
+  { path: 'cities/:cityname', component: CitiesComponent },
   {
     path: 'anti-discrimination-policy',
     component: AntiDiscriminationPolicyComponent,

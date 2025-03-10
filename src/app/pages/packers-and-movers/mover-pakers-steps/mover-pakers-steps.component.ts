@@ -7,6 +7,7 @@ import {
   Validators,
 } from "@angular/forms";
 import { GoogleMap } from "@angular/google-maps";
+import { Router } from "@angular/router";
 import { NgbDate, NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
 import { Subscription } from "rxjs";
@@ -106,6 +107,7 @@ export class MoverPakersStepsComponent {
     private orderService: OrderService,
     public apiservice: httpService,
     private toastService: ToastService,
+     private router: Router,
   ) {
     /*   if(config.data.Citylist)
     {
@@ -176,6 +178,18 @@ export class MoverPakersStepsComponent {
       );
       this.Customerform.controls["toaddress"].setValue(this.jheader.toaddress);
     }
+    // ✅ Handle Payment Success
+  window.addEventListener('payment.success', (event: any) => {
+    console.log('Global Success Handler:', event.detail);
+    this.onPaymentSuccess(event);
+  });
+
+  // ✅ Handle Payment Failure
+  window.addEventListener('payment.failed', (event: any) => {
+    console.error('Global Failure Handler:', event.detail);
+    //alert('Payment Failed: ' + event.detail.error.description);
+    this.toastService.showErrorToast('Payment Failed', event.detail.error.description);
+  });
   }
   getAddress(place: any, type: string) {
     // this.phone = this.getPhone(place);
@@ -384,6 +398,7 @@ export class MoverPakersStepsComponent {
               'success',
              'Thankyou for being a Customer for  house Expert',
             );
+            
             this.display = false;
             // delete this.bookingInformation.movetype;
             delete this.bookingInformation.housetype;
@@ -393,6 +408,7 @@ export class MoverPakersStepsComponent {
             this.SubcategoryService.removeBookingInformation();
             this.jheader = '';
             //window.location.reload();
+            this.router.navigate(['thankyou']);
           }
         });
     }
@@ -465,6 +481,7 @@ export class MoverPakersStepsComponent {
             this.SubcategoryService.removeBookingInformation();
             this.jheader = '';
             //window.location.reload();
+            this.router.navigate(['thankyou']);
           }
         });
     }
@@ -509,64 +526,75 @@ export class MoverPakersStepsComponent {
     });
   }
   paynow() {
-   
-    let paymentoptions = this.preparePaymentDetails(   this.bookingInformation.orderresponse,
-      this.bookingInformation);
+    let paymentoptions = this.preparePaymentDetails(this.bookingInformation.orderresponse, this.bookingInformation);
     var rzp1 = new Razorpay(paymentoptions);
+    
+    // Open the Razorpay payment modal
+   // ✅ Open the Razorpay payment modal
+  try {
     rzp1.open();
-    rzp1.on('payment.failed', function (response: any) {
-      //this.message = "Payment Failed";
-      // Todo - store this information in the server
-      alert(response);
-
-       console.log(response.error.code);
-      console.log(response.error.description);
-      console.log(response.error.source);
-      console.log(response.error.step);
-      console.log(response.error.reason);
-      console.log(response.error.metadata.order_id);
-      console.log(response.error.metadata.payment_id);
-      //this.error = response.error.reason;
+  } catch (error) {
+    console.error('Razorpay open() failed:', error);
+    this.handleFailedPayment({
+      error: { description: 'Payment Initialization Failed', reason: 'Invalid API Key or Order ID' },
+    });
+  }
+  
+    // Handle payment failure
+    rzp1.on('payment.failed', (response: any) => {
+      console.error('Payment Failed:', response);
+      //alert(`Payment Failed: ${response.error.description}`);
+      this.toastService.showErrorToast('Payment Failed', response.error.description);
+      // Logging error details
+      console.log('Error Code:', response.error.code);
+      console.log('Description:', response.error.description);
+      console.log('Source:', response.error.source);
+      console.log('Step:', response.error.step);
+      console.log('Reason:', response.error.reason);
+      console.log('Order ID:', response.error.metadata.order_id);
+      console.log('Payment ID:', response.error.metadata.payment_id);
+      
+      // Handle the failed payment response (optional: send to API)
+      this.handleFailedPayment(response);
     });
   }
   preparePaymentDetails(res: any, order: any) {
-    console.log(
-      'ShoppingCartComponent -> preparePaymentDetails -> order',
-      order,
-      this.cartService.TokenAmount
-    );
-
-    console.log('In preparePaymentDetails');
-
+    console.log('Preparing Payment Details:', order, this.cartService.TokenAmount);
+  
     return {
-      key: environment.RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
-      amount: this.cartService.TokenAmount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 29935 refers to 29935 paise or INR 299.35.
-      name: 'House expert solutions pvt Ltd',
+      key: environment.RAZORPAY_KEY_ID, // Razorpay Key
+      amount: this.cartService.TokenAmount * 100, // Convert to paise
       currency: 'INR',
-      order_id: res.razorpayorderno, // order.id,//This is a sample Order ID. Create an Order using Orders API. (https://razorpay.com/docs/payment-gateway/orders/integration/#step-1-create-an-order). Refer the Checkout form table given below
-      //"image": 'https://angular.io/assets/images/logos/angular/angular.png',
-
-      handler: function (response: any, error: any) {
-        console.log('handler response', response, error);
+      name: 'House Expert Solutions Pvt Ltd',
+      order_id: res.razorpayorderno, // Ensure this is valid!
+  
+      // ✅ Improved Payment Handler
+      handler: (response: any) => {
+        console.log('Payment Success:', response);
+  
         var event = new CustomEvent('payment.success', {
           detail: response,
           bubbles: true,
           cancelable: true,
         });
+  
         window.dispatchEvent(event);
       },
+  
       prefill: {
         name: order.jcustomer[0].cust_name,
         email: order.jcustomer[0].cust_email,
         contact: order.jcustomer[0].cust_mobile,
       },
+      
       modal: {
-        // We should prevent closing of the form when esc key is pressed.
-        escape: false,
+        escape: false, // Prevent closing modal with ESC
       },
+  
       notes: {
         address: order.jheader[0].fromaddress,
       },
+  
       theme: {
         color: '#2874f0',
       },
@@ -595,6 +623,36 @@ export class MoverPakersStepsComponent {
     //this.message = "Success Payment";
     console.log("onPaymentSuccess",event);
   } */
+    handleFailedPayment(response: any) {
+      console.error('Handling Failed Payment:', response);
+      
+     /*  let paymentErrorDetails = {
+        spname: 'payment_failed_log',
+        jpayment: [
+          {
+            orderid: response.error.metadata.order_id,
+            paymenttype: 'token',
+            paymentid: response.error.metadata.payment_id,
+            paymentmode: 'razorpay',
+            reason: response.error.reason,
+            message: response.error.description,
+          }
+        ],
+        pid: 0,
+      };
+    
+      // Optional: Send failure details to API
+      this.apiservice.apicall(paymentErrorDetails).subscribe((data: any) => {
+        console.log('Failed Payment Logged:', data.message);
+      }); */
+    
+      // Show error message to user
+      this.toastService.showErrorToast('Payment Failed', response.error.description);
+      this.orderService
+      .SendWhatsAppsPaymentPending(this.jheader.Id)
+      .subscribe((res: any) => {});
+      this.router.navigate(['failed-payment']);
+    }
   @HostListener('window:payment.success', ['$event'])
   onPaymentSuccess(event: any): void {
     console.log('onPaymentSuccess', event);
@@ -635,6 +693,7 @@ export class MoverPakersStepsComponent {
       this.cartService.emptyCart();
       this.SubcategoryService.removeBookingInformation();
       this.jheader = '';
+      this.router.navigate(['thankyou']);
       setTimeout(() => {
         window.location.reload();
       }, 5000);
@@ -663,6 +722,7 @@ export class MoverPakersStepsComponent {
       this.orderService
         .SendWhatsAppsPaymentPending(this.jheader.Id)
         .subscribe((res: any) => {});
+        this.router.navigate(['failed-payment']);
     } else {
     }
     delete this.bookingInformation.housetype;
