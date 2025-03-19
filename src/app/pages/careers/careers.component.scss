@@ -1,0 +1,31 @@
+.careers-container {
+    padding: 20px;
+    text-align: left;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .company-name {
+    font-weight: bold;
+    color: #ff6600;
+  }
+  
+  .benefits-list, .open-positions {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .benefits-list li, .open-positions li {
+    margin-bottom: 8px;
+  }
+  
+  .email-link {
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .email-link:hover {
+    text-decoration: underline;
+  }
+  
