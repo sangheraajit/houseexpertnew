@@ -34,7 +34,7 @@ import { CitiesComponent } from './pages/cities/cities.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  {path:'landing-page', component: LandingPageComponent },
+  { path: 'packers-and-movers', component: LandingPageComponent },
   { path: 'services', component: ServicesComponent },
   { path: 'service-details', component: ServiceDetailsComponent },
   { path: 'services/:cat_id/:cat_name', component: ServicesComponent },
@@ -77,8 +77,8 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
     useHash: true,
-    scrollPositionRestoration:"top"
+    scrollPositionRestoration: "top"
   })],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

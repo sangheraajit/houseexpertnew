@@ -39,7 +39,7 @@ export class HomeServicesComponent {
     {
       name: "Packers and Movers Services",
       icon: "../../../assets/images/home-services/packers.svg",
-      url: "landing-page",
+      url: "packers-and-movers",
     },
     {
       name: "Pest Control Services",
