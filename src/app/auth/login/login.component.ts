@@ -279,7 +279,7 @@ export class LoginComponent {
     };
     this.userservice.register(data).subscribe((res: any) => {
       console.log(res);
-      localStorage.setItem("token", res);
+      //localStorage.setItem("token", res);
       if (res.Done) {
         this.SendOPT();
         /*   let data = {

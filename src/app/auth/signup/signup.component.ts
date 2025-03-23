@@ -63,10 +63,10 @@ export class SignupComponent {
     this.userservice.register(data).subscribe((res: any) => {
       console.log(res);
       this.verifyCustomer()
-      localStorage.setItem("token", res);
+      /* localStorage.setItem("token", res);
       if (res.Done) {
 
-      }
+      } */
     });
   }
   verifyCustomer() {

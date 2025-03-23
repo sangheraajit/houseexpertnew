@@ -353,7 +353,8 @@ export class LandingPageComponent {
         this.submitted = false;
       }
     } else {
-      this.SendOPT();
+     // this.SendOPT();
+     this.verifyCustomer()
     }
   }
   SendOPT() {
@@ -424,7 +425,47 @@ export class LandingPageComponent {
       console.log("OtpVerification result",result); // 'Closed'
       console.log("OtpVerification",result);
       if (result.data && result.iserror==false) {
-        this.verifyCustomer();
+       
+        this.userService.VerifyCustomerExists(this.Mainform.value.phoneNumber).subscribe(
+          (res: any) => {
+            console.log('VerifyCustomerExists:', res);
+    
+            // Set user data in auth service
+            this.authService.setUser(res);
+            if (
+              this.jcustomer.cust_name == "" &&
+              this.jcustomer.cust_email == "" &&
+              this.jcustomer.cust_mobile == ""
+            ) {
+              this.jcustomer.cust_name = res.custName;
+              this.jcustomer.cust_email = res.custEmail;
+              this.jcustomer.cust_mobile = res.custMobile;
+            }
+            // Close the modal with success result
+            const loginData = { iserror: false, data: res };
+            this.toastService.showSuccessToast(
+              "info",
+              "you are logged in successfully"
+            );
+            this.router.navigate(["mover-steps"]); 
+          },
+          (err: any) => {
+            console.log('VerifyCustomerExists Error:', err);
+    
+            // Prepare the error object
+            const loginData = { iserror: true, data: err };
+    
+            // Display error toast based on status
+            if (err.status === 404 && err.error === 'Customer Not Found') {
+              this.toastService.showErrorToast('Error', 'Invalid username or OTP.');            
+            } else {
+              this.toastService.showErrorToast('Error', err.error || 'Customer verification failed.');
+            }
+    
+            // Optionally close the modal with an error result
+           // this.activeModal.dismiss(loginData);
+          }
+        );
         /*  this.toastService.showSuccessToast(
           "info",
           "you are logged in successfully"
@@ -457,7 +498,7 @@ export class LandingPageComponent {
       (res: any) => {
         console.log('VerifyCustomerExists:', res);
 
-        // Set user data in auth service
+        /* // Set user data in auth service
         this.authService.setUser(res);
         if (
           this.jcustomer.cust_name == "" &&
@@ -467,10 +508,11 @@ export class LandingPageComponent {
           this.jcustomer.cust_name = res.custName;
           this.jcustomer.cust_email = res.custEmail;
           this.jcustomer.cust_mobile = res.custMobile;
-        }
+        } */
         // Close the modal with success result
         const loginData = { iserror: false, data: res };
        // this.activeModal.close(loginData);
+       this.SendOPT();
       },
       (err: any) => {
         console.log('VerifyCustomerExists Error:', err);
@@ -482,7 +524,7 @@ export class LandingPageComponent {
         if (err.status === 404 && err.error === 'Customer Not Found') {
           //this.toastService.showErrorToast('Error', 'Invalid username or OTP.');
           this.registorCustomr();
-
+          
         } else {
           this.toastService.showErrorToast('Error', err.error || 'Customer verification failed.');
         }
@@ -510,7 +552,7 @@ registorCustomr()
   this.userService.register(data).subscribe((res: any) => {
     console.log(res);
     this.verifyCustomer()
-    localStorage.setItem("token", res);
+   // localStorage.setItem("token", res);
     
     this.router.navigate(["mover-steps"]); 
   });
