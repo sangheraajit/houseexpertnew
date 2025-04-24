@@ -59,7 +59,7 @@ export class HomeServicesComponent {
     { name: "Pune", url: "cities/pune" },
     { name: "Gurgaon", url: "cities/gurgaon" },
     { name: "Chennai", url: "cities/chennai" },
-    { name: "Ahamdabaad", url: "cities/ahamdabaad" },
+    { name: "Ahmedabad", url: "cities/ahmedabad" },
   ];
   selectedOption: string | undefined;
   @Input() CategoryList: any;

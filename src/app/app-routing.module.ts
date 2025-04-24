@@ -33,7 +33,8 @@ import { CitiesComponent } from './pages/cities/cities.component';
 //import { MoverPakersStepsComponent } from './pages/mover-pakers-steps/mover-pakers-steps.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+ // { path: '', component: HomeComponent },
+ { path: '', component: LandingPageComponent },
   { path: 'packers-and-movers', component: LandingPageComponent },
   { path: 'services', component: ServicesComponent },
   { path: 'service-details', component: ServiceDetailsComponent },
