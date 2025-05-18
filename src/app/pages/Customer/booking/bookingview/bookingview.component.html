@@ -131,7 +131,7 @@
         <tr>
           <td colspan="3" class="text-end" style="text-align: right; border: 1px solid red;">
             <button 
-              *ngIf="dialog.orderstatus === 'Quotation' || dialog.orderstatus === 'adminapproved'" 
+              *ngIf="dialog.orderstatus === 'Quotation' || dialog.orderstatus === 'adminapproved' || dialog.orderstatus === 'Token' || dialog.orderstatus === 'new'" 
               class="btn btn-danger text-uppercase fw-bold" 
               (click)="processPayment()">
               {{ NextButtonLabel }}

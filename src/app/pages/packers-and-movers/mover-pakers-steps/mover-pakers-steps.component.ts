@@ -86,15 +86,15 @@ export class MoverPakersStepsComponent {
   orderdate: any;
   showTimeRanges: boolean = false;
   isselecteddate: any;
-  iscurrenttime: any =0;
-  strselectedtime=""
+  iscurrenttime: any = 0;
+  strselectedtime = ""
   Articlemstlist!: any;
-  selectedPackageName=""
+  selectedPackageName = ""
   DistanceKM: any;
   isPaymentPending = true;
   @Output() SelectedDate = new EventEmitter<any>();
   @Output() SelectedTime = new EventEmitter<any>();
-  
+
   constructor(
     public SubcategoryService: SubcategoryService,
     private ngZone: NgZone,
@@ -107,7 +107,7 @@ export class MoverPakersStepsComponent {
     private orderService: OrderService,
     public apiservice: httpService,
     private toastService: ToastService,
-     private router: Router,
+    private router: Router,
   ) {
     /*   if(config.data.Citylist)
     {
@@ -139,7 +139,7 @@ export class MoverPakersStepsComponent {
         qty: 0,
         active: true,
       }));
-      this.Articlemstlist=this.ArticlemstlistAll;
+      this.Articlemstlist = this.ArticlemstlistAll;
       this.cartService.allItems = this.ArticlemstlistAll;
       this.cartService.listCartItems();
     });
@@ -147,7 +147,7 @@ export class MoverPakersStepsComponent {
       console.log('getAllPackage', res);
       this.PackageList = res;
     }); */
-    
+
 
     this.currentUser = this.authService.currentUserValue;
     //console.log("this.customerinformation currentUser", this.currentUser);
@@ -179,17 +179,17 @@ export class MoverPakersStepsComponent {
       this.Customerform.controls["toaddress"].setValue(this.jheader.toaddress);
     }
     // ✅ Handle Payment Success
-  window.addEventListener('payment.success', (event: any) => {
-    console.log('Global Success Handler:', event.detail);
-    this.onPaymentSuccess(event);
-  });
+   /*  window.addEventListener('payment.success', (event: any) => {
+      console.log('Global Success Handler:', event.detail);
+      this.onPaymentSuccess(event);
+    });
 
-  // ✅ Handle Payment Failure
-  window.addEventListener('payment.failed', (event: any) => {
-    console.error('Global Failure Handler:', event.detail);
-    //alert('Payment Failed: ' + event.detail.error.description);
-    this.toastService.showErrorToast('Payment Failed', event.detail.error.description);
-  });
+    // ✅ Handle Payment Failure
+    window.addEventListener('payment.failed', (event: any) => {
+      console.error('Global Failure Handler:', event.detail);
+      //alert('Payment Failed: ' + event.detail.error.description);
+      this.toastService.showErrorToast('Payment Failed', event.detail.error.description);
+    }); */
   }
   getAddress(place: any, type: string) {
     // this.phone = this.getPhone(place);
@@ -215,33 +215,33 @@ export class MoverPakersStepsComponent {
       this.jheader.tolong = this.googleAddressService.getlng(place);
       this.jheader.tocity = this.googleAddressService.getDistrict(place);
     }
-      // Obtain the distance in meters by the computeDistanceBetween method
-      // From the Google Maps extension using plain coordinates
-      var distanceInMeters =
-        google.maps.geometry.spherical.computeDistanceBetween(
-          new google.maps.LatLng({
-            lat: this.jheader.fromlat,
-            lng: this.jheader.fromlong,
-          }),
-          new google.maps.LatLng({
-            lat: this.jheader.tolat,
-            lng: this.jheader.tolong,
-          })
-        );
+    // Obtain the distance in meters by the computeDistanceBetween method
+    // From the Google Maps extension using plain coordinates
+    var distanceInMeters =
+      google.maps.geometry.spherical.computeDistanceBetween(
+        new google.maps.LatLng({
+          lat: this.jheader.fromlat,
+          lng: this.jheader.fromlong,
+        }),
+        new google.maps.LatLng({
+          lat: this.jheader.tolat,
+          lng: this.jheader.tolong,
+        })
+      );
 
-      // Outputs: Distance in Meters:  286562.7470149898
-      console.log("Distance in Meters: ", distanceInMeters);
+    // Outputs: Distance in Meters:  286562.7470149898
+    console.log("Distance in Meters: ", distanceInMeters);
 
-      // Outputs: Distance in Kilometers:  286.5627470149898
-      this.DistanceKM = (distanceInMeters * 0.001).toFixed(2);
-      console.log("Distance in Kilometers: ", this.DistanceKM);
-      this.jheader.totkm = this.DistanceKM;
-      if (this.jheader.totkm < 150) {
-        this.jheader.incity = true;
-      } else {
-        this.jheader.incity = false;
-      }
-      this.bookingInformation.jheader[0] = this.jheader;
+    // Outputs: Distance in Kilometers:  286.5627470149898
+    this.DistanceKM = (distanceInMeters * 0.001).toFixed(2);
+    console.log("Distance in Kilometers: ", this.DistanceKM);
+    this.jheader.totkm = this.DistanceKM;
+    if (this.jheader.totkm < 150) {
+      this.jheader.incity = true;
+    } else {
+      this.jheader.incity = false;
+    }
+    this.bookingInformation.jheader[0] = this.jheader;
   }
 
   get f(): { [key: string]: AbstractControl } {
@@ -263,7 +263,7 @@ export class MoverPakersStepsComponent {
     console.log("onSelect package event", event);
     // this.selectedPackageValues=event;
     //sthis.bookingInformation.selecteddate =event.toDateString();
-    this.selectedPackageName=item.packagename;
+    this.selectedPackageName = item.packagename;
     if (this.selectedPackageValues === event) {
       this.selectedPackageValues = null;
       return;
@@ -343,50 +343,53 @@ export class MoverPakersStepsComponent {
       });
     }
     this.SubcategoryService.setBookingInformation(this.bookingInformation);
-      const date = new Date(this.jheader.orderdate);
-      this.orderdate = {
-        year: date.getFullYear(),
-        month: date.getMonth() + 1, // JavaScript months are 0-based, NgbDatePicker months are 1-based
-        day: date.getDate(),
-      };
-      this.SubcategoryService.getAllPackage2(
-        0,
-        this.jheader.totalcft,
-        Math.ceil(this.jheader.totkm),
-        this.jheader.fromlift == true ? 0 : Math.ceil(this.jheader.fromfloor),
-        this.jheader.tolift == true ? 0 : Math.ceil(this.jheader.tofloor)
-      ).subscribe((res: any) => {
-        console.log("getAllPackage", res);
+    const date = new Date(this.jheader.orderdate);
+    this.orderdate = {
+      year: date.getFullYear(),
+      month: date.getMonth() + 1, // JavaScript months are 0-based, NgbDatePicker months are 1-based
+      day: date.getDate(),
+    };
+    this.SubcategoryService.getAllPackage2(
+      0,
+      this.jheader.totalcft,
+      Math.ceil(this.jheader.totkm),
+      this.jheader.fromlift == true ? 0 : Math.ceil(this.jheader.fromfloor),
+      this.jheader.tolift == true ? 0 : Math.ceil(this.jheader.tofloor)
+    ).subscribe((res: any) => {
+      console.log("getAllPackage", res);
 
-        this.PackageList = res;
-        this.PackageList.forEach((element: any) => {
-          element.packageTotal = element.getcalculateamounts;
+      this.PackageList = res;
+      this.PackageList.forEach((element: any) => {
+        element.packageTotal = element.getcalculateamounts;
 
-          // this.PackageList.forEach((element:any) => {
-          //   element.packageTotal=element.packageamount+this.jheader.total;
-        });
+        // this.PackageList.forEach((element:any) => {
+        //   element.packageTotal=element.packageamount+this.jheader.total;
       });
-    
+    });
+
     if (step == 4) {
       this.itemstomove = this.cartService.cartItemsList
         .map((item: any) => {
           return item.name + "(" + item.qty + ")";
         })
         .join(",");
-        this.orderService
+      this.orderService
         .CreateOrUpdateOrder(this.bookingInformation)
         .subscribe((res: any) => {
           // alert('in');
           this.bookingInformation.orderresponse = res;
           console.log('bookingInformation res', res);
-        
+
 
           // this.cart.cartTotal=res.totalamount;
           // this.cart.TokenAmount=this.cart.percentage(15,this.cart.cartTotal);
           // this.jheader.tokenamount = this.cart.TokenAmount;
           // this.jheader.grandtotal = this.cart.cartTotal;
 
+
           this.jheader.vehiclename = res.vehiclename;
+          this.jheader.orderno = res.orderno;
+          this.jheader.Id = res.id;
           this.bookingInformation.jheader[0] = this.jheader;
 
           this.SubcategoryService.setBookingInformation(
@@ -396,9 +399,9 @@ export class MoverPakersStepsComponent {
           if (this.DistanceKM > 150) {
             this.toastService.showSuccessToast(
               'success',
-             'Thankyou for being a Customer for  house Expert',
+              'Thankyou for being a Customer for  house Expert',
             );
-            
+
             this.display = false;
             // delete this.bookingInformation.movetype;
             delete this.bookingInformation.housetype;
@@ -408,12 +411,12 @@ export class MoverPakersStepsComponent {
             this.SubcategoryService.removeBookingInformation();
             this.jheader = '';
             //window.location.reload();
-            this.router.navigate(['thankyou']);
+            //this.router.navigate(['thankyou']);
           }
         });
     }
   }
-  navChanged(event:any) {
+  navChanged(event: any) {
     console.log('navChanged1', event);
     console.log("step  navChanged bookingInformation", this.bookingInformation);
     this.bookingInformation.jheader[0] = this.jheader;
@@ -421,7 +424,7 @@ export class MoverPakersStepsComponent {
     this.bookingInformation = this.SubcategoryService.getBookingInformation();
     this.jheader = this.bookingInformation.jheader[0];
     if (event.nextId == 3) {
-     console.log("orderdate",this.orderdate);
+      console.log("orderdate", this.orderdate);
       this.SubcategoryService.getAllPackage2(
         0,
         this.jheader.totalcft,
@@ -447,13 +450,16 @@ export class MoverPakersStepsComponent {
         })
         .join(",");
 
-        this.orderService
+      this.orderService
         .CreateOrUpdateOrder(this.bookingInformation)
         .subscribe((res: any) => {
           // alert('in');
           this.bookingInformation.orderresponse = res;
           console.log('bookingInformation res', res);
-        
+          this.jheader.orderno = res.orderno;
+          this.jheader.Id = res.id;
+          this.bookingInformation.jheader[0] = this.jheader;
+
 
           // this.cart.cartTotal=res.totalamount;
           // this.cart.TokenAmount=this.cart.percentage(15,this.cart.cartTotal);
@@ -470,7 +476,7 @@ export class MoverPakersStepsComponent {
           if (this.DistanceKM > 150) {
             this.toastService.showSuccessToast(
               'success',
-             'Thankyou for being a Customer for  house Expert',
+              'Thankyou for being a Customer for  house Expert',
             );
             this.display = false;
             // delete this.bookingInformation.movetype;
@@ -481,7 +487,7 @@ export class MoverPakersStepsComponent {
             this.SubcategoryService.removeBookingInformation();
             this.jheader = '';
             //window.location.reload();
-            this.router.navigate(['thankyou']);
+            // this.router.navigate(['thankyou']);
           }
         });
     }
@@ -489,21 +495,36 @@ export class MoverPakersStepsComponent {
   toggleTimeRanges() {
     this.showTimeRanges = !this.showTimeRanges;
   }
-  selecttime(inputdate: any,strselectedtime:string) {
-    console.log("orderdate",this.orderdate);
-    this.iscurrenttime = inputdate;
-    this.strselectedtime=strselectedtime;
-    var dateTime = this.datePipe.transform(this.formatDate(this.orderdate), 'yyyy-MM-ddT'+ (("00" + this.iscurrenttime).slice(-2))  + ':00:00');//var dateTime = moment(this.isselecteddate,"yyyy-MM-dd");
-    this.showTimeRanges=false;
-    this.bookingInformation.jheader[0].orderdate =
-      moment(dateTime).format("YYYY-MM-DD H:mm:ss");
-    this.SelectedDate.emit(dateTime);
-    
+  selecttime(inputHour: number, strselectedtime: string) {
+    this.iscurrenttime = inputHour;
+    this.strselectedtime = strselectedtime;
+
+    // Parse the selected date from the NgbDatePicker
+    const selectedDate = moment({
+      year: this.orderdate.year,
+      month: this.orderdate.month - 1, // moment months are 0-based
+      day: this.orderdate.day,
+      hour: inputHour,
+      minute: 0,
+      second: 0,
+    });
+
+    // Format for display and API
+    const formattedDateTime = selectedDate.format('YYYY-MM-DD HH:mm:ss');
+
+    this.bookingInformation.jheader[0].orderdate = formattedDateTime;
+
+    this.SelectedDate.emit(formattedDateTime);
+
+    this.showTimeRanges = false;
+
+    console.log("Formatted DateTime:", formattedDateTime);
   }
+
   formatDate(date: NgbDate) {
-    
+
     // NgbDates use 1 for Jan, Moement uses 0, must substract 1 month for proper date conversion
-    var ngbObj =  JSON.parse(JSON.stringify(date));
+    var ngbObj = JSON.parse(JSON.stringify(date));
     var newMoment = moment();
 
     if (ngbObj) {
@@ -528,18 +549,18 @@ export class MoverPakersStepsComponent {
   paynow() {
     let paymentoptions = this.preparePaymentDetails(this.bookingInformation.orderresponse, this.bookingInformation);
     var rzp1 = new Razorpay(paymentoptions);
-    
+
     // Open the Razorpay payment modal
-   // ✅ Open the Razorpay payment modal
-  try {
-    rzp1.open();
-  } catch (error) {
-    console.error('Razorpay open() failed:', error);
-    this.handleFailedPayment({
-      error: { description: 'Payment Initialization Failed', reason: 'Invalid API Key or Order ID' },
-    });
-  }
-  
+    // ✅ Open the Razorpay payment modal
+    try {
+      rzp1.open();
+    } catch (error) {
+      console.error('Razorpay open() failed:', error);
+      this.handleFailedPayment({
+        error: { description: 'Payment Initialization Failed', reason: 'Invalid API Key or Order ID' },
+      });
+    }
+
     // Handle payment failure
     rzp1.on('payment.failed', (response: any) => {
       console.error('Payment Failed:', response);
@@ -553,48 +574,48 @@ export class MoverPakersStepsComponent {
       console.log('Reason:', response.error.reason);
       console.log('Order ID:', response.error.metadata.order_id);
       console.log('Payment ID:', response.error.metadata.payment_id);
-      
+
       // Handle the failed payment response (optional: send to API)
       this.handleFailedPayment(response);
     });
   }
   preparePaymentDetails(res: any, order: any) {
     console.log('Preparing Payment Details:', order, this.cartService.TokenAmount);
-  
+
     return {
       key: environment.RAZORPAY_KEY_ID, // Razorpay Key
       amount: this.cartService.TokenAmount * 100, // Convert to paise
       currency: 'INR',
       name: 'House Expert Solutions Pvt Ltd',
       order_id: res.razorpayorderno, // Ensure this is valid!
-  
+
       // ✅ Improved Payment Handler
       handler: (response: any) => {
         console.log('Payment Success:', response);
-  
+
         var event = new CustomEvent('payment.success', {
           detail: response,
           bubbles: true,
           cancelable: true,
         });
-  
+
         window.dispatchEvent(event);
       },
-  
+
       prefill: {
         name: order.jcustomer[0].cust_name,
         email: order.jcustomer[0].cust_email,
         contact: order.jcustomer[0].cust_mobile,
       },
-      
+
       modal: {
         escape: false, // Prevent closing modal with ESC
       },
-  
+
       notes: {
         address: order.jheader[0].fromaddress,
       },
-  
+
       theme: {
         color: '#2874f0',
       },
@@ -623,36 +644,36 @@ export class MoverPakersStepsComponent {
     //this.message = "Success Payment";
     console.log("onPaymentSuccess",event);
   } */
-    handleFailedPayment(response: any) {
-      console.error('Handling Failed Payment:', response);
-      
-     /*  let paymentErrorDetails = {
-        spname: 'payment_failed_log',
-        jpayment: [
-          {
-            orderid: response.error.metadata.order_id,
-            paymenttype: 'token',
-            paymentid: response.error.metadata.payment_id,
-            paymentmode: 'razorpay',
-            reason: response.error.reason,
-            message: response.error.description,
-          }
-        ],
-        pid: 0,
-      };
-    
-      // Optional: Send failure details to API
-      this.apiservice.apicall(paymentErrorDetails).subscribe((data: any) => {
-        console.log('Failed Payment Logged:', data.message);
-      }); */
-    
-      // Show error message to user
-      this.toastService.showErrorToast('Payment Failed', response.error.description);
-      this.orderService
+  handleFailedPayment(response: any) {
+    console.error('Handling Failed Payment:', response);
+
+    /*  let paymentErrorDetails = {
+       spname: 'payment_failed_log',
+       jpayment: [
+         {
+           orderid: response.error.metadata.order_id,
+           paymenttype: 'token',
+           paymentid: response.error.metadata.payment_id,
+           paymentmode: 'razorpay',
+           reason: response.error.reason,
+           message: response.error.description,
+         }
+       ],
+       pid: 0,
+     };
+   
+     // Optional: Send failure details to API
+     this.apiservice.apicall(paymentErrorDetails).subscribe((data: any) => {
+       console.log('Failed Payment Logged:', data.message);
+     }); */
+
+    // Show error message to user
+    this.toastService.showErrorToast('Payment Failed', response.error.description);
+    this.orderService
       .SendWhatsAppsPaymentPending(this.jheader.Id)
-      .subscribe((res: any) => {});
-      this.router.navigate(['failed-payment']);
-    }
+      .subscribe((res: any) => { });
+    this.router.navigate(['failed-payment']);
+  }
   @HostListener('window:payment.success', ['$event'])
   onPaymentSuccess(event: any): void {
     console.log('onPaymentSuccess', event);
@@ -661,7 +682,7 @@ export class MoverPakersStepsComponent {
       spname: 'payment_save',
       jpayment: [
         {
-          orderid: this.bookingInformation.orderresponse.orderno,
+          orderid: this.bookingInformation.orderresponse.id,
           paymenttype: 'token',
           paymentid: event.detail.razorpay_payment_id,
           paymentmode: 'razorpay',
@@ -676,15 +697,15 @@ export class MoverPakersStepsComponent {
       console.log('paymentId', data.message);
 
       this.toastService.showSuccessToast(
-       'success',
-      'Thankyou for being a Customer for houseexpert',
-       );
+        'success',
+        'Thankyou for being a Customer for houseexpert',
+      );
       this.orderService
         .SendWhatsAppsJobConfirmation(this.jheader.Id)
-        .subscribe((res: any) => {});
+        .subscribe((res: any) => { });
       this.orderService
         .SendWhatsAppsAdvancePay(this.jheader.Id)
-        .subscribe((res: any) => {});
+        .subscribe((res: any) => { });
       this.display = false;
       this.isPaymentPending = false;
       delete this.bookingInformation.housetype;
@@ -693,10 +714,10 @@ export class MoverPakersStepsComponent {
       this.cartService.emptyCart();
       this.SubcategoryService.removeBookingInformation();
       this.jheader = '';
-      this.router.navigate(['thankyou']);
-      setTimeout(() => {
-        window.location.reload();
-      }, 5000);
+      // this.router.navigate(['thankyou']);
+      /*  setTimeout(() => {
+         window.location.reload();
+       }, 5000); */
 
       //this.router.navigate(['bookinglist'])
     });
@@ -721,8 +742,8 @@ export class MoverPakersStepsComponent {
     if (this.isPaymentPending) {
       this.orderService
         .SendWhatsAppsPaymentPending(this.jheader.Id)
-        .subscribe((res: any) => {});
-        this.router.navigate(['failed-payment']);
+        .subscribe((res: any) => { });
+      this.router.navigate(['failed-payment']);
     } else {
     }
     delete this.bookingInformation.housetype;

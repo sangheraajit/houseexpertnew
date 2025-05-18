@@ -57,9 +57,10 @@ export class SelectPackageComponent
     console.log('ArticlemstlistAll', this.ArticlemstlistAll);
     console.log("PackageList", this.PackageList);
     console.log("orderHeader", this.orderHeader);
+     console.log("pagename", this.pagename);
     this.selectedValues =this.orderHeader.packageid;
     console.log("onSelect package event", this.selectedValues);
-    if (this.pagename == "package") {
+    if (this.pagename == "package" || this.pagename == "mybooking") {
       this.SubcategoryService.getAllPackage2(
         0,
         this.orderHeader.totalcft,

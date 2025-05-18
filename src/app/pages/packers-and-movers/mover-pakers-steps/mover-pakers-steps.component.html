@@ -26,9 +26,7 @@
         <div class="image-container">
           <div class="req-description mb-4">
             <p class="fs-24 mb-2 text-white">Your</p>
-            <h2
-              class="font-display mb-4 fw-bold d-inline-flex align-items-end gap-2 bottom-line fs-70"
-            >
+            <h2 class="font-display mb-4 fw-bold d-inline-flex align-items-end gap-2 bottom-line fs-70">
               Stress-Free
               <sub class="font-poppins fs-24"> Moving Solution</sub>
             </h2>
@@ -36,7 +34,7 @@
               We handle all aspects of your move, so you can relax and enjoy your new home.
             </p>
           </div>
-          
+
         </div>
       </div>
       <div class="col-lg-6 col-md-12">
@@ -52,140 +50,94 @@
     <span class="blur-bg2"></span>
     <div class="row align-items-center">
       <div class="col-12 tab-wrapper">
-        <ul
-          ngbNav
-          #nav="ngbNav"
-          [(activeId)]="active"
-          class="nav-tabs"
-          (navChange)="navChanged($event)"
-        >
-        <li [ngbNavItem]="1">
-          <button class="btn btn-link" ngbNavLink>Step 1</button>
-          <ng-template ngbNavContent>
-            <div>
-              <h3 class="text-uppercase fs-20 mb-3 fw-bold text-purple">
-                Movement Details
-              </h3>
+        <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs" (navChange)="navChanged($event)">
+          <li [ngbNavItem]="1">
+            <button class="btn btn-link" ngbNavLink>Step 1</button>
+            <ng-template ngbNavContent>
               <div>
-                <form [formGroup]="Customerform">
-                  <!-- Moving From Section -->
-                  <div class="row mb-4">
-                    <div class="col-lg-12 col-md-12">
-                      <div class="form-group">
-                        <label for="fromAddress">Moving From*</label>
-                        <app-google-places
-                          id="fromAddress"
-                          formControlName="fromaddress"
-                          placeholder="Moving From"
-                          [isRequired]="true"
-                          [autocompleteInput]="jheader.fromaddress"
-                          (setAddress)="getAddress($event, 'from')"
-                          adressType="geocode"
-                          [ngClass]="{
+                <h3 class="text-uppercase fs-20 mb-3 fw-bold text-purple">
+                  Movement Details
+                </h3>
+                <div>
+                  <form [formGroup]="Customerform">
+                    <!-- Moving From Section -->
+                    <div class="row mb-4">
+                      <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                          <label for="fromAddress">Moving From*</label>
+                          <app-google-places id="fromAddress" formControlName="fromaddress" placeholder="Moving From"
+                            [isRequired]="true" [autocompleteInput]="jheader.fromaddress"
+                            (setAddress)="getAddress($event, 'from')" adressType="geocode" [ngClass]="{
                             'is-invalid': f['fromaddress'].touched && !f['fromaddress'].valid
-                          }"
-                        ></app-google-places>
+                          }"></app-google-places>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12">
-                      <div class="form-group">
-                        <label for="fromFloor">Floor No</label>
-                        <input
-                          id="fromFloor"
-                          class="form-control"
-                          type="number"
-                          formControlName="fromfloor"
-                          [(ngModel)]="jheader.fromfloor"
-                          placeholder="Floor No"
-                          [ngClass]="{
+                      <div class="col-lg-6 col-md-12">
+                        <div class="form-group">
+                          <label for="fromFloor">Floor No</label>
+                          <input id="fromFloor" class="form-control" type="number" formControlName="fromfloor"
+                            [(ngModel)]="jheader.fromfloor" placeholder="Floor No" [ngClass]="{
                             'is-invalid': f['fromfloor'].touched && !f['fromfloor'].valid
-                          }"
-                        />
+                          }" />
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-12">
+                        <div class="form-group">
+                          <label class="checkbox">
+                            <input type="checkbox" formControlName="fromlift" [(ngModel)]="jheader.fromlift" />
+                            Service Lift
+                          </label>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-lg-6 col-md-12">
-                      <div class="form-group">
-                        <label class="checkbox">
-                          <input
-                            type="checkbox"
-                            formControlName="fromlift"
-                            [(ngModel)]="jheader.fromlift"
-                          />
-                          Service Lift
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-        
-                  <!-- Moving To Section -->
-                  <div class="row mb-4">
-                    <div class="col-lg-12 col-md-12">
-                      <div class="form-group">
-                        <label for="toAddress">Moving To*</label>
-                        <app-google-places
-                          id="toAddress"
-                          formControlName="toaddress"
-                          [placeholder]="
+
+                    <!-- Moving To Section -->
+                    <div class="row mb-4">
+                      <div class="col-lg-12 col-md-12">
+                        <div class="form-group">
+                          <label for="toAddress">Moving To*</label>
+                          <app-google-places id="toAddress" formControlName="toaddress" [placeholder]="
                             bookingInformation.categoryname == 'Packers and Movers'
                               ? 'Moving to'
                               : 'Address'
-                          "
-                          [isRequired]="true"
-                          [autocompleteInput]="jheader.toaddress"
-                          (setAddress)="getAddress($event, 'to')"
-                          adressType="geocode"
-                          [ngClass]="{
+                          " [isRequired]="true" [autocompleteInput]="jheader.toaddress"
+                            (setAddress)="getAddress($event, 'to')" adressType="geocode" [ngClass]="{
                             'is-invalid': f['toaddress'].touched && !f['toaddress'].valid
-                          }"
-                        ></app-google-places>
+                          }"></app-google-places>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12">
-                      <div class="form-group">
-                        <label for="toFloor">Floor No</label>
-                        <input
-                          id="toFloor"
-                          class="form-control"
-                          type="number"
-                          formControlName="tofloor"
-                          [(ngModel)]="jheader.tofloor"
-                          placeholder="Floor No"
-                          [ngClass]="{
+                      <div class="col-lg-6 col-md-12">
+                        <div class="form-group">
+                          <label for="toFloor">Floor No</label>
+                          <input id="toFloor" class="form-control" type="number" formControlName="tofloor"
+                            [(ngModel)]="jheader.tofloor" placeholder="Floor No" [ngClass]="{
                             'is-invalid': f['tofloor'].touched && !f['tofloor'].valid
-                          }"
-                        />
+                          }" />
+                        </div>
+                      </div>
+                      <div class="col-lg-6 col-md-12">
+                        <div class="form-group">
+                          <label class="checkbox">
+                            <input type="checkbox" formControlName="tolift" [(ngModel)]="jheader.tolift" />
+                            Service Lift
+                          </label>
+                        </div>
                       </div>
                     </div>
-                    <div class="col-lg-6 col-md-12">
-                      <div class="form-group">
-                        <label class="checkbox">
-                          <input
-                            type="checkbox"
-                            formControlName="tolift"
-                            [(ngModel)]="jheader.tolift"
-                          />
-                          Service Lift
-                        </label>
-                      </div>
+
+                    <!-- Next Button -->
+                    <div class="form-group d-flex justify-content-end mb-0 mt-5 pt-5">
+                      <button (click)="nextPage(2)" type="submit"
+                        class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink">
+                        Next
+                      </button>
                     </div>
-                  </div>
-        
-                  <!-- Next Button -->
-                  <div class="form-group d-flex justify-content-end mb-0 mt-5 pt-5">
-                    <button
-                      (click)="nextPage(2)"
-                      type="submit"
-                      class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
-                    >
-                      Next
-                    </button>
-                  </div>
-                </form>
+                  </form>
+                </div>
               </div>
-            </div>
-          </ng-template>
-        </li>
-        
+            </ng-template>
+          </li>
+
           <li [ngbNavItem]="2">
             <button ngbNavLink>Step 2</button>
             <ng-template ngbNavContent>
@@ -197,19 +149,12 @@
                   <div class="row">
                     <div class="col-10 mb-4">
                       <div class="input-group rounded-pill m-0" ngbDropdown>
-                        <input
-                          #query
-                          (keyup)="searchData(query.value)"
-                          type="text"
+                        <input #query (keyup)="searchData(query.value)" type="text"
                           class="form-control border-0 rounded-pill shadow-none px-0 ps-4"
-                          placeholder="Please enter any product name to search"
-                          aria-label="Username"
-                          aria-describedby="basic-addon1"
-                        />
-                        <span
-                          class="bg-pink input-group-text border-0 px-3 bg-pink text-white rounded-circle ms-2"
-                          id="basic-addon1"
-                        >
+                          placeholder="Please enter any product name to search" aria-label="Username"
+                          aria-describedby="basic-addon1" />
+                        <span class="bg-pink input-group-text border-0 px-3 bg-pink text-white rounded-circle ms-2"
+                          id="basic-addon1">
                           <i class="fa fa-search fs-22 scaleX-1"></i>
                         </span>
                       </div>
@@ -250,42 +195,19 @@
                         <h4 class="fs-16 fw-normal">Selected Items</h4>
 
                         <ul>
-                          <li
-                            class="selected-item d-flex"
-                            *ngFor="let item of Articlemstlist"
-                          >
+                          <li class="selected-item d-flex" *ngFor="let item of Articlemstlist">
                             {{ item.itemname }}
                             <div class="d-flex align-items-center qty ms-auto">
-                              <span
-                                *ngIf="item.qty > 0"
-                                (click)="changeQty(item, -1, '')"
-                                >-</span
-                              >
-                              <input
-                                *ngIf="item.qty > 0"
-                                type="text"
-                                value="{{ item?.qty }}"
-                                #qtyRef
-                                (keyup)="
+                              <span *ngIf="item.qty > 0" (click)="changeQty(item, -1, '')">-</span>
+                              <input *ngIf="item.qty > 0" type="text" value="{{ item?.qty }}" #qtyRef (keyup)="
                                   changeQty(item, qtyRef.value, 'replace')
-                                "
-                              />
+                                " />
 
-                              <span
-                                *ngIf="item.qty > 0"
-                                class="opacity-25"
-                                (click)="changeQty(item, 1, '')"
-                                >+</span
-                              >
-                              <div
-                                style="padding-right: 15px"
-                                *ngIf="item.qty == 0"
-                              >
-                                <button
-                                  (click)="changeQty(item, 1, '')"
+                              <span *ngIf="item.qty > 0" class="opacity-25" (click)="changeQty(item, 1, '')">+</span>
+                              <div style="padding-right: 15px" *ngIf="item.qty == 0">
+                                <button (click)="changeQty(item, 1, '')"
                                   class="custom-btn border-0 rounded-pill fw-bold bg-pink"
-                                  style="font-size: 10px; height: 30px"
-                                >
+                                  style="font-size: 10px; height: 30px">
                                   Add
                                 </button>
                               </div>
@@ -297,11 +219,8 @@
                   </div>
 
                   <div class="form-group d-flex justify-content-end mb-0">
-                    <button
-                      (click)="nextPage(3)"
-                      type="submit"
-                      class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
-                    >
+                    <button (click)="nextPage(3)" type="submit"
+                      class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink">
                       Next
                     </button>
                   </div>
@@ -341,58 +260,42 @@
                         <div class="d-flex align-items-center pick-date">
                           <p class="m-0 p-0 px-4 text-purple fw-medium">
                             Pick A Date
-                            <input
-                              class="form-control"
-                              placeholder="yyyy-mm-dd"
-                              ngbDatepicker
-                              #d="ngbDatepicker"
-                              [minDate]="minDate"
-                              [(ngModel)]="orderdate"
-                            />
+                            <input class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker #d="ngbDatepicker"
+                              [minDate]="minDate" [(ngModel)]="orderdate" />
                           </p>
                           <span class="bg-purple p-3 ms-auto">
-                            <img
-                              (click)="d.toggle()"
-                              src="../../../assets/images/calendar-icon.svg"
-                              alt=""
-                            />
+                            <img (click)="d.toggle()" src="../../../assets/images/calendar-icon.svg" alt="" />
                           </span>
                         </div>
                       </div>
                       <div class="d-flex mb-3">
-                        <div class="d-flex align-items-center pick-time" 	container="body" popoverClass="my-custom-class" [ngbPopover]="popContent">
+                        <div class="d-flex align-items-center pick-time" container="body" popoverClass="my-custom-class"
+                          [ngbPopover]="popContent">
                           <p class="m-0 p-3 px-4 text-purple fw-medium">
                             Pick A Time
-                            <input
-                              class="form-control"
-                              placeholder="yyyy-mm-dd"
-                              
-                              [(ngModel)]="strselectedtime"
-                            />
+                            <input class="form-control" [value]="strselectedtime" readonly />
                           </p>
                           <span class="bg-purple p-3 ms-auto">
                             <img src="../../../assets/images/clock-icon.svg" alt="" />
                           </span>
                         </div>
-                        <ng-template #popContent
-                        >
-                        <div  class="time-ranges-container">
-                          <div class="time-range" (click)="selecttime(10, '10 AM - 12 PM')">
-                            10 AM - 12 PM
+                        <ng-template #popContent>
+                          <div class="time-ranges-container">
+                            <div class="time-range" (click)="selecttime(10, '10 AM - 12 PM')">
+                              10 AM - 12 PM
+                            </div>
+                            <div class="time-range" (click)="selecttime(12, '12 PM - 02 PM')">
+                              12 PM - 02 PM
+                            </div>
+                            <div class="time-range" (click)="selecttime(14, '02 PM - 04 PM')">
+                              02 PM - 04 PM
+                            </div>
+                            <div class="time-range" (click)="selecttime(18, '04 PM - 06 PM')">
+                              04 PM - 06 PM
+                            </div>
                           </div>
-                          <div class="time-range" (click)="selecttime(12, '12 PM - 02 PM')">
-                            12 PM - 02 PM
-                          </div>
-                          <div class="time-range" (click)="selecttime(14, '02 PM - 04 PM')">
-                            02 PM - 04 PM
-                          </div>
-                          <div class="time-range" (click)="selecttime(18, '04 PM - 06 PM')">
-                            04 PM - 06 PM
-                          </div>
-                        </div>
-                        </ng-template
-                      >
-                    
+                        </ng-template>
+
                         <div *ngIf="showTimeRanges" class="time-ranges-container">
                           <div class="time-range" (click)="selecttime(10, '10 AM - 12 PM')">
                             10 AM - 12 PM
@@ -408,7 +311,7 @@
                           </div>
                         </div>
                       </div>
-                      
+
                     </div>
                   </div>
                   <div class="col-md-9">
@@ -417,15 +320,11 @@
                     </h3>
                     <div class="row">
                       <div class="col-md-6" *ngFor="let item of PackageList">
-                        <div
-                          class="package-col"
-                          [ngClass]="
+                        <div class="package-col" [ngClass]="
                             selectedPackageValues === item.id ? 'selected' : ''
-                          "
-                          (click)="
+                          " (click)="
                             onSelect(item, item.id, item.getcalculateamounts)
-                          "
-                        >
+                          ">
                           <h4 class="text-purple fw-semibold fs-20">
                             {{ item.packagename }}
                           </h4>
@@ -444,11 +343,8 @@
                   </div>
                 </div>
                 <div class="col-12 d-flex justify-content-end mb-0 mt-5">
-                  <button
-                    (click)="nextPage(4)"
-                    type="submit"
-                    class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
-                  >
+                  <button (click)="nextPage(4)" type="submit"
+                    class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink">
                     Proceed Payment
                   </button>
                 </div>
@@ -479,12 +375,7 @@
                           </div>
                         </div>
                         <div class="col-md-2">
-                          <a
-                            href="#"
-                            (click)="EditStep(1); $event.preventDefault()"
-                            style="color: #eb2c60"
-                            >Edit</a
-                          >
+                          <a href="#" (click)="EditStep(1); $event.preventDefault()" style="color: #eb2c60">Edit</a>
                         </div>
                       </div>
 
@@ -507,9 +398,7 @@
                           <label>Item to Move*</label>
                         </div>
                         <div class="col-md-2">
-                          <a href="#" (click)="EditStep(2);$event.preventDefault()" style="color: #eb2c60"
-                            >Edit</a
-                          >
+                          <a href="#" (click)="EditStep(2);$event.preventDefault()" style="color: #eb2c60">Edit</a>
                         </div>
                       </div>
                       <div class="row mb-4">
@@ -518,8 +407,8 @@
                             {{ itemstomove }}
                           </div>
                         </div>
-    
-                        
+
+
                       </div>
                       <div class="row">
                         <div class="col-md-6">
@@ -528,51 +417,33 @@
                         <div class="col-md-4">
                           <span class="badge rounded-pill bg-danger">{{
                             selectedPackageName
-                          }}</span>
+                            }}</span>
                         </div>
                         <div class="col-md-2">
-                          <a href="#" (click)="EditStep(3);$event.preventDefault()" style="color: #eb2c60"
-                            >Edit</a
-                          >
+                          <a href="#" (click)="EditStep(3);$event.preventDefault()" style="color: #eb2c60">Edit</a>
                         </div>
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="ps-4">
-                        <h3
-                          class="text-uppercase fs-20 mb-4 fw-bold text-purple"
-                        >
+                        <h3 class="text-uppercase fs-20 mb-4 fw-bold text-purple">
                           PAYMENT
                         </h3>
                         <div class="paymet-table mb-4">
                           <div class="d-flex border-bottom">
-                            <span class="p-3 px-4 flex-grow-1"
-                              >Quotation Amount</span
-                            >
-                            <span class="p-3 pe-4"
-                              >₹ {{ cartService.cartTotal }}</span
-                            >
+                            <span class="p-3 px-4 flex-grow-1">Quotation Amount</span>
+                            <span class="p-3 pe-4">₹ {{ cartService.cartTotal }}</span>
                           </div>
                           <div class="d-flex border-bottom">
-                            <span class="p-3 px-4 flex-grow-1"
-                              >Token to Pay</span
-                            >
-                            <span class="p-3 pe-4 border-start"
-                              >₹ {{ cartService.TokenAmount }}</span
-                            >
+                            <span class="p-3 px-4 flex-grow-1">Token to Pay</span>
+                            <span class="p-3 pe-4 border-start">₹ {{ cartService.TokenAmount }}</span>
                           </div>
                           <div class="d-flex">
-                            <span
-                              class="p-3 px-4 flex-grow-1 fw-semibold text-purple"
-                              >Balance Amount</span
-                            >
-                            <span
-                              class="p-3 pe-4 bg-purple text-white fw-semibold"
-                              >₹
+                            <span class="p-3 px-4 flex-grow-1 fw-semibold text-purple">Balance Amount</span>
+                            <span class="p-3 pe-4 bg-purple text-white fw-semibold">₹
                               {{
-                                cartService.cartTotal - cartService.TokenAmount
-                              }}</span
-                            >
+                              cartService.cartTotal - cartService.TokenAmount
+                              }}</span>
                           </div>
                         </div>
                         <!--  <h4 class="fs-16 fw-normal mb-3">
@@ -607,7 +478,7 @@
                           Note: Boxes we provide are of 17 * 17 * 19 inch in
                           size.
                         </p>
-                       <!--  <ul class="p-0 m-0" style="list-style: none;">
+                        <!--  <ul class="p-0 m-0" style="list-style: none;">
                           <li class="mb-3 font-16 font-medium"  *ngFor="let itemdetails of this.jheader.selectedpackage.tpackagedtl">
                             <p class="mb-0"><i class="pi pi-check text-success font-bold"></i></p>
                             {{itemdetails.bulletdesc}}</li>
@@ -616,19 +487,16 @@
                       </div>
                     </div>
                     <div class="col-12 d-flex justify-content-end mb-0 mt-5">
-                      <button
-                        (click)="paynow()"
-                        type="submit"
-                        class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink"
-                      >
+                      <button (click)="paynow()" type="submit"
+                        class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink">
                         Pay ₹ {{ cartService.TokenAmount }}
                       </button>
                     </div>
                   </div>
-                 
-                
-                 
-                 
+
+
+
+
                 </form>
               </div>
             </ng-template>

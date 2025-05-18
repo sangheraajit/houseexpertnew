@@ -9,8 +9,8 @@ export const environment = {
   /* AdminServer: "https://admin.houseexpert.in",
   //CommonApiServer: "https://dev.api.houseexpert.in/",*/
   AdminServer: "https://admin.houseexpert.in",
-  CommonApiServer: "https://api.houseexpert.in/",
-  ImageserverUrl: "https://api.houseexpert.in/assets/UploadFile/",
+  CommonApiServer: "https://dev.api.houseexpert.in/",
+  ImageserverUrl: "https://dev.api.houseexpert.in/assets/UploadFile/",
   RAZORPAY_KEY_ID:'rzp_test_5kUNZLAhSBYPNy',
   RAZORPAY_KEY_SECRET:'V0sZT8L6KKgNLJZEpnvqnepb',
   //RAZORPAY_KEY_ID:'rzp_live_1STl4OakNI399l',

@@ -61,9 +61,30 @@ export class BookingviewComponent implements OnInit {
     private _sanitizer: DomSanitizer,
     private router: Router,
     private authService: AuthService,
-    
+
     public SubcategoryService: SubcategoryService,
   ) {
+
+  }
+
+  private message = null;
+
+  position = "toast-top-right";
+  animationType = "flyLeft";
+  title = "Result";
+  content = `I'm cool toaster!`;
+  timeout = 5000;
+  toastsLimit = 5;
+  type = "info";
+  noedit = true;
+  isNewestOnTop = true;
+  isHideOnClick = true;
+  isDuplicatesPrevented = false;
+  isCloseButton = true;
+
+  ngOnInit() {
+    this.currentUser = this.authService.currentUserValue;
+    // console.log("this.customerinformation currentUser", this.currentUser);
     if (
       localStorage.getItem("Message") != null &&
       localStorage.getItem("Message") != undefined
@@ -121,39 +142,23 @@ export class BookingviewComponent implements OnInit {
       this.paymenttype = "token";
     } else if (
       this.dialog.orderstatus == "Adminapproved" ||
-      this.dialog.orderstatus == "adminapproved"
+      this.dialog.orderstatus == "adminapproved" ||
+      this.dialog.orderstatus == "Token" ||
+      this.dialog.orderstatus == "token" ||
+      this.dialog.orderstatus == "New" ||
+      this.dialog.orderstatus == "new"
     ) {
       this.payamount = (
-        this.dialog.grandtotal +
-        this.dialog.gstamount +
-        this.dialog.insuranceamount -
-        this.dialog.discount -
-        this.paidamount
+        (this.dialog.grandtotal +
+          this.dialog.gstamount +
+          this.dialog.insuranceamount) -
+        (this.dialog.discount +
+          this.paidamount)
       ).toString();
       //this.payamount =  (this.dialog.grandtotal - this.paidamount).toString();
       this.NextButtonLabel = "Pay Balance Amount ₹ " + this.payamount;
       this.paymenttype = "balance";
     }
-  }
-
-  private message = null;
-
-  position = "toast-top-right";
-  animationType = "flyLeft";
-  title = "Result";
-  content = `I'm cool toaster!`;
-  timeout = 5000;
-  toastsLimit = 5;
-  type = "info";
-  noedit = true;
-  isNewestOnTop = true;
-  isHideOnClick = true;
-  isDuplicatesPrevented = false;
-  isCloseButton = true;
-
-  ngOnInit() {
-    this.currentUser = this.authService.currentUserValue;
-   // console.log("this.customerinformation currentUser", this.currentUser);
   }
   // closeModal() {
   //    this.activeModal.close();
@@ -179,19 +184,19 @@ export class BookingviewComponent implements OnInit {
           this.dialogdetail = data;
           //this.sourcedatadtl.load(JSON.parse(data.results.table[0].document));
           //this.dialogdetail = JSON.parse(data.results.table[0].document);
-          
-            //console.log(JSON.stringify(this.dialogdetail));
-            //this.sourcedata.load(this.dialogdetail);
-            try {
-             
-              this.combinedJson.orderdetails = this.dialogdetail;
-  
-              console.log("Combined JSON:", this.combinedJson);
-              // Proceed with the combined JSON
-            } catch (error) {
-              console.error("Error parsing JSON data:", error);
-            }
-          
+
+          //console.log(JSON.stringify(this.dialogdetail));
+          //this.sourcedata.load(this.dialogdetail);
+          try {
+
+            this.combinedJson.orderdetails = this.dialogdetail;
+
+            console.log("Combined JSON:", this.combinedJson);
+            // Proceed with the combined JSON
+          } catch (error) {
+            console.error("Error parsing JSON data:", error);
+          }
+
         }
       },
 
@@ -204,7 +209,7 @@ export class BookingviewComponent implements OnInit {
     this.dialog.insuranceamount =
       (this.dialog.forinsurance * environment.insurancerate) / 100;
   }
-  discountamountchange() {}
+  discountamountchange() { }
   public processPayment() {
     let order = {
       amount: (Number(this.payamount) * 100).toString(),
@@ -362,7 +367,7 @@ export class BookingviewComponent implements OnInit {
       );
       this.orderService
         .SendWhatsAppsAdvancePay(this.dialog.id)
-        .subscribe((res: any) => {});
+        .subscribe((res: any) => { });
       this.router.navigate(["bookinglist"]);
       //this.display = false;
 
@@ -394,10 +399,10 @@ export class BookingviewComponent implements OnInit {
         // debugger;
         let data: any = res;
         console.log(data);
-        if (!this.dialog.gstamount && this.dialog.gstamount != 0)
-          this.dialog.gstamount = Math.round(
-            (this.dialog.grandtotal * this.gstrate) / 100
-          );
+        /*  if (!this.dialog.gstamount && this.dialog.gstamount != 0)
+           this.dialog.gstamount = Math.round(
+             (this.dialog.grandtotal * this.gstrate) / 100
+           ); */
         // console.log(data.results);
         if (!this.dialog.forinsurance)
           //this.dialog.forinsurance = 100000;
@@ -431,14 +436,18 @@ export class BookingviewComponent implements OnInit {
           } else if (
             this.dialog.orderstatus == "Adminapproved" ||
             this.dialog.orderstatus == "adminapproved" ||
-            this.dialog.orderstatus == "ready"
+            this.dialog.orderstatus == "ready" ||
+            this.dialog.orderstatus == "Token" ||
+            this.dialog.orderstatus == "token" ||
+            this.dialog.orderstatus == "New" ||
+            this.dialog.orderstatus == "new"
           ) {
             this.payamount = (
-              this.dialog.grandtotal +
-              this.dialog.gstamount +
-              this.dialog.insuranceamount -
-              this.dialog.discount -
-              this.paidamount
+              (this.dialog.grandtotal +
+                this.dialog.gstamount +
+                this.dialog.insuranceamount) -
+              (this.dialog.discount +
+                this.paidamount)
             ).toString();
             //this.payamount =  (this.dialog.grandtotal- this.paidamount).toString();
             this.NextButtonLabel = "Pay Balance Amount ₹ " + this.payamount;
@@ -544,19 +553,20 @@ export class BookingviewComponent implements OnInit {
   }
   viewPackageRate(): void {
     const modalRef = this.modalService.open(SelectPackageComponent, {
-         size: 'lg',
-         centered: true,
-       });
+      size: 'lg',
+      centered: true,
+    });
     this.dialog.orderDetails = this.dialogdetail;
     modalRef.componentInstance.orderHeader = this.dialog;
     modalRef.componentInstance.ArticlemstlistAll = this.ArticlemstlistAll;
+    modalRef.componentInstance.pagename = "mybooking";
 
     modalRef.result.then((result) => {
       if (result) {
         console.log("passdata", result);
 
-       // localStorage.setItem("Message", result);
-       
+        // localStorage.setItem("Message", result);
+
         var packagefind = this.ddlpackage.find(
           (x) => x.idval == result.packageid
         );
@@ -571,10 +581,10 @@ export class BookingviewComponent implements OnInit {
       let data: any = res;
 
       //console.log(data.results);
-     
-        //this.sourcedatadtl.load(JSON.parse(JSON.parse(data.results).Table[0].document));
-        this.ArticlemstlistAll =data;
-      
+
+      //this.sourcedatadtl.load(JSON.parse(JSON.parse(data.results).Table[0].document));
+      this.ArticlemstlistAll = data;
+
     });
   }
   getSeverity(status: string) {

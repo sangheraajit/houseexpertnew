@@ -1,17 +1,37 @@
 .packege_col {
-    border: 2px solid #f1f1f1;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border: 2px solid #f1f1f1;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s ease;
 }
-.packege_col:hover,.packege_col.selected {
-    border-color: #022279;
+
+/* Only enable hover when this class is added */
+.hover-enabled:hover {
+  border-color: #022279;
+  cursor: pointer;
 }
-.packege_col.selected a.bg-warning {
-    background: #022279 !important;
-    color: #fff;
-}
+
 .selected {
-    border-color: #022279;
-    background: #022279 !important;
-    color: #fff;
+  border-color: #022279;
+  background: #022279 !important;
+  color: #fff;
+}
+
+.selected a.bg-warning {
+  background: #022279 !important;
+  color: #fff;
+}
+
+.packege_col_mybooking {
+  border: 2px solid #f1f1f1;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  pointer-events: none;
+  cursor: default;
+}
+
+.packege_col_mybooking.selected {
+  border-color: #022279;
+  background: #022279 !important;
+  color: #fff;
 }
