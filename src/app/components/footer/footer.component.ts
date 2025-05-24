@@ -48,13 +48,13 @@ export class FooterComponent implements OnInit {
     {
       heading: "We are here",
       items: [
-        { name: "Kolkata", url: "cities/kolkata" },
-        { name: "Bangalore", url: "cities/bangalore" },
-        { name: "Mumbai", url: "cities/mumbai" },
-        { name: "Pune", url: "cities/pune" },
-        { name: "Gurgaon", url: "cities/gurgaon" },
-        { name: "Chennai", url: "cities/chennai" },
-        { name: "Ahmedabad", url: "cities/ahmedabad" }
+        { name: "Packers and Movers Kolkata", url: "packersandmovers/kolkata" },
+        { name: "Packers and Movers Bangalore", url: "packersandmovers/bangalore" },
+        { name: "Packers and Movers Mumbai", url: "packersandmovers/mumbai" },
+        { name: "Packers and Movers Pune", url: "packersandmovers/pune" },
+        { name: "Packers and Movers Gurgaon", url: "packersandmovers/gurgaon" },
+        { name: "Packers and Movers Chennai", url: "packersandmovers/chennai" },
+        { name: "Packers and Movers Ahmedabad", url: "packersandmovers/ahmedabad" }
       ]
     }
   ];

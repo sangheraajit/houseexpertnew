@@ -4,10 +4,15 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "build": "ng build",
+    "lint": "tslint -c tslint.json -p . --force",
+    "lint-report": "tslint -c tslint.json -p . -o tslint-output.txt --force",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
     "devbuild": "ng build --configuration=development",
     "stagingbuild": "ng build --configuration=staging",
     "prodbuild": "ng build --configuration=production",
-    "test": "ng test"
+    "post-build": "node ./build/post-build.js"
   },
   "private": true,
   "dependencies": {

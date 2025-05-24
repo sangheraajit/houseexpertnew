@@ -54,7 +54,7 @@ const routes: Routes = [
   { path: 'failed-payment', component: FailedToPayComponent },
   { path: 'thankyou', component: ThankYouComponent },
   { path: 'cart', component: CartComponent },
-  { path: 'cities/:cityname', component: CitiesComponent },
+  { path: 'packersandmovers/:cityname', component: CitiesComponent },
   {
     path: 'anti-discrimination-policy',
     component: AntiDiscriminationPolicyComponent,
