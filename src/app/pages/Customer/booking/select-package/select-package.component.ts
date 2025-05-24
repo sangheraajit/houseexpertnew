@@ -87,7 +87,11 @@ export class SelectPackageComponent
           let data: any = res;
 
           console.log(data.results);
-         
+          if(this.pagename == "mybooking"){
+          data = data.filter(
+            (item: any) =>  item.id == this.selectedValues
+          );
+        }
             //this.sourcedatadtl.load(JSON.parse(JSON.parse(data.results).Table[0].document));
             this.PackageList = data
             this.PackageList.forEach((element: any) => {

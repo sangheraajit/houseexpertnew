@@ -6,16 +6,14 @@
 
 <div class="modal-body">
   <div class="wrapper">
-    
+
     <!-- Page: package -->
     <div *ngIf="pagename === 'package'" class="row">
       <div class="col-md-6" *ngFor="let item of PackageList">
-        <div class="card text-center p-4 packege_col"
-             [ngClass]="[
+        <div class="card text-center p-4 packege_col" [ngClass]="[
                selectedValues === item.id ? 'selected' : '',
                pagename === 'package' ? 'hover-enabled' : ''
-             ]"
-             (click)="onSelect(item, item.id, item.getcalculateamounts)">
+             ]" (click)="onSelect(item, item.id, item.getcalculateamounts)">
           <h3 class="mb-2">{{ item.packagename }}</h3>
           <p class="h1 mb-0">₹ {{ item.packageTotal }}</p>
           <div class="my-3" *ngIf="selectedValues === item.id">
@@ -35,24 +33,24 @@
 
     <!-- Page: mybooking -->
     <div *ngIf="pagename === 'mybooking'" class="row">
-      <div class="col-md-6" *ngFor="let item of PackageList">
-    <div class="card text-center p-4 packege_col_mybooking"
-         [ngClass]="selectedValues === item.id ? 'selected' : ''">
-      <h3 class="mb-2">{{ item.packagename }}</h3>
-      <p class="h1 mb-0">₹ {{ item.packageTotal }}</p>
-      <div class="my-3" *ngIf="selectedValues === item.id">
-        <div class="bg-warning font-12 font-bold text-uppercase rounded d-inline-block py-2 px-4">
-          Selected
+      <div class="col-md-12" *ngFor="let item of PackageList">
+        <div class="card text-center p-4 packege_col_mybooking"
+          [ngClass]="selectedValues === item.id ? 'selected' : ''">
+          <h3 class="mb-2">{{ item.packagename }}</h3>
+          <p class="h1 mb-0">₹ {{ item.packageTotal }}</p>
+          <div class="my-3" *ngIf="selectedValues === item.id">
+            <div class="bg-warning font-12 font-bold text-uppercase rounded d-inline-block py-2 px-4">
+              Selected
+            </div>
+          </div>
+          <ul class="p-0 m-0" style="list-style: none;">
+            <li class="mb-3" *ngFor="let itemdetails of item.tpackagedtl">
+              <p class="mb-0"><i class="pi pi-check text-success font-bold"></i></p>
+              {{ itemdetails.bulletdesc }}
+            </li>
+          </ul>
         </div>
       </div>
-      <ul class="p-0 m-0" style="list-style: none;">
-        <li class="mb-3" *ngFor="let itemdetails of item.tpackagedtl">
-          <p class="mb-0"><i class="pi pi-check text-success font-bold"></i></p>
-          {{ itemdetails.bulletdesc }}
-        </li>
-      </ul>
-    </div>
-  </div>
     </div>
 
     <!-- Page: cartfinal -->

@@ -179,7 +179,7 @@ export class MoverPakersStepsComponent {
       this.Customerform.controls["toaddress"].setValue(this.jheader.toaddress);
     }
     // ✅ Handle Payment Success
-  window.addEventListener('payment.success', (event: any) => {
+  /*window.addEventListener('payment.success', (event: any) => {
     console.log('Global Success Handler:', event.detail);
     this.onPaymentSuccess(event);
   });
@@ -189,7 +189,7 @@ export class MoverPakersStepsComponent {
     console.error('Global Failure Handler:', event.detail);
     //alert('Payment Failed: ' + event.detail.error.description);
     this.toastService.showErrorToast('Payment Failed', event.detail.error.description);
-  });
+  });*/
   }
   getAddress(place: any, type: string) {
     // this.phone = this.getPhone(place);
@@ -388,7 +388,8 @@ export class MoverPakersStepsComponent {
 
           this.jheader.vehiclename = res.vehiclename;
           this.bookingInformation.jheader[0] = this.jheader;
-
+ this.jheader.orderno = res.orderno;
+          this.jheader.Id = res.id;
           this.SubcategoryService.setBookingInformation(
             this.bookingInformation
           );
@@ -446,7 +447,13 @@ export class MoverPakersStepsComponent {
           return item.name + "(" + item.qty + ")";
         })
         .join(",");
-
+   // Recalculate the cart totals
+        this.cartService.computeCartTotals();
+        this.bookingInformation.jheader[0].grandtotal = this.cartService.cartTotal;
+        this.bookingInformation.jheader[0].total = this.cartService.cartTotal;
+        this.bookingInformation.jheader[0].totalcft = this.cartService.Totalcft;
+        this.bookingInformation.jheader[0].tokenamount =
+          this.cartService.TokenAmount;
         this.orderService
         .CreateOrUpdateOrder(this.bookingInformation)
         .subscribe((res: any) => {
@@ -462,7 +469,8 @@ export class MoverPakersStepsComponent {
 
           this.jheader.vehiclename = res.vehiclename;
           this.bookingInformation.jheader[0] = this.jheader;
-
+ this.jheader.orderno = res.orderno;
+          this.jheader.Id = res.id;
           this.SubcategoryService.setBookingInformation(
             this.bookingInformation
           );
@@ -489,16 +497,30 @@ export class MoverPakersStepsComponent {
   toggleTimeRanges() {
     this.showTimeRanges = !this.showTimeRanges;
   }
-  selecttime(inputdate: any,strselectedtime:string) {
-    console.log("orderdate",this.orderdate);
-    this.iscurrenttime = inputdate;
-    this.strselectedtime=strselectedtime;
-    var dateTime = this.datePipe.transform(this.formatDate(this.orderdate), 'yyyy-MM-ddT'+ (("00" + this.iscurrenttime).slice(-2))  + ':00:00');//var dateTime = moment(this.isselecteddate,"yyyy-MM-dd");
-    this.showTimeRanges=false;
-    this.bookingInformation.jheader[0].orderdate =
-      moment(dateTime).format("YYYY-MM-DD H:mm:ss");
-    this.SelectedDate.emit(dateTime);
-    
+  selecttime(inputHour: number, strselectedtime: string) {
+    this.iscurrenttime = inputHour;
+    this.strselectedtime = strselectedtime;
+
+    // Parse the selected date from the NgbDatePicker
+    const selectedDate = moment({
+      year: this.orderdate.year,
+      month: this.orderdate.month - 1, // moment months are 0-based
+      day: this.orderdate.day,
+      hour: inputHour,
+      minute: 0,
+      second: 0,
+    });
+
+    // Format for display and API
+    const formattedDateTime = selectedDate.format('YYYY-MM-DD HH:mm:ss');
+
+    this.bookingInformation.jheader[0].orderdate = formattedDateTime;
+
+    this.SelectedDate.emit(formattedDateTime);
+
+    this.showTimeRanges = false;
+
+    console.log("Formatted DateTime:", formattedDateTime);
   }
   formatDate(date: NgbDate) {
     
@@ -661,7 +683,7 @@ export class MoverPakersStepsComponent {
       spname: 'payment_save',
       jpayment: [
         {
-          orderid: this.bookingInformation.orderresponse.orderno,
+          orderid: this.bookingInformation.orderresponse.id,
           paymenttype: 'token',
           paymentid: event.detail.razorpay_payment_id,
           paymentmode: 'razorpay',
