@@ -52,6 +52,9 @@
     }
 }
 @media only screen and (max-width: 767px) {
+      .footer-wrap {
+        display: none;
+    }
     .footerlogo{
         width: 100%;
     }
@@ -66,6 +69,9 @@
 }
 
 @media screen and (max-width: 650px) {
+    .footer-wrap {
+        display: none;
+    }
     #whatsappbutton {
         display: block;
         position: fixed;

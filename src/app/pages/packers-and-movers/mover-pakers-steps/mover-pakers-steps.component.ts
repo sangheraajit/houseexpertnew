@@ -387,9 +387,10 @@ export class MoverPakersStepsComponent {
           // this.jheader.grandtotal = this.cart.cartTotal;
 
           this.jheader.vehiclename = res.vehiclename;
-          this.bookingInformation.jheader[0] = this.jheader;
- this.jheader.orderno = res.orderno;
+           this.jheader.orderno = res.orderno;
           this.jheader.Id = res.id;
+          this.bookingInformation.jheader[0] = this.jheader;
+
           this.SubcategoryService.setBookingInformation(
             this.bookingInformation
           );
@@ -468,9 +469,10 @@ export class MoverPakersStepsComponent {
           // this.jheader.grandtotal = this.cart.cartTotal;
 
           this.jheader.vehiclename = res.vehiclename;
-          this.bookingInformation.jheader[0] = this.jheader;
- this.jheader.orderno = res.orderno;
+           this.jheader.orderno = res.orderno;
           this.jheader.Id = res.id;
+          this.bookingInformation.jheader[0] = this.jheader;
+
           this.SubcategoryService.setBookingInformation(
             this.bookingInformation
           );

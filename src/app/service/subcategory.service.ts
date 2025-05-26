@@ -59,7 +59,10 @@ export class SubcategoryService {
             tolift:false,
             tokenamount:0,
 			      totalcft:0,
-            vehiclename:''
+            vehiclename:'',
+            gstamount:0,
+            insuranceamount:0,
+            forinsurance:0
          }]
       ,
       jdetail:[
@@ -181,7 +184,10 @@ export class SubcategoryService {
             tolift:false,
             tokenamount:0,
 			      totalcft:0,
-            vehiclename:''
+            vehiclename:'',
+            gstamount:0,
+            insuranceamount:0,
+            forinsurance:0
          }]
       ,
       jdetail:[

@@ -348,6 +348,28 @@ export class LandingPageComponent {
         }
         this.bookingInformation.jheader[0] = this.jheader;
         this.SubcategoryService.setBookingInformation(this.bookingInformation);
+           this.orderService
+        .CreateOrUpdateOrder(this.bookingInformation)
+        .subscribe((res: any) => {
+          // alert('in');
+          this.bookingInformation.orderresponse = res;
+          console.log('bookingInformation res', res);
+        
+
+          // this.cart.cartTotal=res.totalamount;
+          // this.cart.TokenAmount=this.cart.percentage(15,this.cart.cartTotal);
+          // this.jheader.tokenamount = this.cart.TokenAmount;
+          // this.jheader.grandtotal = this.cart.cartTotal;
+
+          this.jheader.vehiclename = res.vehiclename;
+       
+ this.jheader.orderno = res.orderno;
+          this.jheader.Id = res.id;
+             this.bookingInformation.jheader[0] = this.jheader;
+          this.SubcategoryService.setBookingInformation(
+            this.bookingInformation
+          );
+        });
         this.router.navigate(["mover-steps"]);
       } else {
         this.submitted = false;
