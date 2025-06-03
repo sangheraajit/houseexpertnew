@@ -126,7 +126,7 @@
                     </div>
 
                     <!-- Next Button -->
-                    <div class="form-group d-flex justify-content-end mb-0 mt-5 pt-5">
+                    <div class="form-group d-flex justify-content-end mb-0 mt-5">
                       <button (click)="nextPage(2)" type="submit"
                         class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink">
                         Next
@@ -206,7 +206,7 @@
                               <span *ngIf="item.qty > 0" class="opacity-25" (click)="changeQty(item, 1, '')">+</span>
                               <div style="padding-right: 15px" *ngIf="item.qty == 0">
                                 <button (click)="changeQty(item, 1, '')"
-                                  class="custom-btn border-0 rounded-pill fw-bold bg-pink"
+                                  class="custom-btn border-0 rounded-pill fw-bold bg-blue"
                                   style="font-size: 10px; height: 30px">
                                   Add
                                 </button>
@@ -218,7 +218,7 @@
                     </div>
                   </div>
 
-                  <div class="form-group d-flex justify-content-end mb-0">
+                  <div class="form-group d-flex justify-content-end mb-0 mt-3">
                     <button (click)="nextPage(3)" type="submit"
                       class="custom-btn border-0 rounded-pill fw-bold px-4 bg-pink">
                       Next
