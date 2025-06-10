@@ -215,7 +215,7 @@ export class SubcategoryService {
     let spname = "order_read2"
     let ptype = "readall"
     let pid = 0;
-    let pwhere = " and customerid =  " + custid;
+    let pwhere = " and customerid =  " + custid + " and orderdate is not null";
     return this.apiservice.apiPostWhere(spname, ptype, pid,pwhere)
   }
 
