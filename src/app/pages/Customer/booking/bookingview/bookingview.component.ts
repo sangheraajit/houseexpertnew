@@ -13,6 +13,7 @@ import { ToastService } from "src/app/service/toast.service";
 import { SelectPackageComponent } from "../select-package/select-package.component";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { SubcategoryService } from "src/app/service/subcategory.service";
+import { CartService } from "src/app/service/cart.service";
 //import { PackersAndMoversMainComponent } from "src/app/sub-category/packers-and-movers-main/packers-and-movers-main.component";
 declare var Razorpay: any;
 @Component({
@@ -63,6 +64,7 @@ export class BookingviewComponent implements OnInit {
     private authService: AuthService,
 
     public SubcategoryService: SubcategoryService,
+     public cartservice: CartService,
   ) {
 
   }
@@ -133,7 +135,17 @@ export class BookingviewComponent implements OnInit {
         ).toString();
     }
     this.dialog.totkm = Math.ceil(this.dialog.totkm);
-    if (
+    if( this.dialog.tokenamount==0 || this.dialog.tokenamount==null || this.dialog.tokenamount==undefined){
+       const totalamount = (
+        (this.dialog.grandtotal +
+          this.dialog.gstamount +
+          this.dialog.insuranceamount) -
+        (this.dialog.discount +
+          this.paidamount)
+      );
+      this.NextButtonLabel = "Pay Token Amount ₹ " +  this.cartservice.percentage(15, totalamount);
+    }
+    else if (
       this.dialog.orderstatus == "Quotation" ||
       this.dialog.orderstatus == "quotation"
     ) {

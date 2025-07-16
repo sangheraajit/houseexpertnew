@@ -725,7 +725,7 @@ registorCustomr()
         // this.storage.delete('mycart');
         //delete this.cart.cartItemsList;
         if (this.DistanceKM > 150) {
-          this.cart.cartTotal = 0;
+       //   this.cart.cartTotal = 0;
           this.bookingInformation.jheader[0].grandtotal = this.cart.cartTotal;
           this.bookingInformation.jheader[0].total = this.cart.cartTotal;
 
