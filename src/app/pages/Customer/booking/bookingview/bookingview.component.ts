@@ -2,7 +2,7 @@ import { Component, OnInit, HostListener, inject } from "@angular/core";
 // import { DDLItem, DDLItemCategory } from "../../../@core/models/model";
 import { DomSanitizer } from "@angular/platform-browser";
 
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 import { OrderService } from "src/app/service/order.service";
 import { UserService } from "src/app/service/user.service";
@@ -64,9 +64,10 @@ export class BookingviewComponent implements OnInit {
     private authService: AuthService,
 
     public SubcategoryService: SubcategoryService,
-     public cartservice: CartService,
+    public cartservice: CartService,
+    private route: ActivatedRoute
   ) {
-
+    console.log("BookingviewComponent constructor called");
   }
 
   private message = null;
@@ -83,99 +84,117 @@ export class BookingviewComponent implements OnInit {
   isHideOnClick = true;
   isDuplicatesPrevented = false;
   isCloseButton = true;
-
+  orderid: any;
+  order: any = {}
   ngOnInit() {
     this.currentUser = this.authService.currentUserValue;
-    // console.log("this.customerinformation currentUser", this.currentUser);
-    if (
-      localStorage.getItem("Message") != null &&
-      localStorage.getItem("Message") != undefined
-    )
-      this.msg = localStorage.getItem("Message") as string;
-    this.getProvList();
-    //this.getCustList();
+    this.orderid = this.route.snapshot.paramMap.get('id');
+    console.log("ORDER ID:", this.orderid);
+    if (this.orderid) {
+      this.loadOrderData();
+    } else {
+      // fallback - try again after slight delay
+      setTimeout(() => {
+        this.orderid = this.route.snapshot.paramMap.get('id');
+        if (this.orderid) {
+          this.loadOrderData();
+        }
+      }, 300);
+    }
 
-    if (this.msg.length > 0) {
-      this.dialog = JSON.parse(this.msg);
+    // console.log("this.customerinformation currentUser", this.currentUser);
+
+  }
+  // closeModal() {
+  //    this.activeModal.close();
+  // }
+  loadOrderData() {
+
+    this.SubcategoryService.getOrdersDetails(this.orderid).subscribe((res: any) => {
+      this.order = res.filter(
+        (order: any) => order.fromcity != null && order.fromcity !== ''
+      );
+      this.dialog = this.order[0];
+      this.getProvList();
       this.combinedJson.order = this.dialog;
       this.getPackList();
       this.getVehicleList();
       this.getorderdetaillist(this.dialog.id);
       this.getpaymentdetaillist(this.dialog.id);
       this.getAllarticle();
-    }
-    //this.dialog.orderdate.getHours()}}":00"{{this.dialog.orderdate.getHours()>12?"PM":"AM"}}-{{ this.dialog.orderdate.getHours()+2}}":00"{{this.dialog.orderdate.getHours()>12?"PM":"AM"
-    if (Number(new Date(this.dialog.orderdate).getHours()) > 12) {
-      this.strdate = (
-        (Number(new Date(this.dialog.orderdate).getHours()) - 12).toString() +
-        ":00" +
-        "PM"
-      ).toString();
-      this.strdate =
-        this.strdate +
-        "-" +
-        (
-          (Number(new Date(this.dialog.orderdate).getHours()) - 10).toString() +
+
+
+
+
+      //this.dialog.orderdate.getHours()}}":00"{{this.dialog.orderdate.getHours()>12?"PM":"AM"}}-{{ this.dialog.orderdate.getHours()+2}}":00"{{this.dialog.orderdate.getHours()>12?"PM":"AM"
+      if (Number(new Date(this.dialog.orderdate).getHours()) > 12) {
+        this.strdate = (
+          (Number(new Date(this.dialog.orderdate).getHours()) - 12).toString() +
           ":00" +
           "PM"
         ).toString();
-    } else {
-      this.strdate = (
-        Number(new Date(this.dialog.orderdate).getHours()).toString() +
-        ":00" +
-        "AM"
-      ).toString();
-      this.strdate =
-        this.strdate +
-        "-" +
-        (
-          (Number(new Date(this.dialog.orderdate).getHours()) + 2).toString() +
+        this.strdate =
+          this.strdate +
+          "-" +
+          (
+            (Number(new Date(this.dialog.orderdate).getHours()) - 10).toString() +
+            ":00" +
+            "PM"
+          ).toString();
+      } else {
+        this.strdate = (
+          Number(new Date(this.dialog.orderdate).getHours()).toString() +
           ":00" +
           "AM"
         ).toString();
-    }
-    this.dialog.totkm = Math.ceil(this.dialog.totkm);
-    if( this.dialog.tokenamount==0 || this.dialog.tokenamount==null || this.dialog.tokenamount==undefined){
-       const totalamount = (
-        (this.dialog.grandtotal +
-          this.dialog.gstamount +
-          this.dialog.insuranceamount) -
-        (this.dialog.discount +
-          this.paidamount)
-      );
-      this.NextButtonLabel = "Pay Token Amount ₹ " +  this.cartservice.percentage(15, totalamount);
-    }
-    else if (
-      this.dialog.orderstatus == "Quotation" ||
-      this.dialog.orderstatus == "quotation"
-    ) {
-      this.payamount = this.dialog.tokenamount;
-      this.NextButtonLabel = "Pay Token Amount ₹ " + this.payamount;
-      this.paymenttype = "token";
-    } else if (
-      this.dialog.orderstatus == "Adminapproved" ||
-      this.dialog.orderstatus == "adminapproved" ||
-      this.dialog.orderstatus == "Token" ||
-      this.dialog.orderstatus == "token" ||
-      this.dialog.orderstatus == "New" ||
-      this.dialog.orderstatus == "new"
-    ) {
-      this.payamount = (
-        (this.dialog.grandtotal +
-          this.dialog.gstamount +
-          this.dialog.insuranceamount) -
-        (this.dialog.discount +
-          this.paidamount)
-      ).toString();
-      //this.payamount =  (this.dialog.grandtotal - this.paidamount).toString();
-      this.NextButtonLabel = "Pay Balance Amount ₹ " + this.payamount;
-      this.paymenttype = "balance";
-    }
+        this.strdate =
+          this.strdate +
+          "-" +
+          (
+            (Number(new Date(this.dialog.orderdate).getHours()) + 2).toString() +
+            ":00" +
+            "AM"
+          ).toString();
+      }
+      this.dialog.totkm = Math.ceil(this.dialog.totkm);
+      if (this.dialog.tokenamount == 0 || this.dialog.tokenamount == null || this.dialog.tokenamount == undefined) {
+        const totalamount = (
+          (this.dialog.grandtotal +
+            this.dialog.gstamount +
+            this.dialog.insuranceamount) -
+          (this.dialog.discount +
+            this.paidamount)
+        );
+        this.NextButtonLabel = "Pay Token Amount ₹ " + this.cartservice.percentage(15, totalamount);
+      }
+      else if (
+        this.dialog.orderstatus == "Quotation" ||
+        this.dialog.orderstatus == "quotation"
+      ) {
+        this.payamount = this.dialog.tokenamount;
+        this.NextButtonLabel = "Pay Token Amount ₹ " + this.payamount;
+        this.paymenttype = "token";
+      } else if (
+        this.dialog.orderstatus == "Adminapproved" ||
+        this.dialog.orderstatus == "adminapproved" ||
+        this.dialog.orderstatus == "Token" ||
+        this.dialog.orderstatus == "token" ||
+        this.dialog.orderstatus == "New" ||
+        this.dialog.orderstatus == "new"
+      ) {
+        this.payamount = (
+          (this.dialog.grandtotal +
+            this.dialog.gstamount +
+            this.dialog.insuranceamount) -
+          (this.dialog.discount +
+            this.paidamount)
+        ).toString();
+        //this.payamount =  (this.dialog.grandtotal - this.paidamount).toString();
+        this.NextButtonLabel = "Pay Balance Amount ₹ " + this.payamount;
+        this.paymenttype = "balance";
+      }
+    });
   }
-  // closeModal() {
-  //    this.activeModal.close();
-  // }
-
   private getorderdetaillist(oid: string) {
     let pwhere1 = " orderid ='" + oid + "'";
     let body = {

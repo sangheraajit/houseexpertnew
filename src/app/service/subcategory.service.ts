@@ -211,11 +211,18 @@ export class SubcategoryService {
       categoryname:''
   };
   }
-  getOrdersServices(custid:number) {
+  getCustomerOrders(custid:number) {
     let spname = "order_read2"
     let ptype = "readall"
     let pid = 0;
     let pwhere = " and customerid =  " + custid + " and orderdate is not null";
+    return this.apiservice.apiPostWhere(spname, ptype, pid,pwhere)
+  }
+    getOrdersDetails(orderid?:number) {
+    let spname = "order_read2"
+    let ptype = "readall"
+    let pid = 0;
+    let pwhere = " and id =  " + orderid + " and orderdate is not null";
     return this.apiservice.apiPostWhere(spname, ptype, pid,pwhere)
   }
 

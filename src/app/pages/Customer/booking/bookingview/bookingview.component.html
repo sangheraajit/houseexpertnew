@@ -1,3 +1,4 @@
+<div *ngIf="dialog; else loading">
 <div class="wrapper">
   <table class="table table-bordered table-hover">
     <thead>
@@ -64,14 +65,14 @@
     <tbody>
       <tr>
         <td class="text-left">
-          {{ dialog.fromaddress1 }}, {{ dialog.fromaddress }}<br />
-          <b>Floor:</b> {{ dialog.fromfloor }}<br />
-          <b>Lift Available:</b> {{ dialog.fromlift ? 'Yes' : 'No' }}
+          {{ dialog.fromaddress1 }}, {{ dialog?.fromaddress }}<br />
+          <b>Floor:</b> {{ dialog?.fromfloor }}<br />
+          <b>Lift Available:</b> {{ dialog?.fromlift ? 'Yes' : 'No' }}
         </td>
         <td class="text-left">
-          {{ dialog.toaddress1 }}, {{ dialog.toaddress }}<br />
-          <b>Floor:</b> {{ dialog.tofloor }}<br />
-          <b>Lift Available:</b> {{ dialog.tolift ? 'Yes' : 'No' }}
+          {{ dialog?.toaddress1 }}, {{ dialog?.toaddress }}<br />
+          <b>Floor:</b> {{ dialog?.tofloor }}<br />
+          <b>Lift Available:</b> {{ dialog?.tolift ? 'Yes' : 'No' }}
         </td>
       </tr>
     </tbody>
@@ -99,22 +100,22 @@
         <tr >
           <td></td>
           <td ><b>Sub-Total</b></td>
-          <td class="text-end">{{ dialog.grandtotal }}</td>
+          <td class="text-end">{{ dialog?.grandtotal }}</td>
         </tr>
         <tr *ngIf="dialog.discount && dialog.discount>0">
           <td></td>
           <td ><b>Discount</b></td>
-          <td class="text-end">{{ dialog.discount }}</td>
+          <td class="text-end">{{ dialog?.discount }}</td>
         </tr>
         <tr *ngIf="dialog.insuranceamount && dialog.insuranceamount>0">
           <td></td>
           <td ><b>Insurance Amount {{ insurancerate }} %</b></td>
-          <td class="text-end">{{ dialog.insuranceamount }}</td>
+          <td class="text-end">{{ dialog?.insuranceamount }}</td>
         </tr>
         <tr *ngIf="dialog.gstamount && dialog.gstamount>0">
           <td></td>
           <td ><b>GST Amount</b></td>
-          <td class="text-end">{{ dialog.gstamount }}</td>
+          <td class="text-end">{{ dialog?.gstamount }}</td>
         </tr>
         <tr>
           <td></td>
@@ -125,7 +126,7 @@
           <td></td>
           <td ><b>Balance</b></td>
           <td class="text-end text-danger">
-            {{ dialog.grandtotal + dialog.gstamount - (dialog.discount + paidamount) }}
+            {{ dialog?.grandtotal + dialog?.gstamount - (dialog?.discount + paidamount) }}
           </td>
         </tr>
         <tr>
@@ -143,3 +144,10 @@
     </table>
   </div>
 </div>
+</div>
+<ng-template #loading>
+  <div class="text-center p-5">
+    <span class="spinner-border"></span>
+    <p>Loading order details...</p>
+  </div>
+</ng-template>

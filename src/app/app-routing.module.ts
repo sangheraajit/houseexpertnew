@@ -33,8 +33,8 @@ import { CitiesComponent } from './pages/cities/cities.component';
 //import { MoverPakersStepsComponent } from './pages/mover-pakers-steps/mover-pakers-steps.component';
 
 const routes: Routes = [
- // { path: '', component: HomeComponent },
- { path: '', component: LandingPageComponent },
+  // { path: '', component: HomeComponent },
+  { path: '', component: LandingPageComponent },
   { path: 'packers-and-movers', component: LandingPageComponent },
   { path: 'services', component: ServicesComponent },
   { path: 'service-details', component: ServiceDetailsComponent },
@@ -72,13 +72,14 @@ const routes: Routes = [
     path: 'bookinglist',
     loadChildren: () =>
       import('./pages/Customer/booking/booking.module').then((m) => m.BookingModule),
-  },
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    useHash: true,
-    scrollPositionRestoration: "top"
+    useHash: false,
+    scrollPositionRestoration: 'top',
+    initialNavigation: 'enabledBlocking', // <-- ADD THIS
   })],
   exports: [RouterModule],
 })

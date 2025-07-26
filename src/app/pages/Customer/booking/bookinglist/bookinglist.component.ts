@@ -32,7 +32,7 @@ export class BookinglistComponent implements OnInit {
   }
 
   loadOrders() {
-    this.orderService.getOrdersServices(this.custid).subscribe((res: any) => {
+    this.orderService.getCustomerOrders(this.custid).subscribe((res: any) => {
       this.orders = res.filter(
         (order: any) => order.fromcity != null && order.fromcity !== ''
       );
