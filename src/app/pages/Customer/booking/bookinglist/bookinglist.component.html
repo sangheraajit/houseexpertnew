@@ -6,8 +6,8 @@
        
         <th>Order ID</th>
         <th>Order Date</th>
-        <th>From City</th>
-        <th>To City</th>
+        <th>From</th>
+        <th>To</th>
         <th>Status</th>
         <th>Action</th>
       </tr>
@@ -15,11 +15,11 @@
     <tbody>
       <tr *ngFor="let order of currentOrders">
         
-        <td>{{ order.id }}</td>
+        <td>{{ order.orderno==null || order.orderno==0 ? order.id:order.orderno }}</td>
         <td>{{order.orderdate | date:"dd-MMM-yyyy"}}</td>
-        <td>{{ order.fromcity }}</td>
-        <td>{{ order.fromcity }}</td>
-        <td>{{ order.tocity }}</td>
+        <td>{{ order.fromaddress }}</td>
+        <td>{{ order.toaddress }}</td>
+        
         <td>
           <span
             class="badge"
