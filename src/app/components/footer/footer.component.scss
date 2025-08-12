@@ -1,4 +1,5 @@
 .footer-wrap {
+  //  display: block; /* or flex/grid depending on your layout */
     background-color: var(--light-color);
     padding: 80px 0 0;
     .f-links{
@@ -51,10 +52,10 @@
 
     }
 }
-@media only screen and (max-width: 767px) {
-      .footer-wrap {
+@media  (max-width: 767px) {
+   /*   .footer-wrap {
         display: none;
-    }
+    }   */
     .footerlogo{
         width: 100%;
     }
@@ -69,9 +70,9 @@
 }
 
 @media screen and (max-width: 650px) {
-    .footer-wrap {
+    /*  .footer-wrap {
         display: none;
-    }
+    }  */
     #whatsappbutton {
         display: block;
         position: fixed;

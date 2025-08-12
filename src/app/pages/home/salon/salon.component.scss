@@ -9,7 +9,7 @@
 }
 
 /* Mobile styles */
-@media only screen and (max-width: 767px) {
+@media  (max-width: 767px) {
     .salon-wrap {
         flex-direction: column; /* Stack vertically for mobile */
     }

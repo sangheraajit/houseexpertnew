@@ -181,3 +181,18 @@ body{
 
 
 
+/* Mobile: Hide footer by default */
+@media only screen and (max-width: 767px) {
+  .footer-wrap {
+    display: none;
+  }
+
+  /* Show only on home page */
+  body.page-home .footer-wrap {
+    display: block;
+  }
+
+  .footerlogo {
+    width: 100%;
+  }
+}

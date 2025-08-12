@@ -62,7 +62,7 @@
 }
 
 /* Mobile styles */
-@media only screen and (max-width: 767px) {
+@media (max-width: 767px) {
   .request-wrap {
     height: auto; // Allow height to be dynamic on mobile
   }
@@ -109,7 +109,7 @@
 }
 
 /* Desktop styles */
-@media only screen and (min-width: 768px) {
+@media  (min-width: 768px) {
   .desktop-layout .req-description {
     position: relative; // Position relative for desktop
   }

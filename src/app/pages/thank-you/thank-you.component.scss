@@ -1,3 +1,22 @@
-.custom-gray-btn,.custom-btn{ height: 53px;}
-::ng-deep .chat-popup,
-::ng-deep .header-wrap{display: none;}
+.custom-gray-btn,
+.custom-btn {
+    height: 53px;
+}
+
+/* ::ng-deep .chat-popup,
+::ng-deep .header-wrap {
+    display: none;
+} */
+
+@media (max-width: 767px) {
+  .shadow-purple img,
+  .shadow-pink img {
+    width: 70px;
+  }
+  .thankyou-image
+  {
+    img {
+    height: 300px;
+  }
+  }
+}

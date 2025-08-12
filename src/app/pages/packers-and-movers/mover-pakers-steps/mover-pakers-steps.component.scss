@@ -498,6 +498,7 @@ li.nav-item+.nav-item {
 }
 
 @media (max-width: 768px) {
+    
     .mover-banner {
         display: none;
     }
@@ -549,3 +550,9 @@ li.nav-item+.nav-item {
     }
 
 }
+
+/* @media (max-width: 768px) {
+    .footer-wrap {
+        display: none;
+    }
+} */

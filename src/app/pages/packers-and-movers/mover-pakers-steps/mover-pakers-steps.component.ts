@@ -297,8 +297,11 @@ export class MoverPakersStepsComponent {
   nextPage(step: number) {
     this.active = step;
     this.bookingInformation.jheader[0] = this.jheader;
+
+
     this.SubcategoryService.setBookingInformation(this.bookingInformation);
-    console.log("step  next bookingInformation", this.bookingInformation);
+    console.log('mover and packers page bookingInformation', this.bookingInformation);
+    console.log("mover and packers page  this.currentStep", step);
     if (step == 3) {
       this.bookingInformation.type = 'select-product';
       // Create an array of article_ids from cartItemsList
@@ -338,38 +341,90 @@ export class MoverPakersStepsComponent {
           this.bookingInformation.jdetail.push(details);
         }
         // Recalculate the cart totals
-        this.cartService.computeCartTotals();
-        this.bookingInformation.jheader[0].grandtotal = this.cartService.cartTotal;
-        this.bookingInformation.jheader[0].total = this.cartService.cartTotal;
-        this.bookingInformation.jheader[0].totalcft = this.cartService.Totalcft;
-        this.bookingInformation.jheader[0].tokenamount =
-          this.cartService.TokenAmount;
+
       });
-    }
+       this.cartService.computeCartTotals();
+       this.bookingInformation.jheader[0].grandtotal = this.cartService.cartTotal;
+    this.bookingInformation.jheader[0].total = this.cartService.cartTotal;
+    this.bookingInformation.jheader[0].totalcft = this.cartService.Totalcft;
+    this.bookingInformation.jheader[0].tokenamount =
+      this.cartService.TokenAmount;
+  this.jheader = this.bookingInformation.jheader[0];
+
     this.SubcategoryService.setBookingInformation(this.bookingInformation);
+      if (this.jheader.totalcft > 0 && this.jheader.totkm > 0 && this.jheader.fromlift != null && this.jheader.tolift != null) {
+        this.SubcategoryService.getAllPackage2(
+          0,
+          this.jheader.totalcft,
+          Math.ceil(this.jheader.totkm),
+          this.jheader.fromlift == true ? 0 : Math.ceil(this.jheader.fromfloor),
+          this.jheader.tolift == true ? 0 : Math.ceil(this.jheader.tofloor)
+        ).subscribe((res: any) => {
+          console.log("getAllPackage", res);
+
+          this.PackageList = res;
+          this.PackageList.forEach((element: any) => {
+            element.packageTotal = element.getcalculateamounts;
+
+            // this.PackageList.forEach((element:any) => {
+            //   element.packageTotal=element.packageamount+this.jheader.total;
+          });
+        });
+        this.onSelect(this.PackageList[0], this.PackageList[0].id, this.PackageList[0].packageamount);
+      }
+
+      if (this.cartService.Totalcft < 180) {
+        /*  this.toastService.showSuccessToast(
+           'success',
+           'Thankyou for being a Customer for  house Expert.Admin will contact you soon for further process.',
+         ); */
+        this.orderService
+          .CreateOrUpdateOrder(this.bookingInformation)
+          .subscribe((res: any) => {
+
+            // alert('in');
+            this.bookingInformation.orderresponse = res;
+            console.log('bookingInformation res', res);
+          });
+        this.display = false;
+        // delete this.bookingInformation.movetype;
+        delete this.bookingInformation.housetype;
+        delete this.bookingInformation.type;
+        delete this.bookingInformation.jdetail;
+        this.cartService.emptyCart();
+        this.SubcategoryService.removeBookingInformation();
+        this.jheader = '';
+        //window.location.reload();
+        this.router.navigate(['/thankyou'], { queryParams: { status: 'other' } });
+      }
+    }
+    //this.SubcategoryService.setBookingInformation(this.bookingInformation);
     const date = new Date(this.jheader.orderdate);
     this.orderdate = {
       year: date.getFullYear(),
       month: date.getMonth() + 1, // JavaScript months are 0-based, NgbDatePicker months are 1-based
       day: date.getDate(),
     };
-    this.SubcategoryService.getAllPackage2(
-      0,
-      this.jheader.totalcft,
-      Math.ceil(this.jheader.totkm),
-      this.jheader.fromlift == true ? 0 : Math.ceil(this.jheader.fromfloor),
-      this.jheader.tolift == true ? 0 : Math.ceil(this.jheader.tofloor)
-    ).subscribe((res: any) => {
-      console.log("getAllPackage", res);
+    if (this.jheader.totalcft > 0 && this.jheader.totkm > 0 && this.jheader.fromlift != null && this.jheader.tolift != null) {
+      this.SubcategoryService.getAllPackage2(
+        0,
+        this.jheader.totalcft,
+        Math.ceil(this.jheader.totkm),
+        this.jheader.fromlift == true ? 0 : Math.ceil(this.jheader.fromfloor),
+        this.jheader.tolift == true ? 0 : Math.ceil(this.jheader.tofloor)
+      ).subscribe((res: any) => {
+        console.log("getAllPackage", res);
 
-      this.PackageList = res;
-      this.PackageList.forEach((element: any) => {
-        element.packageTotal = element.getcalculateamounts;
+        this.PackageList = res;
+        this.PackageList.forEach((element: any) => {
+          element.packageTotal = element.getcalculateamounts;
 
-        // this.PackageList.forEach((element:any) => {
-        //   element.packageTotal=element.packageamount+this.jheader.total;
+          // this.PackageList.forEach((element:any) => {
+          //   element.packageTotal=element.packageamount+this.jheader.total;
+        });
       });
-    });
+    }
+    this.SubcategoryService.setBookingInformation(this.bookingInformation);
 
     if (step == 4) {
       this.itemstomove = this.cartService.cartItemsList
@@ -422,7 +477,7 @@ export class MoverPakersStepsComponent {
             this.SubcategoryService.removeBookingInformation();
             this.jheader = '';
             //window.location.reload();
-            this.router.navigate(['thankyou']);
+            this.router.navigate(['/thankyou'], { queryParams: { status: 'other' } });
           }
         });
     }
@@ -453,8 +508,25 @@ export class MoverPakersStepsComponent {
           //   element.packageTotal=element.packageamount+this.jheader.total;
         });
       });
+      if (this.cartService.Totalcft < 180) {
+        this.toastService.showSuccessToast(
+          'success',
+          'Thankyou for being a Customer for  house Expert.Admin will contact you soon for further process.',
+        );
+
+        this.display = false;
+        // delete this.bookingInformation.movetype;
+        delete this.bookingInformation.housetype;
+        delete this.bookingInformation.type;
+        delete this.bookingInformation.jdetail;
+        this.cartService.emptyCart();
+        this.SubcategoryService.removeBookingInformation();
+        this.jheader = '';
+        //window.location.reload();
+        this.router.navigate(['/thankyou'], { queryParams: { status: 'other' } });
+      }
     }
-    if (event.nextId == 4) {
+    else if (event.nextId == 4) {
       this.itemstomove = this.cartService.cartItemsList
         .map((item: any) => {
           return item.name + "(" + item.qty + ")";
@@ -511,7 +583,7 @@ export class MoverPakersStepsComponent {
             this.SubcategoryService.removeBookingInformation();
             this.jheader = '';
             //window.location.reload();
-            this.router.navigate(['thankyou']);
+            this.router.navigate(['/thankyou'], { queryParams: { status: 'other' } });
           }
         });
     }
@@ -737,7 +809,7 @@ export class MoverPakersStepsComponent {
       this.cartService.emptyCart();
       this.SubcategoryService.removeBookingInformation();
       this.jheader = '';
-      this.router.navigate(['thankyou']);
+      this.router.navigate(['/thankyou'], { queryParams: { status: 'success' } });
       setTimeout(() => {
         window.location.reload();
       }, 5000);

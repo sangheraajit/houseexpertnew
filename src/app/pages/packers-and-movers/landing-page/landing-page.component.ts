@@ -190,7 +190,7 @@ export class LandingPageComponent {
       //toaddress1: ["", Validators.required],
       // housetype: ["", Validators.required],
       phoneNumber: new FormControl(undefined, [Validators.required]),
-    //  movingdate: new FormControl(undefined, [Validators.required]),
+      //  movingdate: new FormControl(undefined, [Validators.required]),
       name: new FormControl("", [
         Validators.required,
         Validators.minLength(1),
@@ -208,15 +208,14 @@ export class LandingPageComponent {
     //console.log("this.customerinformation currentUser", this.currentUser);
 
     this.isAuthenticated = this.authService.isLoggedIn();
-    if(this.isAuthenticated)
-    {
-      
-       
-        this.Mainform.patchValue({
-          name: this.currentUser.custName,
-          email: this.currentUser.custEmail,
-          phoneNumber: this.currentUser.custMobile,
-        })
+    if (this.isAuthenticated) {
+
+
+      this.Mainform.patchValue({
+        name: this.currentUser.custName,
+        email: this.currentUser.custEmail,
+        phoneNumber: this.currentUser.custMobile,
+      })
     }
   }
   public widgetForm: FormGroup = new FormGroup({
@@ -334,8 +333,8 @@ export class LandingPageComponent {
         }); */
         const { fromaddress, toaddress, phoneNumber, name, email, movingdate } =
           this.Mainform.value;
-       /*  this.jheader.orderdate =
-          moment(movingdate).format("YYYY-MM-DD h:mm:ss"); */
+        /*  this.jheader.orderdate =
+           moment(movingdate).format("YYYY-MM-DD h:mm:ss"); */
 
         if (
           this.jcustomer.cust_name == "" &&
@@ -348,35 +347,35 @@ export class LandingPageComponent {
         }
         this.bookingInformation.jheader[0] = this.jheader;
         this.SubcategoryService.setBookingInformation(this.bookingInformation);
-           this.orderService
-        .CreateOrUpdateOrder(this.bookingInformation)
-        .subscribe((res: any) => {
-          // alert('in');
-          this.bookingInformation.orderresponse = res;
-          console.log('bookingInformation res', res);
-        
+        this.orderService
+          .CreateOrUpdateOrder(this.bookingInformation)
+          .subscribe((res: any) => {
+            // alert('in');
+            this.bookingInformation.orderresponse = res;
+            console.log('bookingInformation res', res);
 
-          // this.cart.cartTotal=res.totalamount;
-          // this.cart.TokenAmount=this.cart.percentage(15,this.cart.cartTotal);
-          // this.jheader.tokenamount = this.cart.TokenAmount;
-          // this.jheader.grandtotal = this.cart.cartTotal;
 
-          this.jheader.vehiclename = res.vehiclename;
-       
- this.jheader.orderno = res.orderno;
-          this.jheader.Id = res.id;
-             this.bookingInformation.jheader[0] = this.jheader;
-          this.SubcategoryService.setBookingInformation(
-            this.bookingInformation
-          );
-        });
+            // this.cart.cartTotal=res.totalamount;
+            // this.cart.TokenAmount=this.cart.percentage(15,this.cart.cartTotal);
+            // this.jheader.tokenamount = this.cart.TokenAmount;
+            // this.jheader.grandtotal = this.cart.cartTotal;
+
+            this.jheader.vehiclename = res.vehiclename;
+
+            this.jheader.orderno = res.orderno;
+            this.jheader.Id = res.id;
+            this.bookingInformation.jheader[0] = this.jheader;
+            this.SubcategoryService.setBookingInformation(
+              this.bookingInformation
+            );
+          });
         this.router.navigate(["mover-steps"]);
       } else {
         this.submitted = false;
       }
     } else {
-     // this.SendOPT();
-     this.verifyCustomer()
+      // this.SendOPT();
+      this.verifyCustomer()
     }
   }
   SendOPT() {
@@ -444,14 +443,14 @@ export class LandingPageComponent {
     //modalRef.componentInstance.user = this.user;
     modalRef.componentInstance.phoneNumber = this.Mainform.value.phoneNumber;
     modalRef.result.then((result) => {
-      console.log("OtpVerification result",result); // 'Closed'
-      console.log("OtpVerification",result);
-      if (result.data && result.iserror==false) {
-       
+      console.log("OtpVerification result", result); // 'Closed'
+      console.log("OtpVerification", result);
+      if (result.data && result.iserror == false) {
+
         this.userService.VerifyCustomerExists(this.Mainform.value.phoneNumber).subscribe(
           (res: any) => {
             console.log('VerifyCustomerExists:', res);
-    
+
             // Set user data in auth service
             this.authService.setUser(res);
             if (
@@ -469,23 +468,45 @@ export class LandingPageComponent {
               "info",
               "you are logged in successfully"
             );
-            this.router.navigate(["mover-steps"]); 
+            this.orderService
+              .CreateOrUpdateOrder(this.bookingInformation)
+              .subscribe((res: any) => {
+                // alert('in');
+                this.bookingInformation.orderresponse = res;
+                console.log('bookingInformation res', res);
+
+
+                // this.cart.cartTotal=res.totalamount;
+                // this.cart.TokenAmount=this.cart.percentage(15,this.cart.cartTotal);
+                // this.jheader.tokenamount = this.cart.TokenAmount;
+                // this.jheader.grandtotal = this.cart.cartTotal;
+
+                this.jheader.vehiclename = res.vehiclename;
+                this.jheader.orderno = res.orderno;
+                this.jheader.Id = res.id;
+                this.bookingInformation.jheader[0] = this.jheader;
+
+              });
+            this.SubcategoryService.setBookingInformation(
+              this.bookingInformation
+            );
+            this.router.navigate(["mover-steps"]);
           },
           (err: any) => {
             console.log('VerifyCustomerExists Error:', err);
-    
+
             // Prepare the error object
             const loginData = { iserror: true, data: err };
-    
+
             // Display error toast based on status
             if (err.status === 404 && err.error === 'Customer Not Found') {
-              this.toastService.showErrorToast('Error', 'Invalid username or OTP.');            
+              this.toastService.showErrorToast('Error', 'Invalid username or OTP.');
             } else {
               this.toastService.showErrorToast('Error', err.error || 'Customer verification failed.');
             }
-    
+
             // Optionally close the modal with an error result
-           // this.activeModal.dismiss(loginData);
+            // this.activeModal.dismiss(loginData);
           }
         );
         /*  this.toastService.showSuccessToast(
@@ -512,7 +533,7 @@ export class LandingPageComponent {
         );
       }
     });
-    
+
   }
   verifyCustomer() {
     // Verify the OTP using the service
@@ -533,8 +554,8 @@ export class LandingPageComponent {
         } */
         // Close the modal with success result
         const loginData = { iserror: false, data: res };
-       // this.activeModal.close(loginData);
-       this.SendOPT();
+        // this.activeModal.close(loginData);
+        this.SendOPT();
       },
       (err: any) => {
         console.log('VerifyCustomerExists Error:', err);
@@ -546,39 +567,38 @@ export class LandingPageComponent {
         if (err.status === 404 && err.error === 'Customer Not Found') {
           //this.toastService.showErrorToast('Error', 'Invalid username or OTP.');
           this.registorCustomr();
-          
+
         } else {
           this.toastService.showErrorToast('Error', err.error || 'Customer verification failed.');
         }
 
         // Optionally close the modal with an error result
-       // this.activeModal.dismiss(loginData);
+        // this.activeModal.dismiss(loginData);
       }
     );
   }
-registorCustomr()
-{
-  const { phoneNumber, name, email } =
-          this.Mainform.value;
-  let data = {
-    spname: "customer_save",
-    ptype: "save",
-    pcust_name: name,
-    pcust_pass: phoneNumber.replace("+91", ""),
-    pcust_gender: "M",
-    pcust_email: email,
-    pcust_mobile: phoneNumber.replace("+91", ""),
-    pcust_address: name,
-    pcust_city: 1,
-  };
-  this.userService.register(data).subscribe((res: any) => {
-    console.log(res);
-    this.verifyCustomer()
-   // localStorage.setItem("token", res);
-    
-    this.router.navigate(["mover-steps"]); 
-  });
-}
+  registorCustomr() {
+    const { phoneNumber, name, email } =
+      this.Mainform.value;
+    let data = {
+      spname: "customer_save",
+      ptype: "save",
+      pcust_name: name,
+      pcust_pass: phoneNumber.replace("+91", ""),
+      pcust_gender: "M",
+      pcust_email: email,
+      pcust_mobile: phoneNumber.replace("+91", ""),
+      pcust_address: name,
+      pcust_city: 1,
+    };
+    this.userService.register(data).subscribe((res: any) => {
+      console.log(res);
+      this.verifyCustomer()
+      // localStorage.setItem("token", res);
+
+      this.router.navigate(["mover-steps"]);
+    });
+  }
   OnSelected(type: any) {
     console.log("OnSelected", type);
     this.bookingInformation.housetype = type.value.name;
@@ -616,7 +636,8 @@ registorCustomr()
   }
 
   nextPage() {
-    //console.log('this.step1Information', this.bookingInformation);
+    console.log('landing page bookingInformation', this.bookingInformation);
+    console.log("landing page  this.currentStep", this.currentStep);
     if (this.bookingInformation.categoryname == "Packers and Movers") {
       // debugger;
       if (this.currentStep == 1) {
@@ -687,7 +708,7 @@ registorCustomr()
           .subscribe((res: any) => {
             // alert('in');
             this.bookingInformation.orderresponse = res;
-            console.log("bookingInformation res", res);
+            console.log("landing page bookingInformation res", res);
             this.currentStep += 1;
             this.jheader.vehiclename = res.vehiclename;
             this.jheader.orderno = res.orderno;
@@ -725,7 +746,7 @@ registorCustomr()
         // this.storage.delete('mycart');
         //delete this.cart.cartItemsList;
         if (this.DistanceKM > 150) {
-       //   this.cart.cartTotal = 0;
+          //   this.cart.cartTotal = 0;
           this.bookingInformation.jheader[0].grandtotal = this.cart.cartTotal;
           this.bookingInformation.jheader[0].total = this.cart.cartTotal;
 
@@ -1063,10 +1084,10 @@ registorCustomr()
       );
       this.orderService
         .SendWhatsAppsJobConfirmation(this.jheader.Id)
-        .subscribe((res: any) => {});
+        .subscribe((res: any) => { });
       this.orderService
         .SendWhatsAppsAdvancePay(this.jheader.Id)
-        .subscribe((res: any) => {});
+        .subscribe((res: any) => { });
       this.display = false;
       this.isPaymentPending = false;
       delete this.bookingInformation.housetype;
@@ -1101,7 +1122,7 @@ registorCustomr()
     if (this.isPaymentPending) {
       this.orderService
         .SendWhatsAppsPaymentPending(this.jheader.Id)
-        .subscribe((res: any) => {});
+        .subscribe((res: any) => { });
     } else {
     }
     delete this.bookingInformation.housetype;
