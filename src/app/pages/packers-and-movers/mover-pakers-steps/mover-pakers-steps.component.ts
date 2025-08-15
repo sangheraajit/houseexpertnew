@@ -10,7 +10,7 @@ import { GoogleMap } from "@angular/google-maps";
 import { Router } from "@angular/router";
 import { NgbDate, NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
 import * as moment from "moment";
-import { Subscription } from "rxjs";
+import { firstValueFrom, Subscription } from "rxjs";
 import { AuthService } from "src/app/service/auth.service";
 import { CartService } from "src/app/service/cart.service";
 import { GoogleAddressService } from "src/app/service/google-address.service";
@@ -258,7 +258,7 @@ export class MoverPakersStepsComponent {
       this.cartService.addToCart(product.itemname, 1, replace);
     }
   }
-  onSelect(item: any, event: any, packageamount: any) {
+  async onSelect(item: any, event: any, packageamount: any) {
     //packageamount
     console.log("onSelect package event", event);
     // this.selectedPackageValues=event;
@@ -294,194 +294,180 @@ export class MoverPakersStepsComponent {
   EditStep(step: number) {
     this.active = step;
   }
-  nextPage(step: number) {
-    this.active = step;
-    this.bookingInformation.jheader[0] = this.jheader;
+  async nextPage(step: number) {
+  this.active = step;
+  this.bookingInformation.jheader[0] = this.jheader;
 
+  this.SubcategoryService.setBookingInformation(this.bookingInformation);
+  console.log('mover and packers page bookingInformation', this.bookingInformation);
+  console.log("mover and packers page  this.currentStep", step);
 
-    this.SubcategoryService.setBookingInformation(this.bookingInformation);
-    console.log('mover and packers page bookingInformation', this.bookingInformation);
-    console.log("mover and packers page  this.currentStep", step);
-    if (step == 3) {
-      this.bookingInformation.type = 'select-product';
-      // Create an array of article_ids from cartItemsList
-      const cartArticleIds = this.cartService.cartItemsList.map(
-        (element: any) => element.pid
+  if (step === 3) {
+    this.bookingInformation.type = 'select-product';
+
+    const cartArticleIds = this.cartService.cartItemsList.map((item: any) => item.pid);
+
+    this.bookingInformation.jdetail = this.bookingInformation.jdetail.filter((detail: any) =>
+      cartArticleIds.includes(detail.article_id)
+    );
+
+    this.cartService.cartItemsList.forEach((element: any) => {
+      const existingDetail = this.bookingInformation.jdetail.find(
+        (detail: any) => detail.article_id === element.pid
       );
 
-      // Iterate through jdetail and filter items that are in cartArticleIds
-      this.bookingInformation.jdetail =
-        this.bookingInformation.jdetail.filter((detail: any) => {
-          return cartArticleIds.includes(detail.article_id);
+      if (existingDetail) {
+        existingDetail.quantity += element.qty;
+        existingDetail.line_total = existingDetail.quantity * element.price;
+      } else {
+        this.bookingInformation.jdetail.push({
+          serv_id: 0,
+          article_id: element.pid,
+          quantity: element.qty,
+          admin_rate: 0,
+          partner_rate: 0,
+          discount: 0,
+          tax: 0,
+          line_total: element.qty * element.price,
+          linestatus: 'new',
+          item_name: element.name,
         });
-      // Iterate through cartItemsList and add missing items to jdetail
-      this.cartService.cartItemsList.forEach((element: any) => {
-        const existingDetail = this.bookingInformation.jdetail.find(
-          (detail: any) => detail.article_id === element.pid
-        );
+      }
+    });
 
-        if (existingDetail) {
-          // Item already exists, update its quantity and line_total
-          existingDetail.quantity += element.qty;
-          existingDetail.line_total = existingDetail.quantity * element.price;
-        } else {
-          // Item not found, add it to the cart
-          const details = {
-            serv_id: 0,
-            article_id: element.pid,
-            quantity: element.qty,
-            admin_rate: 0,
-            partner_rate: 0,
-            discount: 0,
-            tax: 0,
-            line_total: element.qty * element.price,
-            linestatus: 'new',
-            item_name: element.name,
-          };
-          this.bookingInformation.jdetail.push(details);
-        }
-        // Recalculate the cart totals
+    this.cartService.computeCartTotals();
 
-      });
-       this.cartService.computeCartTotals();
-       this.bookingInformation.jheader[0].grandtotal = this.cartService.cartTotal;
+    this.bookingInformation.jheader[0].grandtotal = this.cartService.cartTotal;
     this.bookingInformation.jheader[0].total = this.cartService.cartTotal;
     this.bookingInformation.jheader[0].totalcft = this.cartService.Totalcft;
-    this.bookingInformation.jheader[0].tokenamount =
-      this.cartService.TokenAmount;
-  this.jheader = this.bookingInformation.jheader[0];
+    this.bookingInformation.jheader[0].tokenamount = this.cartService.TokenAmount;
+    this.jheader = this.bookingInformation.jheader[0];
 
     this.SubcategoryService.setBookingInformation(this.bookingInformation);
-      if (this.jheader.totalcft > 0 && this.jheader.totkm > 0 && this.jheader.fromlift != null && this.jheader.tolift != null) {
+
+    if (
+      this.jheader.totalcft > 0 &&
+      this.jheader.totkm > 0 &&
+      this.jheader.fromlift != null &&
+      this.jheader.tolift != null
+    ) {
+      const res = await firstValueFrom(
         this.SubcategoryService.getAllPackage2(
           0,
           this.jheader.totalcft,
           Math.ceil(this.jheader.totkm),
-          this.jheader.fromlift == true ? 0 : Math.ceil(this.jheader.fromfloor),
-          this.jheader.tolift == true ? 0 : Math.ceil(this.jheader.tofloor)
-        ).subscribe((res: any) => {
-          console.log("getAllPackage", res);
+          this.jheader.fromlift === true ? 0 : Math.ceil(this.jheader.fromfloor),
+          this.jheader.tolift === true ? 0 : Math.ceil(this.jheader.tofloor)
+        )
+      );
 
-          this.PackageList = res;
-          this.PackageList.forEach((element: any) => {
-            element.packageTotal = element.getcalculateamounts;
+      console.log("getAllPackage", res);
 
-            // this.PackageList.forEach((element:any) => {
-            //   element.packageTotal=element.packageamount+this.jheader.total;
-          });
-        });
-        this.onSelect(this.PackageList[0], this.PackageList[0].id, this.PackageList[0].packageamount);
-      }
+      this.PackageList = res;
+      this.PackageList.forEach((element: any) => {
+        element.packageTotal = element.getcalculateamounts;
+      });
 
-      if (this.cartService.Totalcft < 180) {
-        /*  this.toastService.showSuccessToast(
-           'success',
-           'Thankyou for being a Customer for  house Expert.Admin will contact you soon for further process.',
-         ); */
-        this.orderService
-          .CreateOrUpdateOrder(this.bookingInformation)
-          .subscribe((res: any) => {
+      await this.onSelect(
+        this.PackageList[0],
+        this.PackageList[0].id,
+        this.PackageList[0].packageamount
+      );
+    }
 
-            // alert('in');
-            this.bookingInformation.orderresponse = res;
-            console.log('bookingInformation res', res);
-          });
+    if (this.cartService.Totalcft < 180) {
+      this.orderService.CreateOrUpdateOrder(this.bookingInformation).subscribe((res: any) => {
+        this.bookingInformation.orderresponse = res;
+        console.log('bookingInformation res', res);
+      });
+
+      this.display = false;
+      delete this.bookingInformation.housetype;
+      delete this.bookingInformation.type;
+      delete this.bookingInformation.jdetail;
+
+      this.cartService.emptyCart();
+      this.SubcategoryService.removeBookingInformation();
+      this.jheader = '';
+      this.router.navigate(['/thankyou'], { queryParams: { status: 'other' } });
+    }
+  }
+
+  const date = new Date(this.jheader.orderdate);
+  this.orderdate = {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    day: date.getDate(),
+  };
+
+  if (
+    this.jheader.totalcft > 0 &&
+    this.jheader.totkm > 0 &&
+    this.jheader.fromlift != null &&
+    this.jheader.tolift != null
+  ) {
+    const res = await firstValueFrom(
+      this.SubcategoryService.getAllPackage2(
+        0,
+        this.jheader.totalcft,
+        Math.ceil(this.jheader.totkm),
+        this.jheader.fromlift === true ? 0 : Math.ceil(this.jheader.fromfloor),
+        this.jheader.tolift === true ? 0 : Math.ceil(this.jheader.tofloor)
+      )
+    );
+
+    console.log("getAllPackage", res);
+    this.PackageList = res;
+    this.PackageList.forEach((element: any) => {
+      element.packageTotal = element.getcalculateamounts;
+    });
+  }
+
+  this.SubcategoryService.setBookingInformation(this.bookingInformation);
+
+  if (step === 4) {
+    this.itemstomove = this.cartService.cartItemsList
+      .map((item: any) => `${item.name}(${item.qty})`)
+      .join(",");
+
+    this.orderService.CreateOrUpdateOrder(this.bookingInformation).subscribe((res: any) => {
+      this.bookingInformation.orderresponse = res;
+      console.log('bookingInformation res', res);
+
+      this.jheader.vehiclename = res.vehiclename;
+      this.jheader.orderno = res.orderno;
+      this.jheader.Id = res.id;
+
+      this.orderService.SendOrderEmailWithAttachments(this.jheader.Id).subscribe({
+        next: (res: any) => {
+          console.log('SendOrderEmailWithAttachments res', res);
+        },
+        error: (err) => {
+          console.error('SendOrderEmailWithAttachments error', err);
+        }
+      });
+
+      this.SubcategoryService.setBookingInformation(this.bookingInformation);
+
+      if (this.DistanceKM > 150) {
+        this.toastService.showSuccessToast(
+          'success',
+          'Thank you for being a Customer of House Expert.'
+        );
+
         this.display = false;
-        // delete this.bookingInformation.movetype;
         delete this.bookingInformation.housetype;
         delete this.bookingInformation.type;
         delete this.bookingInformation.jdetail;
         this.cartService.emptyCart();
         this.SubcategoryService.removeBookingInformation();
         this.jheader = '';
-        //window.location.reload();
         this.router.navigate(['/thankyou'], { queryParams: { status: 'other' } });
       }
-    }
-    //this.SubcategoryService.setBookingInformation(this.bookingInformation);
-    const date = new Date(this.jheader.orderdate);
-    this.orderdate = {
-      year: date.getFullYear(),
-      month: date.getMonth() + 1, // JavaScript months are 0-based, NgbDatePicker months are 1-based
-      day: date.getDate(),
-    };
-    if (this.jheader.totalcft > 0 && this.jheader.totkm > 0 && this.jheader.fromlift != null && this.jheader.tolift != null) {
-      this.SubcategoryService.getAllPackage2(
-        0,
-        this.jheader.totalcft,
-        Math.ceil(this.jheader.totkm),
-        this.jheader.fromlift == true ? 0 : Math.ceil(this.jheader.fromfloor),
-        this.jheader.tolift == true ? 0 : Math.ceil(this.jheader.tofloor)
-      ).subscribe((res: any) => {
-        console.log("getAllPackage", res);
-
-        this.PackageList = res;
-        this.PackageList.forEach((element: any) => {
-          element.packageTotal = element.getcalculateamounts;
-
-          // this.PackageList.forEach((element:any) => {
-          //   element.packageTotal=element.packageamount+this.jheader.total;
-        });
-      });
-    }
-    this.SubcategoryService.setBookingInformation(this.bookingInformation);
-
-    if (step == 4) {
-      this.itemstomove = this.cartService.cartItemsList
-        .map((item: any) => {
-          return item.name + "(" + item.qty + ")";
-        })
-        .join(",");
-      this.orderService
-        .CreateOrUpdateOrder(this.bookingInformation)
-        .subscribe((res: any) => {
-          // alert('in');
-          this.bookingInformation.orderresponse = res;
-          console.log('bookingInformation res', res);
-
-
-          // this.cart.cartTotal=res.totalamount;
-          // this.cart.TokenAmount=this.cart.percentage(15,this.cart.cartTotal);
-          // this.jheader.tokenamount = this.cart.TokenAmount;
-          // this.jheader.grandtotal = this.cart.cartTotal;
-
-          this.jheader.vehiclename = res.vehiclename;
-          this.jheader.orderno = res.orderno;
-          this.jheader.Id = res.id;
-          this.orderService.SendOrderEmailWithAttachments(this.jheader.Id)
-            .subscribe({
-              next: (res: any) => {
-                console.log('SendOrderEmailWithAttachments res', res);
-              },
-              error: (err) => {
-                console.error('SendOrderEmailWithAttachments error', err);
-              }
-            });
-          this.SubcategoryService.setBookingInformation(
-            this.bookingInformation
-          );
-
-
-          if (this.DistanceKM > 150) {
-            this.toastService.showSuccessToast(
-              'success',
-              'Thankyou for being a Customer for  house Expert',
-            );
-
-            this.display = false;
-            // delete this.bookingInformation.movetype;
-            delete this.bookingInformation.housetype;
-            delete this.bookingInformation.type;
-            delete this.bookingInformation.jdetail;
-            this.cartService.emptyCart();
-            this.SubcategoryService.removeBookingInformation();
-            this.jheader = '';
-            //window.location.reload();
-            this.router.navigate(['/thankyou'], { queryParams: { status: 'other' } });
-          }
-        });
-    }
+    });
   }
+}
+
   navChanged(event: any) {
     console.log('navChanged1', event);
     console.log("step  navChanged bookingInformation", this.bookingInformation);
