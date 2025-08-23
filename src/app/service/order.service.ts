@@ -6,56 +6,61 @@ import { environment } from 'src/environments/environment';
 
 
 const httpOptions = {
-headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 declare var Razorpay: any;
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class OrderService {
-  apiUrl = environment.CommonApiServer + 'api/OrderControler/';
-  constructor(private http: HttpClient) {
+    apiUrl = environment.CommonApiServer + 'api/OrderControler/';
+    constructor(private http: HttpClient) {
 
-  }
+    }
 
-  createOrder(order:any){
-   /*  customerName: order.name,
-    email: order.email,
-    phoneNumber: order.phone,
-    amount: order.amount */
-      return this.http.post(this.apiUrl+"SaveOrder", order);
-  }
-  CreateOrUpdateOrder(order:any){
-    
-       return this.http.post(this.apiUrl+"CreateOrUpdateOrder", order);
-   }
-   SendOrderEmailWithAttachments(orderid:any){
-    
-       return this.http.post(this.apiUrl+"SendOrderEmailWithAttachments?orderid="+orderid, {});
-   }
-   SendWhatsAppsPaymentPending(orderid:any){
-   
-       return this.http.post(this.apiUrl+"SendWhatsAppsPaymentPending?orderid="+orderid,{});
-   }
-   SendWhatsAppsQuotation(orderid:any){
-   
-       return this.http.post(this.apiUrl+"SendWhatsAppsQuotation?orderid="+orderid,{});
-   }
-   SendWhatsAppsAdvancePay(orderid:any){
-   
-       return this.http.post(this.apiUrl+"SendWhatsAppsAdvancePay?orderid="+orderid,{});
-   }
-   SendWhatsAppsJobConfirmation(orderid:any){
-    
-       return this.http.post(this.apiUrl+"SendWhatsAppsJobConfirmation?orderid="+orderid,{});
-   }
-  createRazorOrder(order:any){
-   
-       return this.http.post(this.apiUrl+"GetRazorpayOrderNumber", order);
-   }
-  updateOrder(order:any) {
-    
-      return this.http.post(this.apiUrl+"update",order);
-  }
+    createOrder(order: any) {
+        /*  customerName: order.name,
+         email: order.email,
+         phoneNumber: order.phone,
+         amount: order.amount */
+        return this.http.post(this.apiUrl + "SaveOrder", order);
+    }
+    CreateOrUpdateOrder(order: any) {
+
+        return this.http.post(this.apiUrl + "CreateOrUpdateOrder", order);
+    }
+    SendOrderEmailWithAttachments(orderid: any) {
+
+        return this.http.post(this.apiUrl + "SendOrderEmailWithAttachments?orderid=" + orderid, {});
+    }
+    SendWhatsAppsPaymentPending(orderid: any) {
+
+        return this.http.post(this.apiUrl + "SendWhatsAppsPaymentPending?orderid=" + orderid, {});
+    }
+    SendWhatsAppsQuotation(orderid: any) {
+
+        return this.http.post(this.apiUrl + "SendWhatsAppsQuotation?orderid=" + orderid, {});
+    }
+    SendWhatsAppsAdvancePay(orderid: any) {
+
+        return this.http.post(this.apiUrl + "SendWhatsAppsAdvancePay?orderid=" + orderid, {});
+    }
+    SendWhatsAppsJobConfirmation(orderid: any) {
+
+        return this.http.post(this.apiUrl + "SendWhatsAppsJobConfirmation?orderid=" + orderid, {});
+    }
+    createRazorOrder(order: any) {
+
+        return this.http.post(this.apiUrl + "GetRazorpayOrderNumber", order);
+    }
+    updateOrder(order: any) {
+
+        return this.http.post(this.apiUrl + "update", order);
+    }
+    downloadOrderPdf(orderId: number): Observable<any> {
+        return this.http.post(`${this.apiUrl}DownloadOrderPdf?orderId=${orderId}`, {
+            responseType: 'blob' // Important for binary file
+        });
+    }
 }

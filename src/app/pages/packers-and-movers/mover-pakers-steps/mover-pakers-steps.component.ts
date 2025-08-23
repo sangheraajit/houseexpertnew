@@ -438,14 +438,14 @@ export class MoverPakersStepsComponent {
       this.jheader.orderno = res.orderno;
       this.jheader.Id = res.id;
 
-      this.orderService.SendOrderEmailWithAttachments(this.jheader.Id).subscribe({
+      /* this.orderService.SendOrderEmailWithAttachments(this.jheader.Id).subscribe({
         next: (res: any) => {
           console.log('SendOrderEmailWithAttachments res', res);
         },
         error: (err) => {
           console.error('SendOrderEmailWithAttachments error', err);
         }
-      });
+      }); */
 
       this.SubcategoryService.setBookingInformation(this.bookingInformation);
 
@@ -542,7 +542,7 @@ export class MoverPakersStepsComponent {
           this.jheader.orderno = res.orderno;
           this.jheader.Id = res.id;
           this.bookingInformation.jheader[0] = this.jheader;
-          this.orderService.SendOrderEmailWithAttachments(this.jheader.Id)
+         /*  this.orderService.SendOrderEmailWithAttachments(this.jheader.Id)
             .subscribe({
               next: (res: any) => {
                 console.log('SendOrderEmailWithAttachments res', res);
@@ -550,7 +550,7 @@ export class MoverPakersStepsComponent {
               error: (err) => {
                 console.error('SendOrderEmailWithAttachments error', err);
               }
-            });
+            }); */
           this.SubcategoryService.setBookingInformation(
             this.bookingInformation
           );

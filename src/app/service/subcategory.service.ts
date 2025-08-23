@@ -119,7 +119,7 @@ export class SubcategoryService {
     let body = {
       spname: spname,
       pserv_id: pserv_id,
-      ptotcft: ptotcft,
+      ptotcft: Math.ceil(ptotcft),
       pkm: pkm,
       pfromfloor: pfromfloor,
       ptofloor: ptofloor
