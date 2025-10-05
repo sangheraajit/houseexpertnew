@@ -15,7 +15,7 @@
                pagename === 'package' ? 'hover-enabled' : ''
              ]" (click)="onSelect(item, item.id, item.getcalculateamounts)">
           <h3 class="mb-2">{{ item.packagename }}</h3>
-          <p class="h1 mb-0">₹ {{ item.packageTotal }}</p>
+          <p class="h1 mb-0">₹ {{ orderHeader.grandtotal }}</p>
           <div class="my-3" *ngIf="selectedValues === item.id">
             <div class="bg-warning font-12 font-bold text-uppercase rounded d-inline-block py-2 px-4">
               Selected
@@ -37,7 +37,7 @@
         <div class="card text-center p-4 packege_col_mybooking"
           [ngClass]="selectedValues === item.id ? 'selected' : ''">
           <h3 class="mb-2">{{ item.packagename }}</h3>
-          <p class="h1 mb-0">₹ {{ item.packageTotal }}</p>
+          <p class="h1 mb-0">₹ {{ orderHeader.grandtotal }}</p>
           <div class="my-3" *ngIf="selectedValues === item.id">
             <div class="bg-warning font-12 font-bold text-uppercase rounded d-inline-block py-2 px-4">
               Selected

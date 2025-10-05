@@ -126,7 +126,7 @@
           <td></td>
           <td ><b>Balance</b></td>
           <td class="text-end text-danger">
-            {{ dialog?.grandtotal + dialog?.gstamount - (dialog?.discount + paidamount) }}
+            {{ calculateGrandTotal() }}
           </td>
         </tr>
         <tr>

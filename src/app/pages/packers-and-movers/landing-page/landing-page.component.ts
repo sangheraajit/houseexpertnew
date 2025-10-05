@@ -315,7 +315,7 @@ export class LandingPageComponent {
     this.bookingInformation = this.SubcategoryService.getBookingInformation();
     this.jheader = this.bookingInformation.jheader[0];
     this.jcustomer = this.bookingInformation.jcustomer[0];
-    if (this.isAuthenticated) {
+    //if (this.isAuthenticated) {
       this.currentStep = 1;
 
       if (this.Mainform.valid) {
@@ -341,9 +341,9 @@ export class LandingPageComponent {
           this.jcustomer.cust_email == "" &&
           this.jcustomer.cust_mobile == ""
         ) {
-          this.jcustomer.cust_name = this.currentUser.custName;
-          this.jcustomer.cust_email = this.currentUser.custEmail;
-          this.jcustomer.cust_mobile = this.currentUser.custMobile;
+          this.jcustomer.cust_name = name;//this.currentUser.custName;
+          this.jcustomer.cust_email = email;//this.currentUser.custEmail;
+          this.jcustomer.cust_mobile = phoneNumber;//this.currentUser.custMobile;
         }
         this.bookingInformation.jheader[0] = this.jheader;
         this.SubcategoryService.setBookingInformation(this.bookingInformation);
@@ -369,14 +369,16 @@ export class LandingPageComponent {
               this.bookingInformation
             );
           });
-        this.router.navigate(["mover-steps"]);
+        //this.router.navigate(["mover-steps"]);
+        
+         this.router.navigate(['/thankyou'], { queryParams: { status: 'other' } });
       } else {
         this.submitted = false;
       }
-    } else {
+   // } else {
       // this.SendOPT();
-      this.verifyCustomer()
-    }
+    // this.verifyCustomer()
+   // }
   }
   SendOPT() {
     this.submitted = true;
@@ -490,7 +492,8 @@ export class LandingPageComponent {
             this.SubcategoryService.setBookingInformation(
               this.bookingInformation
             );
-            this.router.navigate(["mover-steps"]);
+            //this.router.navigate(["mover-steps"]);
+            this.router.navigate(['/thankyou'], { queryParams: { status: 'other' } });
           },
           (err: any) => {
             console.log('VerifyCustomerExists Error:', err);
@@ -555,7 +558,7 @@ export class LandingPageComponent {
         // Close the modal with success result
         const loginData = { iserror: false, data: res };
         // this.activeModal.close(loginData);
-        this.SendOPT();
+        //this.SendOPT();
       },
       (err: any) => {
         console.log('VerifyCustomerExists Error:', err);
@@ -596,7 +599,8 @@ export class LandingPageComponent {
       this.verifyCustomer()
       // localStorage.setItem("token", res);
 
-      this.router.navigate(["mover-steps"]);
+     // this.router.navigate(["mover-steps"]);
+     this.router.navigate(['/thankyou'], { queryParams: { status: 'other' } });
     });
   }
   OnSelected(type: any) {

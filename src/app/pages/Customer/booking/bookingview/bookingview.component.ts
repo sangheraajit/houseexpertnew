@@ -158,13 +158,7 @@ export class BookingviewComponent implements OnInit {
       }
       this.dialog.totkm = Math.ceil(this.dialog.totkm);
       if (this.dialog.tokenamount == 0 || this.dialog.tokenamount == null || this.dialog.tokenamount == undefined) {
-        const totalamount = (
-          (this.dialog.grandtotal +
-            this.dialog.gstamount +
-            this.dialog.insuranceamount) -
-          (this.dialog.discount +
-            this.paidamount)
-        );
+        const totalamount = this.calculateGrandTotal();
         this.NextButtonLabel = "Pay Token Amount ₹ " + this.cartservice.percentage(15, totalamount);
       }
       else if (
@@ -182,18 +176,42 @@ export class BookingviewComponent implements OnInit {
         this.dialog.orderstatus == "New" ||
         this.dialog.orderstatus == "new"
       ) {
-        this.payamount = (
-          (this.dialog.grandtotal +
-            this.dialog.gstamount +
-            this.dialog.insuranceamount) -
-          (this.dialog.discount +
-            this.paidamount)
-        ).toString();
+        this.updatePayAmount();
         //this.payamount =  (this.dialog.grandtotal - this.paidamount).toString();
         this.NextButtonLabel = "Pay Balance Amount ₹ " + this.payamount;
         this.paymenttype = "balance";
       }
     });
+  }
+  calculateGrandTotal(): number {
+    const total = this.dialog?.total || 0;
+    const gst = this.dialog?.gstamount || 0;
+    const insurance = this.dialog?.insuranceamount || 0;
+    let discount = this.dialog?.discount || 0;
+
+    // If discount is negative, normalize it to positive
+    if (discount < 0) {
+      discount = Math.abs(discount);
+    }
+
+    return total + gst + insurance - discount;
+  }
+  updatePayAmount(): void {
+    const grandtotal = this.dialog?.grandtotal || 0;
+    const gst = this.dialog?.gstamount || 0;
+    const insurance = this.dialog?.insuranceamount || 0;
+    let discount = this.dialog?.discount || 0;
+    const paid = this.paidamount || 0;
+
+    // Normalize discount to always be positive
+    if (discount < 0) {
+      discount = Math.abs(discount);
+    }
+
+    this.payamount = (
+      (grandtotal + gst + insurance) -
+      (discount + paid)
+    ).toString();
   }
   private getorderdetaillist(oid: string) {
     let pwhere1 = " orderid ='" + oid + "'";

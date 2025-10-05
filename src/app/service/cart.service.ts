@@ -99,7 +99,7 @@ export class CartService {
     let totalQuantityValue: number = 0;
     let totalcftValue: number = 0;
     for (let currentCartItem of this.cartItemsList) {
-      totalPriceValue += currentCartItem.qty * currentCartItem.price;
+      totalPriceValue += currentCartItem.qty; //* currentCartItem.price;
       totalQuantityValue += currentCartItem.qty;
       //totalcftValue+=currentCartItem.cft
       totalcftValue+=(currentCartItem.cft*currentCartItem.qty)
